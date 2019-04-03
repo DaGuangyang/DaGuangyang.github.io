@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/mpstat.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/top-1.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/uptime.png">
-<meta property="og:updated_time" content="2019-04-03T18:08:30.251Z">
+<meta property="og:updated_time" content="2019-04-03T18:14:44.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux中CPU、内存、磁盘检测">
 <meta name="twitter:description" content="CPU监控、内存监控、磁盘监控、检测工具">
@@ -234,14 +234,12 @@
 <span class="line">power management ：        #对能源管理的支持</span>
 </pre></td></tr></table></figure>
 <ul>
-<li>查看逻辑核数<br><code>cat /proc/cpuinfo | grep &quot;processor&quot; | wc -l</code><ul>
+<li>查看逻辑核数<br><code>cat /proc/cpuinfo | grep &quot;processor&quot; | wc -l</code></li>
 <li>查看物理核数<br><code>cat /proc/cpuinfo | grep &quot;cpu cores&quot; | uniq</code>  </li>
 <li>查看CPU个数<br><code>cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</code>  </li>
 <li>查看CPU信息（型号）<br><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code>  </li>
 <li>CPU负载<br>平均负载是指上一分钟同时处于就绪状态的平均进程数。在CPU中可以理解为CPU可以并行处理的任务数量，就是CPU个数x核数。要保证性能好就需要CPU load小于CPU个数x核数x0.7。Load Average是指CPU Load。  </li>
 <li>CPU检测常用工具  </li>
-</ul>
-</li>
 </ul>
 <table>
 <thead>
