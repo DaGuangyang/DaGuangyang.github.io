@@ -6,15 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | DaguangY</title>
+  <title>linux中CPU、内存、磁盘检测 | DaguangY</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="DaguangY">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="CPU监控、内存监控、磁盘监控、检测工具">
+<meta name="keywords" content="linux,CPU监控,内存监控,磁盘监控">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux中CPU、内存、磁盘检测">
+<meta property="og:url" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/index.html">
 <meta property="og:site_name" content="DaguangY">
+<meta property="og:description" content="CPU监控、内存监控、磁盘监控、检测工具">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/linux.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/uptime.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/vmstat.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/mpstat.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/top-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/uptime.png">
+<meta property="og:updated_time" content="2019-04-03T18:08:30.251Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DaguangY">
+<meta name="twitter:title" content="linux中CPU、内存、磁盘检测">
+<meta name="twitter:description" content="CPU监控、内存监控、磁盘监控、检测工具">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/linux.png">
   
     <link rel="alternative" href="/atom.xml" title="DaguangY" type="application/atom+xml">
   
@@ -150,36 +162,362 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-linux中CPU、内存、磁盘检测" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/28/linux中CPU、内存、磁盘检测/" class="archive-article-date">
-  	<time datetime="2019-03-28T14:41:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-28</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/28/linux中CPU、内存、磁盘检测/">linux中CPU、内存、磁盘检测</a>
+    <h1 class="article-title" itemprop="name">
+      linux中CPU、内存、磁盘检测
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/03/28/linux中CPU、内存、磁盘检测/" class="archive-article-date">
+  	<time datetime="2019-03-28T14:41:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/2019/03/28/linux中CPU、内存、磁盘检测/linux.png" alt="linux"><br>CPU监控、内存监控、磁盘监控、检测工具<br><a id="more"></a></p>
+<h1 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h1><h2 id="CPU监控"><a href="#CPU监控" class="headerlink" title="CPU监控"></a>CPU监控</h2><ul>
+<li>查看CPU信息<br>在Linux中查看CPU信息，就离不开 <strong>/proc/cpuinfo</strong> 文件，不同的指令集CPU产生的文件是不同的，X86指令集CPU的 <strong>/proc/cpuinfo</strong> 文件包含一下内容。  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+</pre></td><td class="code"><pre><span class="line">processor　　： 0        #单核：CPU编号；多核：物理核、使用超线程技术虚拟的逻辑核  </span>
+<span class="line">vendor_id　　：GenuineIntel        #CPU制造商  </span>
+<span class="line">cpu family　　：6        #CPU产品系列代号  </span>
+<span class="line">model　　　　：26        #CPU属于其系列中的哪一代的代号  </span>
+<span class="line">model name　：Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz        #CPU属于的名字及其编号、标称主频  </span>
+<span class="line">stepping　　  ：5        #CPU属于制作更新版本</span>
+<span class="line">cpu MHz　　  ：1600.000        #CPU的实际使用主频</span>
+<span class="line">cache size　　： 8192 KB        #CPU二级缓存大小</span>
+<span class="line">physical id　　：0        #单个CPU的标号</span>
+<span class="line">siblings　　　 ：8        #单个CPU逻辑物理核数</span>
+<span class="line">core id　　　  ： 0        #当前物理核在其所处CPU中的编号，这个编号不一定连续</span>
+<span class="line">cpu cores　　 ：4        #该逻辑核所处CPU的物理核数</span>
+<span class="line">apicid　　       ：0        #用来区分不同逻辑核的编号，系统中每个逻辑核的此编号必然不同，此编号不一定连续</span>
+<span class="line">fpu　　　　　  ：yes        #是否具有浮点运算单元</span>
+<span class="line">fpu_exception ：yes        #是否支持浮点计算异常</span>
+<span class="line">cpuid level　　 ： 11        #执行cpuid指令前，eax寄存器中的值，根据不同的值cpuid指令会返回不同的内容</span>
+<span class="line">wp　　　　　　：yes        #表明当前CPU是否在内核态支持对用户空间的写保护</span>
+<span class="line">flags 　　　　　： fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm syscall nx rdtscp lm constant_tsc ida nonstop_tsc pni monitor ds_cpl vmx est tm2 cx16 xtpr popcnt lahf_lm        #当前CPU支持的功能</span>
+<span class="line">bogomips　　 ：4522.12        #在系统内核启动时粗略测算的CPU速度</span>
+<span class="line">clflush size　　：64        #每次刷新缓存的大小单位</span>
+<span class="line">cache_alignment　　： 64        #缓存地址对齐单位</span>
+<span class="line">address sizes　　　 ： 40 bits physical, 48 bits virtual        #可访问地址空间位数</span>
+<span class="line">power management ：        #对能源管理的支持</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>查看逻辑核数<br><code>cat /proc/cpuinfo | grep &quot;processor&quot; | wc -l</code><ul>
+<li>查看物理核数<br><code>cat /proc/cpuinfo | grep &quot;cpu cores&quot; | uniq</code>  </li>
+<li>查看CPU个数<br><code>cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</code>  </li>
+<li>查看CPU信息（型号）<br><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code>  </li>
+<li>CPU负载<br>平均负载是指上一分钟同时处于就绪状态的平均进程数。在CPU中可以理解为CPU可以并行处理的任务数量，就是CPU个数x核数。要保证性能好就需要CPU load小于CPU个数x核数x0.7。Load Average是指CPU Load。  </li>
+<li>CPU检测常用工具  </li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">工具</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">uptime</td>
+<td style="text-align:center">平均负载</td>
+</tr>
+<tr>
+<td style="text-align:center">vmstat</td>
+<td style="text-align:center">包括系统范围的cpu平均负载</td>
+</tr>
+<tr>
+<td style="text-align:center">mpstat</td>
+<td style="text-align:center">查看所有cpu核信息</td>
+</tr>
+<tr>
+<td style="text-align:center">top</td>
+<td style="text-align:center">监控每个进程cpu用量</td>
+</tr>
+<tr>
+<td style="text-align:center">sar-u</td>
+<td style="text-align:center">查看cpu信息</td>
+</tr>
+<tr>
+<td style="text-align:center">pidstat</td>
+<td style="text-align:center">每个进程cpu用量分解</td>
+</tr>
+<tr>
+<td style="text-align:center">perf</td>
+<td style="text-align:center">cpu剖析和跟踪，性能计数分析</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-使用uptime查看CPU平均负载"><a href="#1-使用uptime查看CPU平均负载" class="headerlink" title="1.使用uptime查看CPU平均负载"></a>1.使用<code>uptime</code>查看CPU平均负载</h3><p><em><code>uptime</code>可以查看系统运行了多长时间和系统的平均负载</em><br><img src="/2019/03/28/linux中CPU、内存、磁盘检测/uptime.png" alt="uptime"><br> <strong>00:59:02</strong>：系统现在时间<br><strong>up  1:18</strong>：系统运行时长<br><strong>1 user</strong>：用户连接数<br><strong>load average: 0.00, 0.00, 0.00</strong>：系统1分钟、5分钟、15分钟的平均负载  </p>
+<h3 id="2-使用vmstat进行检测"><a href="#2-使用vmstat进行检测" class="headerlink" title="2.使用vmstat进行检测"></a>2.使用<code>vmstat</code>进行检测</h3><p><em><code>vmstat</code>:含义为显示虚拟内存状态，但是可以报告进程、内存、I/O等系统整体运行状态</em><br><strong>使用方法</strong>：vmstat [选项] [状态信息刷新时间] [报告次数]<br><img src="/2019/03/28/linux中CPU、内存、磁盘检测/vmstat.png" alt="vmstat">  </p>
+<ul>
+<li>Procs（进程）<br>r: 运行队列中进程数量，这个值也可以判断是否需要增加CPU。（长期大于1）<br>b: 等待IO的进程数量</li>
+<li>Memory（内存）<br>swpd: 使用虚拟内存大小，如果swpd的值不为0，但是SI，SO的值长期为0，这种情况不会影响系统性能。<br>free: 空闲物理内存大小。<br>buff: 用作缓冲的内存大小。<br>cache: 用作缓存的内存大小，如果cache的值大的时候，说明cache处的文件数多，如果频繁访问到的文件都能被cache处，那么磁盘的读IO bi会非常小  </li>
+<li>Swap<br>si: 每秒从交换区写到内存的大小，由磁盘调入内存。<br>so: 每秒写入交换区的内存大小，由内存调入磁盘。<br><em>注意：内存够用的时候，这2个值都是0，如果这2个值长期大于0时，系统性能会受到影响，磁盘IO和CPU资源都会被消耗。有些朋友看到空闲内存（free）很少的或接近于0时，就认为内存不够用了，不能光看这一点，还要结合si和so，如果free很少，但是si和so也很少（大多时候是0），那么不用担心，系统性能这时不会受到影响的</em>  </li>
+<li>IO（现在的Linux版本块的大小为1kb）<br>bi: 每秒读取的块数<br>bo: 每秒写入的块数<br><em>注意：随机磁盘读写的时候，这2个值越大（如超出1024k)，能看到CPU在IO等待的值也会越大。</em>  </li>
+<li>system（系统）<br>in: 每秒中断数，包括时钟中断。<br>cs: 每秒上下文切换数。<br><em>注意：上面2个值越大，会看到由内核消耗的CPU时间会越大。</em>  </li>
+<li>CPU（以百分比表示）  <ul>
+<li>us: 用户进程执行时间百分比(user time)<br>us的值比较高时，说明用户进程消耗的CPU时间多，但是如果长期超50%的使用，那么我们就该考虑优化程序算法或者进行加速  </li>
+<li>sy: 内核系统进程执行时间百分比(system time)<br>sy的值高时，说明系统内核消耗的CPU资源多，这并不是良性表现，我们应该检查原因。  </li>
+<li>wa: IO等待时间百分比<br>wa的值高时，说明IO等待比较严重，这可能由于磁盘大量作随机访问造成，也有可能磁盘出现瓶颈（块操作）。</li>
+<li>id: 空闲时间百分比  <h3 id="3-使用mpstat进行检测"><a href="#3-使用mpstat进行检测" class="headerlink" title="3.使用mpstat进行检测"></a>3.使用<code>mpstat</code>进行检测</h3>其报告与CPU的一些统计信息，这些信息存放在/proc/stat文件中。在多CPUs系统里，其不但能查看所有CPU的平均状况信息，而且能够查看特定CPU的信息。可以<strong>查看多核心cpu中每个计算核心的统计数据</strong>；而vmstat只能查看系统整体cpu情况。<br><code>mpstat -P All 2 3</code>：指定显示每2秒输出一次统计信息，供统计3次，—P为指定CPU编号<br><img src="/2019/03/28/linux中CPU、内存、磁盘检测/mpstat.png" alt="mpstat">  </li>
+</ul>
+</li>
+<li><strong>%user</strong>：表示处理用户进程所使用CPU的百分比。用户进程是用于应用程序（如Oracle数据库）的非内核进程  </li>
+<li><strong>%nice</strong>：表示使用nice命令对进程进行降级时CPU的百分比；  </li>
+<li><strong>%sys</strong>：表示内核进程使用的CPU百分比；  </li>
+<li><strong>%iowait</strong>：表示等待进行I/O所使用的CPU时间百分比；  </li>
+<li><strong>%irq</strong>：表示用于处理系统中断的CPU百分比；  </li>
+<li><strong>%soft</strong>：表示用于软件中断的CPU百分比；  </li>
+<li><strong>%steal</strong> ：显示虚拟机管理器在服务另一个虚拟处理器时虚拟CPU处在非自愿等待下花费时间的百分比  </li>
+<li><strong>%guest</strong> ：显示运行虚拟处理器时CPU花费时间的百分比  </li>
+<li><strong>%idle</strong>：显示CPU的空闲时间；  <h3 id="4-使用top进行检测"><a href="#4-使用top进行检测" class="headerlink" title="4.使用top进行检测"></a>4.使用<code>top</code>进行检测</h3>top可以实时显示进程的状态<br><img src="/2019/03/28/linux中CPU、内存、磁盘检测/top-1.png" alt="top-1">  </li>
+</ul>
+<p><strong>top前五行是统计信息</strong>  </p>
+<ol>
+<li>任务队列信息，与<code>uptime</code>命令执行结果相同<br><img src="/2019/03/28/linux中CPU、内存、磁盘检测/uptime.png" alt="uptime">  </li>
+<li>第二行为进程信息统计数据<br><strong>125 total</strong>:进程总数 &emsp;<strong>1 running</strong>：正在运行的进程总数&emsp;<strong>124 sleeping</strong>：睡眠的进程数&emsp;<strong>0 stopped</strong>：停止的进程数&emsp;<strong>0 zombie</strong>：僵尸进程数  </li>
+<li>第三行CPU信息统计数据<br><strong>0.3%us</strong>：用户空间占用CPU百分比&emsp;<strong>0.0%sy</strong>：内核（系统）占用CPU百分比&emsp;<strong>0.0%ni</strong>：用户进程空间内改变过优先级的进程占用CPU百分比<br><strong>99.7%id</strong>:空闲CPU百分比&emsp;<strong>0.0%wa</strong>:等待输入输出的CPU时间百分比&emsp;<strong>0.0%hi</strong>:硬件CPU中断占用百分比&emsp;<strong>0.0%si</strong>:软中断占用百分比&emsp;<strong>0.0%st</strong>:虚拟机(虚拟化技术)占用百分比  </li>
+<li>第四行为物理内存信息<br><strong>1020232k total</strong>：物理内存总量&emsp;<strong>269696k used</strong>：使用的物理内存总量&emsp;<strong>750536k free</strong>：空闲的物理内存总量&emsp;<strong>29980k buffers</strong>：用作内核缓存的内存量  </li>
+<li>第五行为交换区信息<br><strong>2064376k total</strong>：交换区总量&emsp;<strong>0k used</strong>：使用的交换区总量&emsp;<strong>2064376k free</strong>：空闲的交换区总量&emsp;<strong>104728 cached</strong>：缓冲的交换区总量  </li>
+</ol>
+<p><strong>top列展示含义</strong>  </p>
+<ul>
+<li><strong>PID：进程号</strong>  </li>
+<li>PPID：父进程号  </li>
+<li>UID：进程所有者  </li>
+<li><strong>USER：进程的拥有者</strong>  </li>
+<li>GROUP：进程用户所属组  </li>
+<li>TTY：启动进程的终端名，不是从终端启动的进程则显示为？  </li>
+<li><strong>PR：进程的优先级</strong>  </li>
+<li><strong>NI：nice值，负值表示高优先级，正值表示低优先级</strong> </li>
+<li>P：最后使用的CPU，仅在多CPU环境下有用  </li>
+<li><strong>%CPU：上次更新到现在的CPU时间占用百分比</strong>  </li>
+<li><strong>TIME：进程所用的CPU时间总计，单位秒</strong>  </li>
+<li><strong>TIME+：进程使用的CPU时间总计，单位1/100秒</strong>  </li>
+<li>%MEM：进程使用的物理内存百分比  </li>
+<li><strong>VIRT：进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES</strong>  </li>
+<li>SWAP：进程使用的虚拟内存中，被换出的大小，单位kb  </li>
+<li><strong>RES：进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA</strong>  </li>
+<li>CODE：可执行代码占用的物理内存大小，单位kb  </li>
+<li>DATA：可执行代码以外的部分（数据段+栈）占用的物理内存，单位kb  </li>
+<li><strong>SHR：共享内存大小，单位kb</strong>  </li>
+<li>nFLT：页面错误次数  </li>
+<li>nDRT：最后一次写入到现在，被修改过的页面数  </li>
+<li><strong>S：进程状态&emsp;D:不可中断的睡眠状态&emsp;R:运行&emsp;S：睡眠&emsp;T：跟踪/停止&emsp;Z：僵尸进程</strong>  </li>
+<li><strong>COMMAND：命令名/命令行</strong>  </li>
+<li>WCHAN：若该进程睡眠，则显示睡眠中的系统函数名  </li>
+<li>Flags：任务标志<br><em>通过 f 键可以选择显示的内容。按 f 键之后会显示列的列表，按 a-z 即可显示或隐藏对应的列，最后按回车键确定</em><br><em>按 o 键可以改变列的显示顺序。按小写的 a-z 可以将相应的列向右移动，而大写的 A-Z可以将相应的列向左移动。最后按回车键确定</em><br><em>按大写的 F 或 O 键，然后按 a-z 可以将进程按照相应的列进行排序。而大写的 R 键可以将当前的排序倒转</em>  </li>
+</ul>
+<p><strong>语法</strong><br>-p：指定进程号来仅仅监视该进程状态  </p>
+<p><strong>交互命令</strong><br>q:退出top<br>c：切换显示命令名称和完整命令行<br>m：切换显示内存信息<br>t：切换显示进程和CPU状态信息<br>i：忽略闲置和僵死进程。这是一个开关式命令<br>P：根据CPU使用百分比大小进行排序<br>M：根据驻留内存大小进行排序<br>T：根据时间/累计时间进行排序<br>s：改变两次刷新之间的间隔时间，单位秒；默认为5s；若设置的间隔时间太小则来不及看清，也会加大系统负载<br>k：终止一个进程  </p>
+<h2 id="内存监控"><a href="#内存监控" class="headerlink" title="内存监控"></a>内存监控</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">工具</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">free</td>
+<td style="text-align:center">缓存容量统计信息</td>
+</tr>
+<tr>
+<td style="text-align:center">vmstat</td>
+<td style="text-align:center">虚拟内存统计信息</td>
+</tr>
+<tr>
+<td style="text-align:center">top</td>
+<td style="text-align:center">监视每个进程的内存使用情况</td>
+</tr>
+<tr>
+<td style="text-align:center">pidstat</td>
+<td style="text-align:center">显示活动进程的内存使用统计</td>
+</tr>
+<tr>
+<td style="text-align:center">pmap</td>
+<td style="text-align:center">查看进程的内存映像信息</td>
+</tr>
+<tr>
+<td style="text-align:center">sar -r</td>
+<td style="text-align:center">查看内存</td>
+</tr>
+<tr>
+<td style="text-align:center">dtrace</td>
+<td style="text-align:center">动态跟踪</td>
+</tr>
+<tr>
+<td style="text-align:center">valgrind</td>
+<td style="text-align:center">分析程序性能及程序中的内存泄露错误</td>
+</tr>
+</tbody>
+</table>
+<p><em>在此先对CPU的监控工具进行整理，后面对工具的使用进行说明</em>  </p>
+<h2 id="IO分析"><a href="#IO分析" class="headerlink" title="IO分析"></a>IO分析</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">工具</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">iostat</td>
+<td style="text-align:center">磁盘详细统计信息</td>
+</tr>
+<tr>
+<td style="text-align:center">iotop</td>
+<td style="text-align:center">按进程查看磁盘IO的使用情况</td>
+</tr>
+<tr>
+<td style="text-align:center">pidstat</td>
+<td style="text-align:center">按进程查看磁盘IO的使用情况</td>
+</tr>
+<tr>
+<td style="text-align:center">perf</td>
+<td style="text-align:center">动态跟踪工具动态跟踪工具</td>
+</tr>
+</tbody>
+</table>
+<h2 id="网络分析"><a href="#网络分析" class="headerlink" title="网络分析"></a>网络分析</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">工具</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ping</td>
+<td style="text-align:center">主要透过 ICMP 封包 来进行整个网络的状况报告</td>
+</tr>
+<tr>
+<td style="text-align:center">traceroute</td>
+<td style="text-align:center">用来检测发出数据包的主机到目标主机之间所经过的网关数量的工具</td>
+</tr>
+<tr>
+<td style="text-align:center">netstat</td>
+<td style="text-align:center">用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况</td>
+</tr>
+<tr>
+<td style="text-align:center">ss</td>
+<td style="text-align:center">可以用来获取socket统计信息，而且比netstat更快速更高效</td>
+</tr>
+<tr>
+<td style="text-align:center">host</td>
+<td style="text-align:center">可以用来查出某个主机名的 IP,跟nslookup作用一样</td>
+</tr>
+<tr>
+<td style="text-align:center">tcpdump</td>
+<td style="text-align:center">是以包为单位进行输出的，阅读起来不是很方便</td>
+</tr>
+<tr>
+<td style="text-align:center">tcpflow</td>
+<td style="text-align:center">是面向tcp流的, 每个tcp传输会保存成一个文件,很方便的查看</td>
+</tr>
+<tr>
+<td style="text-align:center">sar -n DEV</td>
+<td style="text-align:center">网卡流量情况</td>
+</tr>
+<tr>
+<td style="text-align:center">sar -n SOCK</td>
+<td style="text-align:center">查询网络以及tcp，udp状态信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="系统负载"><a href="#系统负载" class="headerlink" title="系统负载"></a>系统负载</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">工具</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">top</td>
+<td style="text-align:center">查看系统负载情况</td>
+</tr>
+<tr>
+<td style="text-align:center">uptime</td>
+<td style="text-align:center">查看系统负载情况</td>
+</tr>
+<tr>
+<td style="text-align:center">strace</td>
+<td style="text-align:center">统计跟踪内核态信息</td>
+</tr>
+<tr>
+<td style="text-align:center">vmstat</td>
+<td style="text-align:center">查看负载情况</td>
+</tr>
+<tr>
+<td style="text-align:center">dmesg</td>
+<td style="text-align:center">查看内核日志信息</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -203,187 +541,119 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/28/linux中CPU、内存、磁盘检测/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/4.linux根目录结构以及文件类型/" class="archive-article-date">
-  	<time datetime="2019-03-25T20:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/26/4.linux根目录结构以及文件类型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">4.linux根目录及文件类型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/4.linux根目录结构以及文件类型/">4.linux根目录及文件类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux目录结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#监控"><span class="toc-number">1.</span> <span class="toc-text">监控</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CPU监控"><span class="toc-number">1.1.</span> <span class="toc-text">CPU监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-使用uptime查看CPU平均负载"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.使用uptime查看CPU平均负载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用vmstat进行检测"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.使用vmstat进行检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用mpstat进行检测"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.使用mpstat进行检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用top进行检测"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.使用top进行检测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存监控"><span class="toc-number">1.2.</span> <span class="toc-text">内存监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO分析"><span class="toc-number">1.3.</span> <span class="toc-text">IO分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络分析"><span class="toc-number">1.4.</span> <span class="toc-text">网络分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统负载"><span class="toc-number">1.5.</span> <span class="toc-text">系统负载</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/3.常用命令/" class="archive-article-date">
-  	<time datetime="2019-03-25T19:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/3.常用命令/">3.常用命令</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux常用命令</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/2.获取命令使用详解/" class="archive-article-date">
-  	<time datetime="2019-03-25T18:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/2.获取命令使用详解/">2.获取命令使用详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">帮助文档</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/1.初识Linux/" class="archive-article-date">
-  	<time datetime="2019-03-25T17:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/1.初识Linux/">（一）初识Linux</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">终端设备</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -406,8 +676,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

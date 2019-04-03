@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/3 | DaguangY</title>
+  <title>4.linux根目录及文件类型 | DaguangY</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="DaguangY">
-<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
+  <meta name="description" content="linux根目录结构、linux文件类型">
+<meta name="keywords" content="linux,linux目录结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.linux根目录及文件类型">
+<meta property="og:url" content="http://yoursite.com/2019/03/26/4.linux根目录结构以及文件类型/index.html">
 <meta property="og:site_name" content="DaguangY">
+<meta property="og:description" content="linux根目录结构、linux文件类型">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/03/26/4.linux根目录结构以及文件类型/linux.png">
+<meta property="og:updated_time" content="2019-03-27T15:08:14.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DaguangY">
+<meta name="twitter:title" content="4.linux根目录及文件类型">
+<meta name="twitter:description" content="linux根目录结构、linux文件类型">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/26/4.linux根目录结构以及文件类型/linux.png">
   
     <link rel="alternative" href="/atom.xml" title="DaguangY" type="application/atom+xml">
   
@@ -150,86 +157,119 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-4.linux根目录结构以及文件类型" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/28/linux中CPU、内存、磁盘检测/" class="archive-article-date">
-  	<time datetime="2019-03-28T14:41:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-28</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/28/linux中CPU、内存、磁盘检测/">linux中CPU、内存、磁盘检测</a>
+    <h1 class="article-title" itemprop="name">
+      4.linux根目录及文件类型
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">CPU监控</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内存监控</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">磁盘监控</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/4.linux根目录结构以及文件类型/" class="archive-article-date">
+        
+        <a href="/2019/03/26/4.linux根目录结构以及文件类型/" class="archive-article-date">
   	<time datetime="2019-03-25T20:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/4.linux根目录结构以及文件类型/">4.linux根目录及文件类型</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/2019/03/26/4.linux根目录结构以及文件类型/linux.png" alt="linux"><br>linux根目录结构、linux文件类型<br><a id="more"></a><br>#</p>
+<h2 id="linux根目录结构"><a href="#linux根目录结构" class="headerlink" title="linux根目录结构"></a>linux根目录结构</h2><p><strong>FHS</strong>：文件系统层次化标准  具体可查看<a href="http://www.pathname.com/fhs/pub/fhs-2.3.html" target="_blank" rel="noopener">FHS标准</a>  </p>
+<ul>
+<li><p>/bin：所有用户可用的基本命令程序文件</p>
+</li>
+<li><p>/sbin：供系统管理员使用的工具程序</p>
+</li>
+<li><p>/boot：引导加载器必须用到的各静态文件；kernel、initramfs（initrd）、grub等</p>
+</li>
+<li><p>/dev：存储特殊文件或设备文件；字符设备（线性设备：有时序性；键盘、显示器）、块设备（随机设备：无时序性；硬盘）</p>
+</li>
+<li><p>/etc：系统程序的配置文件，只能为二进制，不能是可执行文件</p>
+</li>
+<li><p>/home：普通用户家目录</p>
+</li>
+<li><p>/root：管理员家目录</p>
+</li>
+<li><p>/lib：为系统启动或根文件系统上的应用程序（bin，sbin）提供共享库，以及为内核提供内核模块</p>
+<p> libc.so.*：动态链接的C库</p>
+<p> ld*：运行时链接器/加载器</p>
+<p> modules：用于存储内核模块的目录</p>
+</li>
+<li><p>/bin64：64位系统特有的，存放64位共享库</p>
+</li>
+<li><p>/media：便携式设备挂载点</p>
+</li>
+<li><p>/mnt：其他文件系统的临时挂载点</p>
+</li>
+<li><p>/opt：附加应用程序的安装位置</p>
+</li>
+<li><p>/root：管理员家目录</p>
+</li>
+<li><p>/tmp：临时文件</p>
+</li>
+<li><p>/usr：全局共享的只读文件</p>
+<p> bin，sbin</p>
+<p> lib，lib64</p>
+<p> include：C程序的头文件</p>
+<p> share：命令手册页和自带文档等架构特有的文件</p>
+<p> local：安装本地应用程序，安装用于安装第三方程序、</p>
+</li>
+<li><p>/var：经常放生变化的文件</p>
+</li>
+<li><p>/proc：基于内存（关机不存在），虚拟文件系统，内核及进程存储其相关信息，多为内核参数</p>
+</li>
+<li><p>/sys：基于内存（关机不存在），提供了一种比proc更为理想的访问内核数据的途径</p>
+</li>
+</ul>
+<h2 id="Linux文件类型"><a href="#Linux文件类型" class="headerlink" title="Linux文件类型"></a>Linux文件类型</h2><ul>
+<li><p>-：常规文件，即f</p>
+</li>
+<li><p>d：目录文件</p>
+</li>
+<li><p>b：块设备，以“block”为单位进行随机访问</p>
+</li>
+<li><p>c：字符设备，以“character”为单位进行线性访问对同一类设备进行区分<br> 主设备号：标识设备类型，进行而确定要加载的驱动程序<br> 次设备号：用于区分同一类型的不同设备</p>
+</li>
+<li><p>l：符号链接文件（软链接文件），类似Windows中的快捷方式</p>
+</li>
+<li><p>p：命名管道</p>
+</li>
+<li><p>s：套接字文件</p>
+</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -245,145 +285,128 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/26/4.linux根目录结构以及文件类型/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/3.常用命令/" class="archive-article-date">
-  	<time datetime="2019-03-25T19:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/03/28/linux中CPU、内存、磁盘检测/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          linux中CPU、内存、磁盘检测
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/3.常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">3.常用命令</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/3.常用命令/">3.常用命令</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux常用命令</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux根目录结构"><span class="toc-number">1.</span> <span class="toc-text">linux根目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件类型"><span class="toc-number">2.</span> <span class="toc-text">Linux文件类型</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/2.获取命令使用详解/" class="archive-article-date">
-  	<time datetime="2019-03-25T18:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/2.获取命令使用详解/">2.获取命令使用详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">帮助文档</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/1.初识Linux/" class="archive-article-date">
-  	<time datetime="2019-03-25T17:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/1.初识Linux/">（一）初识Linux</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">终端设备</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -406,8 +429,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
