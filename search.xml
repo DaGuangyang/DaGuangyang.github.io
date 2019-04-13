@@ -15,6 +15,12 @@
     <title><![CDATA[1.初识Docker]]></title>
     <url>%2F2019%2F04%2F11%2F1.%E5%88%9D%E8%AF%86Docker%2F</url>
     <content type="text"><![CDATA[DockerDocker基本概念Docker镜像（Image）&emsp;&emsp;Docker镜像就是一个只读的模板，用于创建Docker容器。Docker有简单的机制来创建镜像或更新现有镜像，也可以将其他人的镜像拿来直接使用。 Docker容器（Container）&emsp;&emsp;Docker利用容器来运行应用。容器是从镜像创建的运行实例。可以被启动、停止、删除等。每个容器是相互隔离的。 Docker仓库（Repository）&emsp;&emsp;仓库是集中存放镜像文件的场所。仓库分为公开仓库（Public）和私有仓库（Private）两种形式。最大的仓库是Docker Hub；国内也有去多的公开仓库，可以更快速访问。&emsp;&emsp;用户也可以在本地创建私有仓库。当用户创建了自己的镜像后可以使用push命令将上传到私有或公开仓库，这样另外一台机器需使用这个镜像的时候就可以直接pull下来。 安装Docker&emsp;&emsp;Docker要求CentOS系统的内核版本高于3.10且是64位系统，可以使用uname -r进行查看。 使用脚本进行安装 1 2 3 curl -fsSL https://get.docker.com/ | sh # 推荐使用阿里云安装脚本 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun 开启Docker服务 1 2 #开启服务 service docker start 安装校验 1 docker version]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker基础及安装</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[10.文本处理三剑客]]></title>
