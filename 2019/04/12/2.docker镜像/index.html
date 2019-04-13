@@ -96,8 +96,7 @@
 
 
 
-  <meta name="keywords" content="docker镜像">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="2.Docker镜像">
 <meta property="og:url" content="http://yoursite.com/2019/04/12/2.Docker镜像/index.html">
 <meta property="og:site_name" content="DaguangY">
@@ -447,24 +446,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -587,12 +568,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/docker镜像/" rel="tag"># docker镜像</a>
-          
-        </div>
-      
 
       
       
@@ -612,8 +587,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/13/test/" rel="prev" title="test">
-                test <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/12/2.docker镜像/" rel="prev" title="2.docker镜像">
+                2.docker镜像 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -683,7 +658,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1257,6 +1232,70 @@
           // remove loading animation
           $(".local-search-pop-overlay").remove();
           $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+).css('overflow', '');
 
           proceedsearch();
         }
