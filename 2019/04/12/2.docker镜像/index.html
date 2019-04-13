@@ -109,9 +109,9 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/提交镜像.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/查看容器ID.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/镜像列表2.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/build.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/docker-build.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/阿里云仓库管理.png">
-<meta property="og:updated_time" content="2019-04-13T15:03:25.205Z">
+<meta property="og:updated_time" content="2019-04-13T15:28:15.262Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2.Docker镜像">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/12/2.Docker镜像/docker.jpg">
@@ -441,7 +441,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-13 23:03:25" itemprop="dateModified" datetime="2019-04-13T23:03:25+08:00">2019-04-13</time>
+                <time title="修改时间：2019-04-13 23:28:15" itemprop="dateModified" datetime="2019-04-13T23:28:15+08:00">2019-04-13</time>
               
             
           </span>
@@ -536,7 +536,7 @@
 <span class="line">EXPOSE 80</span>
 </pre></td></tr></table></figure></p>
 <p><strong>FOEM</strong>：指定使用哪个镜像作为基础<br><strong>MAINTAINER</strong>：指定作者以及作者邮箱地址<br><strong>RUN</strong>：会在当前镜像中运行该命令<br><strong>EXPOSE</strong>：告诉Docker该容器内的应用程序将会使用容器的指定端口<br><em>此处先介绍简单的Dockerfile语法，更多的Docker语法后续介绍</em></p>
-<p>然后执行<code>docker build -t=&quot;test/ubuntu:1.0&quot; .</code><br>-t:指定仓库和名称，test为仓库名，ubuntu为镜像名，:1.0为tags<br>.：指定Dockerfile的路径<br>在build进程执行过程中可以看到第一件事就是将Dockerfile内容上传，以为所有的操作都依据Dockerfile进行的，然后Dockerfile中的指令被一条一条的执行，每一步都创建一个新的容器，在容器中执行指令并提交修改。当所有的指令都执行完毕后返回最终的镜像ID。所有的中间步骤产生的容器都会被删除和清理。<br><img src="/2019/04/12/2.Docker镜像/build.png" alt="build">  </p>
+<p>然后执行<code>docker build -t=&quot;test/ubuntu:1.0&quot; .</code><br>-t:指定仓库和名称，test为仓库名，ubuntu为镜像名，:1.0为tags<br>.：指定Dockerfile的路径<br>在build进程执行过程中可以看到第一件事就是将Dockerfile内容上传，以为所有的操作都依据Dockerfile进行的，然后Dockerfile中的指令被一条一条的执行，每一步都创建一个新的容器，在容器中执行指令并提交修改。当所有的指令都执行完毕后返回最终的镜像ID。所有的中间步骤产生的容器都会被删除和清理。<br><img src="/2019/04/12/2.Docker镜像/docker-build.png" alt="build">  </p>
 <h2 id="从本地文件系统导入镜像"><a href="#从本地文件系统导入镜像" class="headerlink" title="从本地文件系统导入镜像"></a>从本地文件系统导入镜像</h2><p><code>docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]</code><br>-c:应用docker指令创建镜像<br>-m：提交时的说明文字<br>file|URL:导入镜像的路径<br>REPOSITORY：仓库名<br>TAG：标签  </p>
 <h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>用户可以通过<code>docker push</code>命令将自己创建的镜像上传到仓库来共享  </p>
 <h3 id="将自己的docker镜像上传到阿里云的docker-hub"><a href="#将自己的docker镜像上传到阿里云的docker-hub" class="headerlink" title="将自己的docker镜像上传到阿里云的docker hub"></a>将自己的docker镜像上传到阿里云的docker hub</h3><p>登录阿里云，在容器镜像服务的命名空间中创建一个命令空间，然后在镜像仓库中创建镜像仓库，具体的操作步骤可以查看仓库后的管理<br><img src="/2019/04/12/2.Docker镜像/阿里云仓库管理.png" alt="阿里云仓库管理"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
