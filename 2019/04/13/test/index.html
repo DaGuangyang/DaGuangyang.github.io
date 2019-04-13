@@ -96,21 +96,17 @@
 
 
 
-  <meta name="description" content="linux中的权限管理">
-<meta name="keywords" content="权限管理">
+  <meta name="description" content="The fire in my heart it will never die">
 <meta property="og:type" content="article">
-<meta property="og:title" content="7.权限管理">
-<meta property="og:url" content="http://yoursite.com/2019/04/09/7.权限管理/index.html">
+<meta property="og:title" content="test">
+<meta property="og:url" content="http://yoursite.com/2019/04/13/test/index.html">
 <meta property="og:site_name" content="DaguangY">
-<meta property="og:description" content="linux中的权限管理">
+<meta property="og:description" content="The fire in my heart it will never die">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/04/09/7.权限管理/linux.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/09/7.权限管理/权限.png">
-<meta property="og:updated_time" content="2019-04-09T15:04:09.079Z">
+<meta property="og:updated_time" content="2019-04-13T15:21:49.939Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="7.权限管理">
-<meta name="twitter:description" content="linux中的权限管理">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/09/7.权限管理/linux.png">
+<meta name="twitter:title" content="test">
+<meta name="twitter:description" content="The fire in my heart it will never die">
 
 
 
@@ -118,7 +114,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/04/09/7.权限管理/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/13/test/">
 
 
 
@@ -128,7 +124,7 @@
   };
 </script>
 
-  <title>7.权限管理 | DaguangY</title>
+  <title>test | DaguangY</title>
   
 
 
@@ -377,7 +373,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/7.权限管理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DaguangYang">
@@ -394,7 +390,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">7.权限管理
+          <h1 class="post-title" itemprop="name headline">test
 
               
             
@@ -420,34 +416,12 @@
                 
               
 
-              <time title="创建时间：2019-04-09 02:34:30 / 修改时间：23:04:09" itemprop="dateCreated datePublished" datetime="2019-04-09T02:34:30+08:00">2019-04-09</time>
+              <time title="创建时间：2019-04-13 23:21:49" itemprop="dateCreated datePublished" datetime="2019-04-13T23:21:49+08:00">2019-04-13</time>
             
 
-            
-              
-
-              
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -477,13 +451,7 @@
       
 
       
-        <p><img src="/2019/04/09/7.权限管理/linux.png" alt="linux"><br>linux中的权限管理<br><a id="more"></a></p>
-<h2 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h2><p><img src="/2019/04/09/7.权限管理/权限.png" alt="权限"><br>进程访问文件访问权限说明：进程的属主与文件的属主是否相同，若相同则应用属主权限；否则，则检查进程的属主是否属于文件的属组，若相同则应用属组权限；否则使用other权限<br>—|r：读|w：写|x：执行<br>:—:|:–:|:—:|:—:<br>文件|获取文件数据|修改文件数据|可将此文件运行为进行<br>目录|可使用ls查看目录下的文件列表|可创建、删除此目录下的文件列表|可cd至此目录中，可使用ls -l查看文件详情</p>
-<h3 id="权限管理命令"><a href="#权限管理命令" class="headerlink" title="权限管理命令"></a>权限管理命令</h3><p>三类用户：u—属主&emsp;g—属组&emsp;o—其他&emsp;a—所有  </p>
-<p><code>chmod</code><br>修改权限，用户只能修改属主为自己的文件权限<br>-R：递归修改权限<br>（一）<code>chmod u=rwx FILE</code><br>&emsp;&emsp;&emsp;<code>chmod 777 FILE</code><br>&emsp;&emsp;&emsp;<code>chmod u+x FILE</code><br>（二）<code>chmod --referece=LIKE_FILE FILE</code> 将FILE的权限修改为LIKE_FILE权限一样  </p>
-<p><code>chown</code><br>修改属主、属组，仅管理员可用<br>-R：递归修改<br>（一）chown 属组[:属组] FILE<br>（二）<code>chown --referece=LIKE_FILE FILE</code> 将FILE的属主属组修改为LIKE_FILE权限一样  </p>
-<p><code>chgrp</code><br>修改属组，仅管理员可用<br>-R：递归修改<br>（一）chgrp 属组 FILE<br>（二）<code>chgrp --referece=LIKE_FILE FILE</code> 将FILE的属组修改为LIKE_FILE权限一样  </p>
-
+        
       
     </div>
 
@@ -504,12 +472,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/权限管理/" rel="tag"># 权限管理</a>
-          
-        </div>
-      
 
       
       
@@ -519,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/08/6.用户、组/" rel="next" title="6.用户、组">
-                <i class="fa fa-chevron-left"></i> 6.用户、组
+              <a href="/2019/04/12/2.Docker镜像/" rel="next" title="2.Docker镜像">
+                <i class="fa fa-chevron-left"></i> 2.Docker镜像
               </a>
             
           </div>
@@ -528,10 +490,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/10/8.shell/" rel="prev" title="8.shell">
-                8.shell <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -575,17 +533,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -711,23 +660,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#权限管理"><span class="nav-number">1.</span> <span class="nav-text">权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#权限管理命令"><span class="nav-number">1.1.</span> <span class="nav-text">权限管理命令</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
