@@ -108,14 +108,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/图片docker.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/阿里云.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/镜像列表.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/启动容器.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/提交镜像.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/查看容器ID.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/镜像列表2.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/docker-build.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/阿里云仓库管理.png">
-<meta property="og:updated_time" content="2019-04-13T15:46:46.660Z">
+<meta property="og:updated_time" content="2019-04-14T09:09:47.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2.docker镜像">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/12/2.docker镜像/图片docker.jpg">
@@ -445,7 +438,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-13 23:46:46" itemprop="dateModified" datetime="2019-04-13T23:46:46+08:00">2019-04-13</time>
+                <time title="修改时间：2019-04-14 17:09:47" itemprop="dateModified" datetime="2019-04-14T17:09:47+08:00">2019-04-14</time>
               
             
           </span>
@@ -501,75 +494,200 @@
 <h2 id="Docker镜像介绍"><a href="#Docker镜像介绍" class="headerlink" title="Docker镜像介绍"></a>Docker镜像介绍</h2><p>在上一章介绍到镜像是docker的三大组件之一。docker运行容器需要本地存在对应的镜像。如果镜像不存在本地，docker会从镜像仓库下载（默认是Docker Hub中的仓库）。</p>
 <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><ol>
 <li>查找想要的镜像<br><code>docker search [选项] image_name</code><br>【选项】：<br>-s NUM：可以查看NUM星以上的镜像<br>–automated:默认false，显示automated build镜像<br>–no-trunk：默认false，以不截断方式查找镜像</li>
-<li>获取想要的镜像<br><code>docker pull [选项] image_name[:tags]</code><br>【选项】：<br>-a:下载所有该tags的镜像<br>tags：若忽略tags则下载最新版本的镜像  </li>
-</ol>
-<p><em>因docker默认的仓库为Docker Hub，在国内使用时速度比较慢，以下三种方式更换(registry.docker-cn.com 为Docker中国官方镜像仓库)镜像仓库</em>  </p>
-<ol>
+<li>获取想要的镜像<br><code>docker pull [选项] image_name[:tag]</code><br>【选项】：<br>-a:下载所有该tags的镜像<br>tag：若忽略tag则下载最新版本的镜像<br><em>因docker默认的仓库为Docker Hub，在国内使用时速度比较慢，以下三种方式更换(registry.docker-cn.com 为Docker中国官方镜像仓库)镜像仓库</em>  </li>
 <li>方法一：<br><em>本次拉取有效</em><br><code>docker pull registry.docker-cn.com/library/ubuntu:12.04</code>  </li>
 <li>方法二：<br><em>当前进程有效</em><br><code>docker --registry-mirror=https://registry.docker-cn.com daemon</code>  </li>
-<li>方法三：<br><em>永久性保留,</em><br><a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">Docker 中国官方镜像加速</a><br>或者使用阿里云的镜像仓库<br><img src="/2019/04/12/2.docker镜像/阿里云.png" alt="阿里云"><br>配置修改完后重启docker服务<code>systemctl restart docker</code></li>
+<li>方法三：<br><em>永久性保留,</em><br><a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">Docker 中国官方镜像加速</a><br>或者使用阿里云的镜像仓库<br><img src="/2019/04/12/2.docker镜像/阿里云.png" alt="阿里云"><br>配置修改完后重启docker服务<code>systemctl restart docker</code>  </li>
 </ol>
-<h2 id="列出本地镜像"><a href="#列出本地镜像" class="headerlink" title="列出本地镜像"></a>列出本地镜像</h2><p><code>docker images [选项] [镜像仓库[:镜像标记]]</code><br>【选项】：<br>-a：显示本地所有的镜像文件（含中间影响层，默认不展示中间映像层）<br>–digests：显示镜像文件的摘要信息<br>–no-trunc：显示完整的镜像信息<br><img src="/2019/04/12/2.docker镜像/镜像列表.png" alt="镜像列表"><br><strong>REPOSITORY</strong>：镜像仓库<br><strong>TAG</strong>：镜像标签，区分版本<br><strong>IMANE ID</strong>：镜像ID（唯一）<br><strong>CREATED</strong>：镜像创建时间<br><strong>SIZE</strong>：镜像大小  </p>
-<h2 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h2><p>创建镜像的方法一般有两种：从镜像库中下载镜像修改；利用本地文件系统自行创建。  </p>
-<h3 id="修改已有镜像"><a href="#修改已有镜像" class="headerlink" title="修改已有镜像"></a>修改已有镜像</h3><ol>
-<li>先使用下载的镜像启动容器<br><code>docker run -i -t ubuntu /bin/bash</code><br><img src="/2019/04/12/2.docker镜像/启动容器.png" alt="启动容器"><br><em>root@后面的为该容器的ID</em></li>
-<li>在容器中进行修改,如安装软件,<br><code>apt-get -yqq update</code><br><code>apt-get -y install apache2</code></li>
-<li>退出容器<br><code>exit</code>  </li>
-<li>提交更新后的副本<br><code>docker commit [选项] 容器ID 镜像仓库名[:tags]</code><br>【选项】<br><strong>-m=”commit message”</strong>:指定提交的说明信息<br><strong>–author=”author”</strong>:镜像作者信息<br><img src="/2019/04/12/2.docker镜像/提交镜像.png" alt="提交镜像"><br>创建成功后会返回镜像ID信息<br>容器ID除了在之前容器中的交互式中查看之外，还可以通过<code>docker ps -a</code>查看<br><img src="/2019/04/12/2.docker镜像/查看容器ID.png" alt="docker ps -a"><br>创建成功后就可以在docker的本地镜像列表中查看到了<br><img src="/2019/04/12/2.docker镜像/镜像列表2.png" alt="镜像列表-2"></li>
-</ol>
-<h3 id="通过Dockerfile文件和docker-build创建镜像"><a href="#通过Dockerfile文件和docker-build创建镜像" class="headerlink" title="通过Dockerfile文件和docker build创建镜像"></a>通过Dockerfile文件和docker build创建镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">mkdir /opt/static_web</span>
-<span class="line">cd /opt/static_web</span>
-<span class="line">vim Dockerfile</span>
-</pre></td></tr></table></figure>
-<p>首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="列出本地镜像"><a href="#列出本地镜像" class="headerlink" title="列出本地镜像"></a>列出本地镜像</h2><p><code>docker images [选项] [镜像仓库[:镜像标记]]</code><br><code>docker image ls [选项] [镜像仓库[:镜像标记]]</code><br>【选项】：<br><strong>-a</strong>：显示本地所有的镜像文件（含中间层镜像，，默认不展示中间层镜像）<br><strong>–digests</strong>：显示镜像文件的摘要信息<br><strong>–no-trunc</strong>：显示完整的镜像信息<br><strong>-f –filter</strong>:过滤，例如-f since=mongo：3.2，是查看mongo：3.2之后建立的镜像，查看之前的镜像使用before。<br><strong>-q</strong>:只显示镜像的ID<br><strong>–format</strong>：列出镜像列表指定的列，如：<figure class="highlight docker"><figcaption><span>image ls --format "&#123;&#123;.ID&#125;&#125;: &#123;&#123;.Repository&#125;&#125;"``` 是只展示镜像ID、和仓库名列；还可以以表格的形式进行展示，如：``` docker image ls --format "table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Repository&#125;&#125;\t&#123;&#123;.Tag&#125;&#125;"```,这样列出的信息可以等距展示，并且有标题行，和默认展示的结构一样  </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
 <span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span>
-<span class="line">FROM ubuntu:latest</span>
-<span class="line">MAINTAINER DaguangY &quot;email&quot;</span>
-<span class="line">RUN apt-get update</span>
-<span class="line">RUN apt-get install -y nginx</span>
-<span class="line">RUN echo &apos;Hi, I am in your container&apos; &gt; /usr/share/nginx/html/index.html</span>
-<span class="line">EXPOSE 80</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+</pre></td><td class="code"><pre><span class="line">![镜像列表](<span class="number">2</span>.docker镜像/镜像列表.png)  </span>
+<span class="line">**REPOSITORY**：镜像仓库  </span>
+<span class="line">**TAG**：镜像标签，区分版本  </span>
+<span class="line">**IMANE ID**：镜像ID（唯一）  </span>
+<span class="line">**CREATED**：镜像创建时间  </span>
+<span class="line">**SIZE**：镜像大小  </span>
+<span class="line">可以看到列出的镜像的大小与Docker Hub上显示的镜像带下不同，这是因为 Docker Hub 中显示的体积是压缩后的体积。在镜像下载和上传过程中镜像是保持着压缩状态的，因此 Docker Hub 所显示的大小是网络传输中更关心的流量大小。而 `docker images` 显示的是镜像下载到本地后，展开的大小，准确说，是展开后的各层所占空间的总和，因为镜像到本地后，查看空间的时候，更关心的是本地磁盘空间占用的大小。  </span>
+<span class="line">另外一个需要注意的问题是，docker image ls 列表中的镜像体积总和并非是所有镜像实际硬盘消耗。由于 Docker 镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。由于 Docker 使用 Union FS，相同的层只需要保存一份即可，因此实际镜像硬盘占用空间很可能要比这个列表镜像大小的总和要小的多。  </span>
+<span class="line">可以使用`docker system df`查看镜像、容器、数据卷所占用的空间。  </span>
+<span class="line">![docker system df](<span class="number">2</span>.docker镜像/sys_df.png)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">### 虚悬镜像  </span></span>
+<span class="line">当我们可能会在本地镜像列表中看到仓库名、标签均为`&lt;none&gt;`。这个镜像原本是有镜像名和标签的，随着镜像的维护，发布了新版本，重新docker pull后镜像名被转移到新下载的镜像上，而旧的镜像上的名称被取消，从而形成了`&lt;none&gt;`。docker build 也可以导致这样的问题，由于新旧镜像名一样，旧镜像名被取消。这类无标签镜像被称为 **虚悬镜像**。  </span>
+<span class="line">可以使用`docker images -f dangling=true`查看虚悬镜像  </span>
+<span class="line"></span>
+<span class="line"><span class="comment">### 中间层镜像  </span></span>
+<span class="line">在使用一段时间后，可能会看到一些依赖的中间层镜像，默认的`docker images`、`docker image ls`只能会显示顶层的镜像，要显示所有镜像的话需要加上-a。  </span>
+<span class="line">这样会看到许多无标签的镜像，与之前的虚悬镜像不同，这些无标签的镜像很多都是中中间层镜像，是其他镜像所以来的镜像。这些无标签镜像不应该删除，否则会导致上层镜像因为依赖丢失而出错。他们没有被多存一份。只要删除那些依赖它们的镜像后，这些依赖的中间层镜像也会被连带删除。</span>
+<span class="line"></span>
+<span class="line"><span class="comment">## 创建镜像  </span></span>
+<span class="line">创建镜像的方法一般有两种：从镜像库中下载镜像修改；利用本地文件系统自行创建。  </span>
+<span class="line"></span>
+<span class="line"><span class="comment">### 修改已有镜像  </span></span>
+<span class="line"><span class="number">1</span>. 先使用下载的镜像启动容器  </span>
+<span class="line">`docker <span class="keyword">run</span> -i -t ubuntu /bin/bash`  </span>
+<span class="line">-i：交互式操作  </span>
+<span class="line">-t：终端  </span>
+<span class="line">--rm：退出容器后随之将该容器删除  </span>
+<span class="line">![启动容器](<span class="number">2</span>.docker镜像/启动容器.png)  </span>
+<span class="line">*root@后面的为该容器的ID*</span>
+<span class="line"><span class="number">2</span>. 在容器中进行修改,如安装软件,  </span>
+<span class="line">`apt-get -yqq update`  </span>
+<span class="line">`apt-get -y install apache2`</span>
+<span class="line"><span class="number">3</span>. 退出容器  </span>
+<span class="line">`exit`  </span>
+<span class="line"><span class="number">4</span>. 提交更新后的副本  </span>
+<span class="line">`docker commit [选项] 容器ID 镜像仓库名[:tags]`  </span>
+<span class="line">【选项】  </span>
+<span class="line">**-m=<span class="string">"commit message"</span>**:指定提交的说明信息  </span>
+<span class="line">**--author=<span class="string">"author"</span>**:镜像作者信息   </span>
+<span class="line">![提交镜像](<span class="number">2</span>.docker镜像/提交镜像.png)  </span>
+<span class="line">创建成功后会返回镜像ID信息</span>
+<span class="line">容器ID除了在之前容器中的交互式中查看之外，还可以通过`docker ps -a`查看  </span>
+<span class="line">![docker ps -a](<span class="number">2</span>.docker镜像/查看容器ID.png)  </span>
+<span class="line">创建成功后就可以在docker的本地镜像列表中查看到了  </span>
+<span class="line">![镜像列表-<span class="number">2</span>](<span class="number">2</span>.docker镜像/镜像列表<span class="number">2</span>.png)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">### 通过Dockerfile文件和docker build创建镜像</span></span>
 </pre></td></tr></table></figure></p>
-<p><strong>FOEM</strong>：指定使用哪个镜像作为基础<br><strong>MAINTAINER</strong>：指定作者以及作者邮箱地址<br><strong>RUN</strong>：会在当前镜像中运行该命令<br><strong>EXPOSE</strong>：告诉Docker该容器内的应用程序将会使用容器的指定端口<br><em>此处先介绍简单的Dockerfile语法，更多的Docker语法后续介绍</em></p>
-<p>然后执行<code>docker build -t=&quot;test/ubuntu:1.0&quot; .</code><br>-t:指定仓库和名称，test为仓库名，ubuntu为镜像名，:1.0为tags<br>.：指定Dockerfile的路径<br>在build进程执行过程中可以看到第一件事就是将Dockerfile内容上传，以为所有的操作都依据Dockerfile进行的，然后Dockerfile中的指令被一条一条的执行，每一步都创建一个新的容器，在容器中执行指令并提交修改。当所有的指令都执行完毕后返回最终的镜像ID。所有的中间步骤产生的容器都会被删除和清理。<br><img src="/2019/04/12/2.docker镜像/docker-build.png" alt="build">  </p>
-<h2 id="从本地文件系统导入镜像"><a href="#从本地文件系统导入镜像" class="headerlink" title="从本地文件系统导入镜像"></a>从本地文件系统导入镜像</h2><p><code>docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]</code><br>-c:应用docker指令创建镜像<br>-m：提交时的说明文字<br>file|URL:导入镜像的路径<br>REPOSITORY：仓库名<br>TAG：标签  </p>
-<h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>用户可以通过<code>docker push</code>命令将自己创建的镜像上传到仓库来共享  </p>
-<h3 id="将自己的docker镜像上传到阿里云的docker-hub"><a href="#将自己的docker镜像上传到阿里云的docker-hub" class="headerlink" title="将自己的docker镜像上传到阿里云的docker hub"></a>将自己的docker镜像上传到阿里云的docker hub</h3><p>登录阿里云，在容器镜像服务的命名空间中创建一个命令空间，然后在镜像仓库中创建镜像仓库，具体的操作步骤可以查看仓库后的管理<br><img src="/2019/04/12/2.docker镜像/阿里云仓库管理.png" alt="阿里云仓库管理"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>mkdir /opt/static_web<br>cd /opt/static_web<br>vim Dockerfile<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件</span>
+</pre></td></tr></table></figure></p>
+<h1 id="Version-0-0-1"><a href="#Version-0-0-1" class="headerlink" title="Version: 0.0.1"></a>Version: 0.0.1</h1><p>FROM ubuntu:latest<br>MAINTAINER DaguangY “email”<br>RUN apt-get update<br>RUN apt-get install -y nginx<br>RUN echo ‘Hi, I am in your container’ &gt; /usr/share/nginx/html/index.html<br>EXPOSE 80<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo docker login --username=guang123hb registry.cn-shanghai.aliyuncs.com</span>
-<span class="line">$ sudo docker tag [ImageId] registry.cn-shanghai.aliyuncs.com/daguangy/my_images:[镜像版本号]</span>
-<span class="line">$ sudo docker push registry.cn-shanghai.aliyuncs.com/daguangy/my_images:[镜像版本号]</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line">**FOEM**：指定使用哪个镜像作为基础  </span>
+<span class="line">**MAINTAINER**：指定作者以及作者邮箱地址  </span>
+<span class="line">**RUN**：会在当前镜像中运行该命令  </span>
+<span class="line">**EXPOSE**：告诉Docker该容器内的应用程序将会使用容器的指定端口  </span>
+<span class="line">*此处先介绍简单的Dockerfile语法，更多的Docker语法后续介绍*</span>
+<span class="line"></span>
+<span class="line">然后执行`docker build -t=&quot;test/ubuntu:1.0&quot; .`  </span>
+<span class="line">-t:指定仓库和名称，test为仓库名，ubuntu为镜像名，:1.0为tags  </span>
+<span class="line">.：指定Dockerfile的路径  </span>
+<span class="line">在build进程执行过程中可以看到第一件事就是将Dockerfile内容上传，以为所有的操作都依据Dockerfile进行的，然后Dockerfile中的指令被一条一条的执行，每一步都创建一个新的容器，在容器中执行指令并提交修改。当所有的指令都执行完毕后返回最终的镜像ID。所有的中间步骤产生的容器都会被删除和清理。  </span>
+<span class="line">![build](2.docker镜像/docker-build.png)  </span>
+<span class="line"></span>
+<span class="line">## 从本地文件系统导入镜像  </span>
+<span class="line">`docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]`  </span>
+<span class="line">-c:应用docker指令创建镜像  </span>
+<span class="line">-m：提交时的说明文字  </span>
+<span class="line">file|URL:导入镜像的路径  </span>
+<span class="line">REPOSITORY：仓库名  </span>
+<span class="line">TAG：标签  </span>
+<span class="line"></span>
+<span class="line">## 上传镜像  </span>
+<span class="line">用户可以通过`docker push`命令将自己创建的镜像上传到仓库来共享  </span>
+<span class="line"></span>
+<span class="line">### 将自己的docker镜像上传到阿里云的docker hub</span>
+<span class="line">登录阿里云，在容器镜像服务的命名空间中创建一个命令空间，然后在镜像仓库中创建镜像仓库，具体的操作步骤可以查看仓库后的管理  </span>
+<span class="line">![阿里云仓库管理](2.docker镜像/阿里云仓库管理.png)</span>
 </pre></td></tr></table></figure></p>
-<h2 id="导出和导入镜像"><a href="#导出和导入镜像" class="headerlink" title="导出和导入镜像"></a>导出和导入镜像</h2><h3 id="导出镜像"><a href="#导出镜像" class="headerlink" title="导出镜像"></a>导出镜像</h3><p>导出镜像到本地文件，可以使用<code>docker save</code>命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">例如：</span>
-<span class="line">sudo docker save -o ubuntu_14.04.tar ubuntu:14.04</span>
-</pre></td></tr></table></figure></p>
-<h3 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h3><p>使用<code>docker load</code>从导出的本地文件中再导入到本地镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>$ sudo docker login –username=guang123hb registry.cn-shanghai.aliyuncs.com<br>$ sudo docker tag [ImageId] registry.cn-shanghai.aliyuncs.com/daguangy/my_images:[镜像版本号]<br>$ sudo docker push registry.cn-shanghai.aliyuncs.com/daguangy/my_images:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">sudo docker load --input ubuntu_14.04.tar</span>
-<span class="line">或</span>
-<span class="line">sudo docker load &lt; ubuntu_14.04.tar</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"></span>
+<span class="line">## 导出和导入镜像  </span>
+<span class="line">### 导出镜像  </span>
+<span class="line">导出镜像到本地文件，可以使用`docker save`命令</span>
 </pre></td></tr></table></figure></p>
-<p>这将会导入镜像以及其的元数据信息（包括标签等）  </p>
-<h2 id="删除本地镜像"><a href="#删除本地镜像" class="headerlink" title="删除本地镜像"></a>删除本地镜像</h2><p>如果要移除本地镜像，可以使用<code>docker rmi REPOSITORY:TAG</code>命令。注意<code>docer rm CONTAINER ID</code>是删除容器。<br><code>docker rmi registry.cn-shanghai.aliyuncs.com/daguangy/my_images:v1</code><br><strong><em>注意：删除这个镜像之前要删除所有依赖这个镜像的容器</em></strong>  </p>
-<h2 id="清理所有未打过标签的本地镜像"><a href="#清理所有未打过标签的本地镜像" class="headerlink" title="清理所有未打过标签的本地镜像"></a>清理所有未打过标签的本地镜像</h2><p><code>docker images</code>可以列出本地镜像，其中很可能会包含很多中间状态的未打过标签的镜像，会占据大量的磁盘空间<br>可以使用以下的命令清理所有未打过标签的镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>例如：<br>sudo docker save -o ubuntu_14.04.tar ubuntu:14.04<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">sudo docker rmi $(docker images -q -f &quot;dangling=true&quot;)</span>
-<span class="line">sudo docker rmi $(docker images --quiet --filter &quot;dangling=true&quot;)</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"></span>
+<span class="line">### 导入镜像  </span>
+<span class="line">使用`docker load`从导出的本地文件中再导入到本地镜像</span>
 </pre></td></tr></table></figure></p>
-<h2 id="镜像的实现原理"><a href="#镜像的实现原理" class="headerlink" title="镜像的实现原理"></a>镜像的实现原理</h2><p><strong>太难了，搞不懂，先放放</strong><br>先标记一下</p>
+<p>sudo docker load –input ubuntu_14.04.tar<br>或<br>sudo docker load &lt; ubuntu_14.04.tar<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">这将会导入镜像以及其的元数据信息（包括标签等）  </span>
+<span class="line"></span>
+<span class="line">## 删除本地镜像  </span>
+<span class="line">如果要移除本地镜像，可以使用`docker rmi [选项] 镜像`命令，镜像可以是镜像短ID、镜像长ID、镜像名、或者镜像摘要。完整的镜像ID也成为长ID，`docker images ls`展示的是短ID，在删除镜像时一般提取前三个字符以上，只要能够区分镜像就可以了。*注意`docer rm CONTAINER ID`是删除容器。*  </span>
+<span class="line">`docker rmi registry.cn-shanghai.aliyuncs.com/daguangy/my_images:v1`  </span>
+<span class="line">***注意：删除这个镜像之前要删除所有依赖这个镜像的容器***  </span>
+<span class="line"></span>
+<span class="line">## 清理虚悬镜像  </span>
+<span class="line">虚悬镜像一般是已经失去了存在价值的</span>
+</pre></td></tr></table></figure></p>
+<p>docker rmi $(docker images -q -f “dangling=true”)<br>或<br>docker rmi $(docker images –quiet –filter “dangling=true”)<br>或<br>docker image prune<br><code>`</code></p>
 
       
     </div>
@@ -615,6 +733,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/14/3.docker容器/" rel="prev" title="3.docker容器">
+                3.docker容器 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -683,7 +805,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -767,7 +889,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -805,7 +931,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker镜像介绍"><span class="nav-number">1.</span> <span class="nav-text">Docker镜像介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取镜像"><span class="nav-number">2.</span> <span class="nav-text">获取镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出本地镜像"><span class="nav-number">3.</span> <span class="nav-text">列出本地镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建镜像"><span class="nav-number">4.</span> <span class="nav-text">创建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改已有镜像"><span class="nav-number">4.1.</span> <span class="nav-text">修改已有镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Dockerfile文件和docker-build创建镜像"><span class="nav-number">4.2.</span> <span class="nav-text">通过Dockerfile文件和docker build创建镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从本地文件系统导入镜像"><span class="nav-number">5.</span> <span class="nav-text">从本地文件系统导入镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传镜像"><span class="nav-number">6.</span> <span class="nav-text">上传镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将自己的docker镜像上传到阿里云的docker-hub"><span class="nav-number">6.1.</span> <span class="nav-text">将自己的docker镜像上传到阿里云的docker hub</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出和导入镜像"><span class="nav-number">7.</span> <span class="nav-text">导出和导入镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导出镜像"><span class="nav-number">7.1.</span> <span class="nav-text">导出镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入镜像"><span class="nav-number">7.2.</span> <span class="nav-text">导入镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除本地镜像"><span class="nav-number">8.</span> <span class="nav-text">删除本地镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清理所有未打过标签的本地镜像"><span class="nav-number">9.</span> <span class="nav-text">清理所有未打过标签的本地镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像的实现原理"><span class="nav-number">10.</span> <span class="nav-text">镜像的实现原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker镜像介绍"><span class="nav-number">1.</span> <span class="nav-text">Docker镜像介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取镜像"><span class="nav-number">2.</span> <span class="nav-text">获取镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出本地镜像"><span class="nav-number">3.</span> <span class="nav-text">列出本地镜像</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Version-0-0-1"><span class="nav-number"></span> <span class="nav-text">Version: 0.0.1</span></a></li></div>
             
 
           </div>
