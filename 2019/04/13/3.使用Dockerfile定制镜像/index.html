@@ -100,20 +100,20 @@
 
 
 
-  <meta name="description" content="命令的语法通用格式、获取命令帮助文档">
-<meta name="keywords" content="帮助文档">
+  <meta name="description" content="#使用 Dockerfile 定制镜像1 2 3 mkdir /opt/static_web cd /opt/static_web vim Dockerfile  首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件1 2 3 4 5 6 7 # Version: 0.0.1 FROM ubuntu:latest">
+<meta name="keywords" content="docker镜像">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2.获取命令使用详解">
-<meta property="og:url" content="http://yoursite.com/2019/03/26/2.获取命令使用详解/index.html">
+<meta property="og:title" content="3.使用Dockerfile定制镜像">
+<meta property="og:url" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/index.html">
 <meta property="og:site_name" content="DaguangY">
-<meta property="og:description" content="命令的语法通用格式、获取命令帮助文档">
+<meta property="og:description" content="#使用 Dockerfile 定制镜像1 2 3 mkdir /opt/static_web cd /opt/static_web vim Dockerfile  首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件1 2 3 4 5 6 7 # Version: 0.0.1 FROM ubuntu:latest">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/03/26/2.获取命令使用详解/linux.png">
-<meta property="og:updated_time" content="2019-04-07T16:01:11.664Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker-build.png">
+<meta property="og:updated_time" content="2019-04-14T20:50:10.349Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2.获取命令使用详解">
-<meta name="twitter:description" content="命令的语法通用格式、获取命令帮助文档">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/26/2.获取命令使用详解/linux.png">
+<meta name="twitter:title" content="3.使用Dockerfile定制镜像">
+<meta name="twitter:description" content="#使用 Dockerfile 定制镜像1 2 3 mkdir /opt/static_web cd /opt/static_web vim Dockerfile  首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件1 2 3 4 5 6 7 # Version: 0.0.1 FROM ubuntu:latest">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker-build.png">
 
 
 
@@ -121,7 +121,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/03/26/2.获取命令使用详解/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/">
 
 
 
@@ -131,7 +131,7 @@
   };
 </script>
 
-  <title>2.获取命令使用详解 | DaguangY</title>
+  <title>3.使用Dockerfile定制镜像 | DaguangY</title>
   
 
 
@@ -380,7 +380,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/2.获取命令使用详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DaguangYang">
@@ -397,7 +397,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2.获取命令使用详解
+          <h1 class="post-title" itemprop="name headline">3.使用Dockerfile定制镜像
 
               
             
@@ -423,7 +423,7 @@
                 
               
 
-              <time title="创建时间：2019-03-26 02:00:00" itemprop="dateCreated datePublished" datetime="2019-03-26T02:00:00+08:00">2019-03-26</time>
+              <time title="创建时间：2019-04-13 04:25:47" itemprop="dateCreated datePublished" datetime="2019-04-13T04:25:47+08:00">2019-04-13</time>
             
 
             
@@ -440,7 +440,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-08 00:01:11" itemprop="dateModified" datetime="2019-04-08T00:01:11+08:00">2019-04-08</time>
+                <time title="修改时间：2019-04-15 04:50:10" itemprop="dateModified" datetime="2019-04-15T04:50:10+08:00">2019-04-15</time>
               
             
           </span>
@@ -457,7 +457,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
 
                 
                 
@@ -492,17 +492,29 @@
       
 
       
-        <p><img src="/2019/03/26/2.获取命令使用详解/linux.png" alt="linux"><br>命令的语法通用格式、获取命令帮助文档<br><a id="more"></a></p>
-<h2 id="命令的语法通用格式"><a href="#命令的语法通用格式" class="headerlink" title="命令的语法通用格式"></a>命令的语法通用格式</h2><p>COMMAND（命令） OPTIONS（选项） ARGUMENTS（参数）<br><strong>发起一个命令</strong>：请求内核将某个二进制程序运行为一个进程<br><strong>命令本身是一个可执行文件</strong>：二进制文件，有可能会调用共享库文件；大多数文件会存放在/bin、/sbin、/usr/bin、/usr/sbin;非标准系统自带的/usr/local/bin、/usr/local/sbin<br><strong>共享库文件</strong>：/lib、/lib64、/usr/lib、/usr/lib64、/usr/local/lib、/usr/local/lib64;<br><strong>命令文件格式</strong>：exe、msi、ELF（Linux）<br><strong>命令分类</strong>：由shell程序自带的命令（内置命令builtin）；独立的可执行程序文件，文件名及命令名（外部命令）；<code>type COMMAND</code>查看命令类型</p>
-<h2 id="获取命令帮助文档"><a href="#获取命令帮助文档" class="headerlink" title="获取命令帮助文档"></a>获取命令帮助文档</h2><ul>
-<li>内部命令<br><code>help COMMAND</code>只能显示内部命令的帮助信息</li>
-<li>外部命令<br>（1）命令自带简要格式的使用帮助：COMMAND –help<br>（2）使用手册：man；存在与/usr/share/man下，该路径下存在不同的章节；<br>&emsp;&emsp;&emsp;<code>man COMMAND</code><br>&emsp;&emsp;&emsp;NAME：功能行说明<br>&emsp;&emsp;&emsp;SYNOPSIS：语法格式；[&emsp;]可选内容；&lt;&emsp;&gt;必填内容；a|b|c多选一；…..同类型可出现多个<br>&emsp;&emsp;&emsp;DESCRIPTION：描述<br>&emsp;&emsp;&emsp;OPTIONS：选项<br>&emsp;&emsp;&emsp;EXAMPLES：使用实例<br>&emsp;&emsp;&emsp;AUTHOR：作者<br>&emsp;&emsp;&emsp;BUGS：报告程序bug方式<br>&emsp;&emsp;<strong>/usr/share/man下的章节之分</strong>：<br>&emsp;&emsp;&emsp;1：用户命令<br>&emsp;&emsp;&emsp;2:系统调用<br>&emsp;&emsp;&emsp;3:C库调用<br>&emsp;&emsp;&emsp;4:设备文件及特殊文件<br>&emsp;&emsp;&emsp;5:文件格式（配置文件格式）<br>&emsp;&emsp;&emsp;6:游戏使用帮助<br>&emsp;&emsp;&emsp;7：杂项<br>&emsp;&emsp;&emsp;8：管理工具及守护进程<br>&emsp;&emsp;<code>man CHAPTER COMMAND</code>&emsp;查看指定章节的帮助手册<br>&emsp;&emsp;<code>whatis COMMAND</code>&emsp;显示命令在那些章节；其执行过程是查询数据库进行的；使用<code>makewhatis</code>来手动更新数据库<br>&emsp;&emsp;<strong>man命令手册中的操作方法：</strong>  <ul>
-<li>翻屏<br>&emsp;&emsp;&emsp;空格：向文件尾部翻一屏<br>&emsp;&emsp;&emsp;b：向文件首部翻一屏<br>&emsp;&emsp;&emsp;回车：向文件尾部翻一行<br>&emsp;&emsp;&emsp;k：向文件首部翻一行<br>&emsp;&emsp;&emsp;G：跳转到最后一行；#G跳转到第#行  </li>
-<li>文本搜索<br>&emsp;&emsp;&emsp;/KEYWORD：从文件首部向文件尾部进行搜索。不区分大小写<br>&emsp;&emsp;&emsp;？KEYWORD：从文件尾部向文件首部进行搜索<br>&emsp;&emsp;&emsp;以上两种搜索关键词定位：n&emsp;与搜索顺序相同；N&emsp;与搜索顺序相反</li>
-<li>退出&emsp;q  </li>
-</ul>
-</li>
-</ul>
+        <p>#使用 Dockerfile 定制镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">mkdir /opt/static_web</span>
+<span class="line">cd /opt/static_web</span>
+<span class="line">vim Dockerfile</span>
+</pre></td></tr></table></figure></p>
+<p>首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span>
+<span class="line">FROM ubuntu:latest</span>
+<span class="line">MAINTAINER DaguangY &quot;email&quot;</span>
+<span class="line">RUN apt-get update</span>
+<span class="line">RUN apt-get install -y nginx</span>
+<span class="line">RUN echo &apos;Hi, I am in your container&apos; &gt; /usr/share/nginx/html/index.html</span>
+<span class="line">EXPOSE 80</span>
+</pre></td></tr></table></figure></p>
+<p>然后执行<code>docker build -t=&quot;test/ubuntu:1.0&quot; .</code><br>-t:指定仓库和名称，test为仓库名，ubuntu为镜像名，:1.0为tags<br>.：指定Dockerfile的路径<br>在build进程执行过程中可以看到第一件事就是将Dockerfile内容上传，以为所有的操作都依据Dockerfile进行的，然后Dockerfile中的指令被一条一条的执行，每一步都创建一个新的容器，在容器中执行指令并提交修改。当所有的指令都执行完毕后返回最终的镜像ID。所有的中间步骤产生的容器都会被删除和清理。<br><img src="/2019/04/13/3.使用Dockerfile定制镜像/docker-build.png" alt="build">  </p>
 
       
     </div>
@@ -526,7 +538,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/帮助文档/" rel="tag"># 帮助文档</a>
+            <a href="/tags/docker镜像/" rel="tag"># docker镜像</a>
           
         </div>
       
@@ -539,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/26/1.初识Linux/" rel="next" title="1.初识Linux">
-                <i class="fa fa-chevron-left"></i> 1.初识Linux
+              <a href="/2019/04/12/2.docker镜像/" rel="next" title="2.docker镜像">
+                <i class="fa fa-chevron-left"></i> 2.docker镜像
               </a>
             
           </div>
@@ -549,8 +561,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/26/待删除-常用命令/" rel="prev" title="待删除-常用命令">
-                待删除-常用命令 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/14/4.docker容器/" rel="prev" title="4.docker容器">
+                4.docker容器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -595,17 +607,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -735,23 +738,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令的语法通用格式"><span class="nav-number">1.</span> <span class="nav-text">命令的语法通用格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取命令帮助文档"><span class="nav-number">2.</span> <span class="nav-text">获取命令帮助文档</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
