@@ -100,20 +100,18 @@
 
 
 
-  <meta name="description" content="#使用 Dockerfile 定制镜像1 2 3 mkdir /opt/static_web cd /opt/static_web vim Dockerfile  首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件1 2 3 4 5 6 7 # Version: 0.0.1 FROM ubuntu:latest">
-<meta name="keywords" content="docker镜像">
+  <meta name="keywords" content="Dockerfile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3.使用Dockerfile定制镜像">
 <meta property="og:url" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/index.html">
 <meta property="og:site_name" content="DaguangY">
-<meta property="og:description" content="#使用 Dockerfile 定制镜像1 2 3 mkdir /opt/static_web cd /opt/static_web vim Dockerfile  首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件1 2 3 4 5 6 7 # Version: 0.0.1 FROM ubuntu:latest">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker-build.png">
-<meta property="og:updated_time" content="2019-04-14T20:50:10.349Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/从URL构建.png">
+<meta property="og:updated_time" content="2019-04-16T19:15:23.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3.使用Dockerfile定制镜像">
-<meta name="twitter:description" content="#使用 Dockerfile 定制镜像1 2 3 mkdir /opt/static_web cd /opt/static_web vim Dockerfile  首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件1 2 3 4 5 6 7 # Version: 0.0.1 FROM ubuntu:latest">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker-build.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg">
 
 
 
@@ -440,7 +438,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-15 04:50:10" itemprop="dateModified" datetime="2019-04-15T04:50:10+08:00">2019-04-15</time>
+                <time title="修改时间：2019-04-17 03:15:23" itemprop="dateModified" datetime="2019-04-17T03:15:23+08:00">2019-04-17</time>
               
             
           </span>
@@ -492,29 +490,119 @@
       
 
       
-        <p>#使用 Dockerfile 定制镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+        <p><img src="/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg" alt="docker"><br><a id="more"></a></p>
+<h2 id="使用-Dockerfile-定制镜像"><a href="#使用-Dockerfile-定制镜像" class="headerlink" title="使用 Dockerfile 定制镜像"></a>使用 Dockerfile 定制镜像</h2><p>从之前的<code>docker commit</code>的学习里可以了解到，镜像定制实际就是定制每一层所添加的配置、文件。若将每一层的命令都写入一个脚本，用这个脚本来构建镜像，之前黑箱镜像的缺陷就都会解决，这个脚本就是Dockerfile。<br>Dockerfile是一个文本文件，其中包含一条一条指定，每一条指定构建一层，因此每一条指定就是指定该层应该如何创建。<br>以nginx镜像为例，使用Dockerfile来定制。<br>在一个空白目录中创建一个名为Dockerfile的文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">mkdir /opt/static_web</span>
-<span class="line">cd /opt/static_web</span>
-<span class="line">vim Dockerfile</span>
+</pre></td><td class="code"><pre><span class="line">mkdir mynginx</span>
+<span class="line">cd mynginx</span>
+<span class="line">touch Dockerfile</span>
 </pre></td></tr></table></figure></p>
-<p>首先创建一个/opt/static_web目录来保存Dockerfile，这个目录就是我们的构建环境，然后再编辑Dockerfile文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>在Docker文件中添加内容为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">FROM nginx</span>
+<span class="line">RUN echo &apos;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&apos; &gt; /usr/share/nginx/html/index.html</span>
+</pre></td></tr></table></figure></p>
+<p>这样使用Dockerfile定制镜像的脚本就完成了。  </p>
+<h3 id="FROM指定镜像基础"><a href="#FROM指定镜像基础" class="headerlink" title="FROM指定镜像基础"></a>FROM指定镜像基础</h3><p>定制镜像就是在一个镜像的基础上进行定制。基础镜像是必须指定的，而且必须是Dockerfile中的第一条指令。<br>Docker还存在一个特殊的镜像名为<code>scratch</code>，它表示一个空白镜像。  </p>
+<h3 id="RUN执行命令"><a href="#RUN执行命令" class="headerlink" title="RUN执行命令"></a>RUN执行命令</h3><p>RUN指令是用来执行命令行命令的。每一个RUN行为都会新建一层在其上执行命令，执行结束后commit这一层的修改，构成新的镜像。RUN支持两种命令格式。  </p>
+<ul>
+<li>shell格式：<code>RUN COMMAND</code>，就像直接在命令行中输入命令一样  </li>
+<li>exec格式：<code>RUN [可执行文件,参数1,参数2]</code>  </li>
+</ul>
+<p>在构建镜像的Dockerfile中将有共同目的指定放在一个RUN下，例如安装redis的多个命令行命令，因为这样可以防止镜像臃肿、防止有多层镜像等问题。<br>在将多条指定当做一个RUN动作的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
 <span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"># Version: 0.0.1</span>
-<span class="line">FROM ubuntu:latest</span>
-<span class="line">MAINTAINER DaguangY &quot;email&quot;</span>
-<span class="line">RUN apt-get update</span>
-<span class="line">RUN apt-get install -y nginx</span>
-<span class="line">RUN echo &apos;Hi, I am in your container&apos; &gt; /usr/share/nginx/html/index.html</span>
-<span class="line">EXPOSE 80</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line">#注释XXXXXXXXXXX</span>
+<span class="line">RUN buildDeps=&apos;gcc libc6-dev make wget&apos; \</span>
+<span class="line">    &amp;&amp; apt-get update \</span>
+<span class="line">    &amp;&amp; apt-get install -y $buildDeps \</span>
+<span class="line">    &amp;&amp; wget -O redis.tar.gz &quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot; \</span>
+<span class="line">    &amp;&amp; mkdir -p /usr/src/redis \</span>
+<span class="line">    &amp;&amp; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \</span>
+<span class="line">    &amp;&amp; make -C /usr/src/redis \</span>
+<span class="line">    &amp;&amp; make -C /usr/src/redis install \</span>
+<span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/* \</span>
+<span class="line">    &amp;&amp; rm redis.tar.gz \</span>
+<span class="line">    &amp;&amp; rm -r /usr/src/redis \</span>
+<span class="line">    &amp;&amp; apt-get purge -y --auto-remove $buildDeps</span>
 </pre></td></tr></table></figure></p>
-<p>然后执行<code>docker build -t=&quot;test/ubuntu:1.0&quot; .</code><br>-t:指定仓库和名称，test为仓库名，ubuntu为镜像名，:1.0为tags<br>.：指定Dockerfile的路径<br>在build进程执行过程中可以看到第一件事就是将Dockerfile内容上传，以为所有的操作都依据Dockerfile进行的，然后Dockerfile中的指令被一条一条的执行，每一步都创建一个新的容器，在容器中执行指令并提交修改。当所有的指令都执行完毕后返回最终的镜像ID。所有的中间步骤产生的容器都会被删除和清理。<br><img src="/2019/04/13/3.使用Dockerfile定制镜像/docker-build.png" alt="build">  </p>
+<p>在这个例子中可以看到有删除命令，这是一步很重要的操作，因为在这一层存储的东西不会在下一层删除，会一直跟着镜像，在<strong>构建时一定要确保每层只添加真正需要的东西，任何无关的东西都清掉</strong>。  </p>
+<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>在Dockerfile所在目录执行<code>docker build [选项] 上下文路径/URL/-</code>,在执行构建命令时可以加上<code>-t 镜像名[:标签]</code>指定镜像名与标签。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker build -t nginx:v3 .</span>
+</pre></td></tr></table></figure></p>
+<h3 id="镜像构建上下文（context）"><a href="#镜像构建上下文（context）" class="headerlink" title="镜像构建上下文（context）"></a>镜像构建上下文（context）</h3><p>在上面的例子中上下文路径就是Dockerfile所在的目录的路径，也就是在命令尾部的<code>.</code>，这是默认情况下会把上下文目录中的Dockerfile文件当做Dockerfile；当然可以指定Dockerfile，例如使用-f指定某个文件为Dockerfile，这个文件名可以不是Dockerfile，也可以不在上下文目录中。<br>当构建镜像的时候用户会指定构建镜像的上下文，docker build 就会把这个路径下的所有内容打包，上传给docker引擎（服务端守护进程），展开后就是获得构建镜像所需的一切文件。构建上下文环境会被递归处理，所以，构建所指定的路径还包括了子目录，而URL还包括了其中指定的子模块。  </p>
+<p>##docker file其他用法  </p>
+<h3 id="从URL中构建镜像"><a href="#从URL中构建镜像" class="headerlink" title="从URL中构建镜像"></a>从URL中构建镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker build https://github.com/twang2218/gitlab-ce-zh.git#:11.1</span>
+</pre></td></tr></table></figure>
+<p>指定构建目录为11.1，然后Docker会自己去<code>git clone</code>这个项目，进入到指定目录开始构建。<br><img src="/2019/04/13/3.使用Dockerfile定制镜像/从URL构建.png" alt="从URL构建">  </p>
+<h3 id="用给定的tar压缩包构建"><a href="#用给定的tar压缩包构建" class="headerlink" title="用给定的tar压缩包构建"></a>用给定的tar压缩包构建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker build http://server/context.tar.gz</span>
+</pre></td></tr></table></figure>
+<p>如果给定的URL是tar压缩包，Docker会下载这个压缩包并自动解压，以其作为上下文开始构建。  </p>
+<h3 id="从标准输入中读取Dockerfile进行构建"><a href="#从标准输入中读取Dockerfile进行构建" class="headerlink" title="从标准输入中读取Dockerfile进行构建"></a>从标准输入中读取Dockerfile进行构建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">docker build - &lt; Dockerfile</span>
+<span class="line">或</span>
+<span class="line">cat Dockerfile | docker build -</span>
+</pre></td></tr></table></figure>
+<p>如果是从标准输入传入的是文本文件，则将其视为Dockerfile，并开始构建。因为没有上下文，因此不能有本地文件COPY进镜像等操作。</p>
+<h3 id="从标准输入中读取上下文压缩包进行构建"><a href="#从标准输入中读取上下文压缩包进行构建" class="headerlink" title="从标准输入中读取上下文压缩包进行构建"></a>从标准输入中读取上下文压缩包进行构建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker build - &lt; context.tar.gz</span>
+</pre></td></tr></table></figure>
+<p>如果发现标准输入的文件格式是压缩包，会使其为上下文压缩包，直接将其展开，将里面视为上下文，并开始构建。</p>
+<h2 id="Dockerfile指令详解"><a href="#Dockerfile指令详解" class="headerlink" title="Dockerfile指令详解"></a>Dockerfile指令详解</h2><h3 id="COPY复制文件"><a href="#COPY复制文件" class="headerlink" title="COPY复制文件"></a>COPY复制文件</h3><p>COPY是将源路径的文件复制到镜像内的目标路径位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;源路径&gt;... &lt;目标路径&gt;</span>
+<span class="line">COPY [--chown=&lt;user&gt;:&lt;group&gt;] [&quot;&lt;源路径1&gt;&quot;,... &quot;&lt;目标路径&gt;&quot;]</span>
+<span class="line">例：</span>
+<span class="line">COPY package.json /usr/src/app/</span>
+</pre></td></tr></table></figure></p>
+<p><strong>源路径</strong>可以是多个，甚至可以是通配符，其通配符的规则满足GO的filepath.Match 规则（暂不深究其规则）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">COPY hom* /mydir/</span>
+<span class="line">COPY hom?.txt /mydir/</span>
+</pre></td></tr></table></figure></p>
+<p>目标路径可以是容器的绝对路径，也可以是工作目录的相对路径（工作目录用WORKDIR指定），目标路径不需要事先创建。<br>在使用COPY时源文件的各种元数据都会被保留，比如读、写、执行权限，时间等。在使用该指令的时候还可以加上<code>--chown=&lt;user&gt;:&lt;group&gt;</code>来改变文件的用户、用户组。  </p>
+<h3 id="ADD更高级的复制文件"><a href="#ADD更高级的复制文件" class="headerlink" title="ADD更高级的复制文件"></a>ADD更高级的复制文件</h3><p>ADD指令与COPY的格式、性质基本一致，一样可以改变文件的用户、用户组，但在COPY上增加了一些特定。例如：  </p>
+<ul>
+<li>源文件路径可以是<strong>URL</strong>。Docker会自动下载文件放到目标路径，文件权限自动设置为600，修改权限需使用RUN指令修改；下载文件为压缩包时，需要解压缩也一样需要额外的一层RUN指令进行加压缩。但是这样的操作与之前介绍的在构建镜像时只将确定放入镜像的文件放入镜像、同目标操作放在一层等注意事项相驳，所以不如直接在RUN指令中使用wget、curl等工具下载、处理权限、解压缩、清理无用文件更加合理。</li>
+<li>源文件为一个<strong>压缩包</strong>时，ADD指令将会自动解压这个文件到目标文件中；需要解压时比较实用，不需要解压时还是使用COPY。</li>
+</ul>
+<p>Docker官方文档中指明尽量使用COPY，因为COPY更加明确，并且ADD指令会令镜像构建缓存失效，从而使镜像构建变得缓慢。所以<strong>在自动解压的时候使用ADD，其他情况下使用COPY</strong>。</p>
+<h3 id="CMD容器命令"><a href="#CMD容器命令" class="headerlink" title="CMD容器命令"></a>CMD容器命令</h3><p>在<a href="/2019/04/11/1.初识Docker/" title="1.初识Docker">1.初识Docker</a>中Docker容器（Container）介绍到容器就是进程，那么在启动容器的时候需要指定运行的程序和参数，CMD指令就是来指定容器<strong>主进程的启动命令</strong>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">shell 格式：CMD &lt;命令&gt;</span>
+<span class="line">exec 格式：CMD [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;...]</span>
+<span class="line">参数列表格式：CMD [&quot;参数1&quot;, &quot;参数2&quot;...]。在指定了 ENTRYPOINT 指令后，用 CMD 指定具体的参数。</span>
+</pre></td></tr></table></figure></p>
+<p>在指令格式上，一般使用exec格式，该格式在解析时会被解释成JSON格式，因此一定要用<strong>双引号</strong>，而不是单引号。<br>如果是shell格式实际命令就会被包装为sh -c 格式，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">CMD echo $HOME</span>
+<span class="line">变更为</span>
+<span class="line">CMD [ &quot;sh&quot;, &quot;-c&quot;, &quot;echo $HOME&quot; ]</span>
+</pre></td></tr></table></figure></p>
+<p><strong>【注意】</strong><br><strong>容器前台执行与后台执行问题</strong><br>容器内没有后台服务的概念。<br>当使用CMD执行后台服务的相关命令时，例如：<code>CMD service nginx start</code>，发现容器容器执行后就立即退出了。这是因为对于容器来说启动程序就是容器应用程序，容器就是为了主进程存在的，主进程退出了，容器也就失去了存在的意义，存而退出了。详细的情况就是<code>CMD service nginx start</code>会被理解为<code>CMD [ &quot;sh&quot;, &quot;-c&quot;, &quot;service nginx start&quot;]</code>,既然主进程是sh，那么当这个service nginx start命令结束了，sh也就结束了，sh主进程退出了，容器自然就退出了。<br><strong>正确的做法：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">直接执行Nginx可执行文件，并要求前台执行</span>
+<span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span>
+</pre></td></tr></table></figure></p>
 
       
     </div>
@@ -538,7 +626,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker镜像/" rel="tag"># docker镜像</a>
+            <a href="/tags/Dockerfile/" rel="tag"># Dockerfile</a>
           
         </div>
       
@@ -607,8 +695,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -711,7 +808,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -738,6 +837,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dockerfile-定制镜像"><span class="nav-number">1.</span> <span class="nav-text">使用 Dockerfile 定制镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM指定镜像基础"><span class="nav-number">1.1.</span> <span class="nav-text">FROM指定镜像基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN执行命令"><span class="nav-number">1.2.</span> <span class="nav-text">RUN执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建镜像"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像构建上下文（context）"><span class="nav-number">2.1.</span> <span class="nav-text">镜像构建上下文（context）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从URL中构建镜像"><span class="nav-number">2.2.</span> <span class="nav-text">从URL中构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用给定的tar压缩包构建"><span class="nav-number">2.3.</span> <span class="nav-text">用给定的tar压缩包构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取Dockerfile进行构建"><span class="nav-number">2.4.</span> <span class="nav-text">从标准输入中读取Dockerfile进行构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取上下文压缩包进行构建"><span class="nav-number">2.5.</span> <span class="nav-text">从标准输入中读取上下文压缩包进行构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile指令详解"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile指令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY复制文件"><span class="nav-number">3.1.</span> <span class="nav-text">COPY复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD更高级的复制文件"><span class="nav-number">3.2.</span> <span class="nav-text">ADD更高级的复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMD容器命令"><span class="nav-number">3.3.</span> <span class="nav-text">CMD容器命令</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
