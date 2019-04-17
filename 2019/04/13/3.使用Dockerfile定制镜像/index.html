@@ -24,6 +24,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
 
 
 
@@ -108,7 +115,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/从URL构建.png">
-<meta property="og:updated_time" content="2019-04-16T19:15:23.601Z">
+<meta property="og:updated_time" content="2019-04-17T18:54:18.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3.使用Dockerfile定制镜像">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg">
@@ -438,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-17 03:15:23" itemprop="dateModified" datetime="2019-04-17T03:15:23+08:00">2019-04-17</time>
+                <time title="修改时间：2019-04-18 02:54:18" itemprop="dateModified" datetime="2019-04-18T02:54:18+08:00">2019-04-18</time>
               
             
           </span>
@@ -472,7 +479,42 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
 
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">6.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">6 分钟</span>
+              
+            </div>
           
 
           
@@ -602,6 +644,64 @@
 <span class="line">2</span>
 </pre></td><td class="code"><pre><span class="line">直接执行Nginx可执行文件，并要求前台执行</span>
 <span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span>
+</pre></td></tr></table></figure></p>
+<h3 id="ENTRYOINT入口点"><a href="#ENTRYOINT入口点" class="headerlink" title="ENTRYOINT入口点"></a>ENTRYOINT入口点</h3><p>ENTRYOINT目的和CMD指令一样，都是在指定容器中启动程序和参数。ENTRYOINT在运行时也可以代替，需用–entrypoint指定。当指定了ENTRYPOINT后，CMD就发生了改变，不再是直接运行其命令，而是将CMD的内容作为参数传给ENTRYPOINT指令，实际执行时，将变为<code>&lt;ENTRYPOINT&gt; &quot;&lt;CMD&gt;&quot;</code>。  </p>
+<h4 id="让镜像变成像命令一样使用"><a href="#让镜像变成像命令一样使用" class="headerlink" title="让镜像变成像命令一样使用"></a>让镜像变成像命令一样使用</h4><p>当我们需要查询当前网络IP，那么可以使用CMD实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">FROM ubuntu:18.04</span>
+<span class="line">CMD [ &quot;curl&quot;, &quot;https://ip.cn&quot; ] #该网址是查询IP的</span>
+</pre></td></tr></table></figure></p>
+<p>使用<code>docker build -t myip .</code>来构建镜像，然后<code>docker run myip</code> 查询当前网络IP<br>但是当我们需为curl添加一个选项，只能通过<code>docker run myip curl -s https://ip.cn -i</code>这样的方式，这显然不是一种好的方式，可以使用<strong>ENTRYPOINT</strong>解决这个问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">FROM ubuntu:18.04</span>
+<span class="line">ENTRYPOINT [ &quot;curl&quot;, &quot;https://ip.cn&quot; ]</span>
+</pre></td></tr></table></figure></p>
+<p>这样就可以<code>docker run myip -i</code>来对启动程序添加选项  </p>
+<h4 id="应用运行前的准备工作"><a href="#应用运行前的准备工作" class="headerlink" title="应用运行前的准备工作"></a>应用运行前的准备工作</h4><p>启动容器就是启动主进程，但有些时候，在启动主进程前，需要一些准备工作。<br>比如mysql数据库，在mysql服务器运行之前需要做一些数据库配置、初始化的工作。而且希望避免使用root用户去启动服务，从而提高安全性，但在启动服务之前还需要以root身份做一些准备工作，最后切换到用户身份启动服务。或者是除了服务外，其它命令使用root身份执行，方便调试。这种情况就可以写一个脚本，然后放入ENTRYPINT中执行，这个脚本会将CMD传过来的参数作为命令，在脚本最后执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">官方redis镜像</span>
+<span class="line">FROM alpine:3.4</span>
+<span class="line">...</span>
+<span class="line">RUN addgroup -S redis &amp;&amp; adduser -S -G redis redis</span>
+<span class="line">...</span>
+<span class="line">ENTRYPOINT [&quot;docker-entrypoint.sh&quot;]</span>
+<span class="line"></span>
+<span class="line">EXPOSE 6379</span>
+<span class="line">CMD [ &quot;redis-server&quot; ]</span>
+</pre></td></tr></table></figure></p>
+<p>这个脚本为redis创建了redis用户，在最后指定了ENTRYPOINT为docker-entrypoint.sh脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">#!/bin/sh</span>
+<span class="line">...</span>
+<span class="line"># allow the container to be started with `--user`</span>
+<span class="line">if [ &quot;$1&quot; = &apos;redis-server&apos; -a &quot;$(id -u)&quot; = &apos;0&apos; ]; then</span>
+<span class="line">    chown -R redis .</span>
+<span class="line">    exec su-exec redis &quot;$0&quot; &quot;$@&quot;</span>
+<span class="line">fi</span>
+<span class="line"></span>
+<span class="line">exec &quot;$@&quot;</span>
+</pre></td></tr></table></figure></p>
+<p>这个脚本就是根据CMD的内容来判断，是否切换到reids用户身份启动服务器，否则使用root身份。</p>
+<h3 id="ENV设置环境变量"><a href="#ENV设置环境变量" class="headerlink" title="ENV设置环境变量"></a>ENV设置环境变量</h3><p>这个指令就是设置环境变量而已，无论后面是什么指令都可以使用这里定义的环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ENV VERSION=1.0 DEBUG=on</span>
+</pre></td></tr></table></figure></p>
+<h3 id="ARG构建函数"><a href="#ARG构建函数" class="headerlink" title="ARG构建函数"></a>ARG构建函数</h3><p>与ENV一样都是设置环境变量的，但至ARG设置的环境变量将来在容器中是不会存在的，是构建环境的环境变量，但也不能使用ARG保存密码之类的信息，因为在<code>docker history</code>中还是可以看到所有值的。</p>
+<h3 id="VOLUME定义匿名卷"><a href="#VOLUME定义匿名卷" class="headerlink" title="VOLUME定义匿名卷"></a>VOLUME定义匿名卷</h3><p>容器运行时应该尽量保持容器的存储层不发生操作，对与数据库类的需要保存动态数据的应用，其数据库文件应该保存在卷中（volume）。为了防止运行是用户忘记将动态文件保存所保存的目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时用户不指定挂载，其应用可以正常运行，不会像存储层写入大量数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">VOLUME /data</span>
 </pre></td></tr></table></figure></p>
 
       
@@ -848,7 +948,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dockerfile-定制镜像"><span class="nav-number">1.</span> <span class="nav-text">使用 Dockerfile 定制镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM指定镜像基础"><span class="nav-number">1.1.</span> <span class="nav-text">FROM指定镜像基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN执行命令"><span class="nav-number">1.2.</span> <span class="nav-text">RUN执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建镜像"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像构建上下文（context）"><span class="nav-number">2.1.</span> <span class="nav-text">镜像构建上下文（context）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从URL中构建镜像"><span class="nav-number">2.2.</span> <span class="nav-text">从URL中构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用给定的tar压缩包构建"><span class="nav-number">2.3.</span> <span class="nav-text">用给定的tar压缩包构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取Dockerfile进行构建"><span class="nav-number">2.4.</span> <span class="nav-text">从标准输入中读取Dockerfile进行构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取上下文压缩包进行构建"><span class="nav-number">2.5.</span> <span class="nav-text">从标准输入中读取上下文压缩包进行构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile指令详解"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile指令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY复制文件"><span class="nav-number">3.1.</span> <span class="nav-text">COPY复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD更高级的复制文件"><span class="nav-number">3.2.</span> <span class="nav-text">ADD更高级的复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMD容器命令"><span class="nav-number">3.3.</span> <span class="nav-text">CMD容器命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dockerfile-定制镜像"><span class="nav-number">1.</span> <span class="nav-text">使用 Dockerfile 定制镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM指定镜像基础"><span class="nav-number">1.1.</span> <span class="nav-text">FROM指定镜像基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN执行命令"><span class="nav-number">1.2.</span> <span class="nav-text">RUN执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建镜像"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像构建上下文（context）"><span class="nav-number">2.1.</span> <span class="nav-text">镜像构建上下文（context）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从URL中构建镜像"><span class="nav-number">2.2.</span> <span class="nav-text">从URL中构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用给定的tar压缩包构建"><span class="nav-number">2.3.</span> <span class="nav-text">用给定的tar压缩包构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取Dockerfile进行构建"><span class="nav-number">2.4.</span> <span class="nav-text">从标准输入中读取Dockerfile进行构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取上下文压缩包进行构建"><span class="nav-number">2.5.</span> <span class="nav-text">从标准输入中读取上下文压缩包进行构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile指令详解"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile指令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY复制文件"><span class="nav-number">3.1.</span> <span class="nav-text">COPY复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD更高级的复制文件"><span class="nav-number">3.2.</span> <span class="nav-text">ADD更高级的复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMD容器命令"><span class="nav-number">3.3.</span> <span class="nav-text">CMD容器命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ENTRYOINT入口点"><span class="nav-number">3.4.</span> <span class="nav-text">ENTRYOINT入口点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#让镜像变成像命令一样使用"><span class="nav-number">3.4.1.</span> <span class="nav-text">让镜像变成像命令一样使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用运行前的准备工作"><span class="nav-number">3.4.2.</span> <span class="nav-text">应用运行前的准备工作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ENV设置环境变量"><span class="nav-number">3.5.</span> <span class="nav-text">ENV设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARG构建函数"><span class="nav-number">3.6.</span> <span class="nav-text">ARG构建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VOLUME定义匿名卷"><span class="nav-number">3.7.</span> <span class="nav-text">VOLUME定义匿名卷</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -869,32 +969,66 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-18</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">DaguangYang</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">38k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">35 分钟</span>
   
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
 
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
 
 
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
 
 
 
@@ -910,6 +1044,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
