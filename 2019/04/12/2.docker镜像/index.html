@@ -123,7 +123,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/镜像列表2.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/阿里云仓库管理.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/2.docker镜像/删除镜像.png">
-<meta property="og:updated_time" content="2019-04-14T20:49:28.104Z">
+<meta property="og:updated_time" content="2019-04-18T18:09:11.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2.docker镜像">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/12/2.docker镜像/图片docker.jpg">
@@ -453,7 +453,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-15 04:49:28" itemprop="dateModified" datetime="2019-04-15T04:49:28+08:00">2019-04-15</time>
+                <time title="修改时间：2019-04-19 02:09:11" itemprop="dateModified" datetime="2019-04-19T02:09:11+08:00">2019-04-19</time>
               
             
           </span>
@@ -547,7 +547,7 @@
 <li>获取想要的镜像<br><code>docker pull [选项] image_name[:tag]</code><br>【选项】：<br>-a:下载所有该tags的镜像<br>tag：若忽略tag则下载最新版本的镜像<br><em>因docker默认的仓库为Docker Hub，在国内使用时速度比较慢，以下三种方式更换(registry.docker-cn.com 为Docker中国官方镜像仓库)镜像仓库</em>  </li>
 <li>方法一：<br><em>本次拉取有效</em><br><code>docker pull registry.docker-cn.com/library/ubuntu:12.04</code>  </li>
 <li>方法二：<br><em>当前进程有效</em><br><code>docker --registry-mirror=https://registry.docker-cn.com daemon</code>  </li>
-<li>方法三：<br><em>永久性保留,</em><br><a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">Docker 中国官方镜像加速</a><br>或者使用阿里云的镜像仓库<br><img src="/2019/04/12/2.docker镜像/阿里云.png" alt="阿里云"><br>配置修改完后重启docker服务<code>systemctl restart docker</code>  </li>
+<li>方法三：<br><em>永久性保留,</em><br><a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">Docker 中国官方镜像加速</a><br>或者使用阿里云的镜像仓库<br><img src="/2019/04/12/2.docker镜像/阿里云.png" alt="阿里云">  </li>
 </ol>
 <h2 id="列出本地镜像"><a href="#列出本地镜像" class="headerlink" title="列出本地镜像"></a>列出本地镜像</h2><p><code>docker images [选项] [镜像仓库[:镜像标记]]</code><br><code>docker image ls [选项] [镜像仓库[:镜像标记]]</code><br>【选项】：<br><strong>-a</strong>：显示本地所有的镜像文件（含中间层镜像，，默认不展示中间层镜像）<br><strong>–digests</strong>：显示镜像文件的摘要信息<br><strong>–no-trunc</strong>：显示完整的镜像信息<br><strong>-f –filter</strong>:过滤，例如-f since=mongo：3.2，是查看mongo：3.2之后建立的镜像，查看之前的镜像使用before。<br><strong>-q</strong>:只显示镜像的ID<br><strong>–format</strong>：列出镜像列表指定的列，如：<br><code>docker image ls --format &quot;{ {.ID} }: { {.Repository} }&quot;</code> 是只展示镜像ID、和仓库名列；还可以以表格的形式进行展示，如：<code>docker image ls --format &quot;table { {.ID} }\t{ {.Repository} }\t{ {.Tag} }&quot;</code>,这样列出的信息可以等距展示，并且有标题行，和默认展示的结构一样。<strong><em>因语法原因，导致在两个花括号之间是加上了空格</em></strong>  </p>
 <p><img src="/2019/04/12/2.docker镜像/镜像列表.png" alt="镜像列表"><br><strong>REPOSITORY</strong>：镜像仓库<br><strong>TAG</strong>：镜像标签，区分版本<br><strong>IMANE ID</strong>：镜像ID（唯一）<br><strong>CREATED</strong>：镜像创建时间<br><strong>SIZE</strong>：镜像大小<br>可以看到列出的镜像的大小与Docker Hub上显示的镜像带下不同，这是因为 Docker Hub 中显示的体积是压缩后的体积。在镜像下载和上传过程中镜像是保持着压缩状态的，因此 Docker Hub 所显示的大小是网络传输中更关心的流量大小。而 <code>docker images</code> 显示的是镜像下载到本地后，展开的大小，准确说，是展开后的各层所占空间的总和，因为镜像到本地后，查看空间的时候，更关心的是本地磁盘空间占用的大小。<br>另外一个需要注意的问题是，docker image ls 列表中的镜像体积总和并非是所有镜像实际硬盘消耗。由于 Docker 镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。由于 Docker 使用 Union FS，相同的层只需要保存一份即可，因此实际镜像硬盘占用空间很可能要比这个列表镜像大小的总和要小的多。<br>可以使用<code>docker system df</code>查看镜像、容器、数据卷所占用的空间。<br><img src="/2019/04/12/2.docker镜像/sys_df.png" alt="docker system df"></p>
@@ -721,7 +721,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -811,7 +811,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -870,7 +872,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-18</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-19</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -882,7 +884,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">38k</span>
+    <span title="站点总字数">42k</span>
   
 
   
@@ -891,7 +893,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
   
 </div>
 

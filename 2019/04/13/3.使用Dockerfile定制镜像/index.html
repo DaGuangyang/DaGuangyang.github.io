@@ -115,7 +115,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/从URL构建.png">
-<meta property="og:updated_time" content="2019-04-17T18:54:18.185Z">
+<meta property="og:updated_time" content="2019-04-18T19:30:37.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3.使用Dockerfile定制镜像">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/13/3.使用Dockerfile定制镜像/docker.jpg">
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-18 02:54:18" itemprop="dateModified" datetime="2019-04-18T02:54:18+08:00">2019-04-18</time>
+                <time title="修改时间：2019-04-19 03:30:37" itemprop="dateModified" datetime="2019-04-19T03:30:37+08:00">2019-04-19</time>
               
             
           </span>
@@ -498,7 +498,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">6.1k</span>
+                <span title="本文字数">7.5k</span>
               
 
               
@@ -512,7 +512,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">6 分钟</span>
+                <span title="阅读时长">7 分钟</span>
               
             </div>
           
@@ -605,7 +605,7 @@
 </pre></td><td class="code"><pre><span class="line">docker build - &lt; context.tar.gz</span>
 </pre></td></tr></table></figure>
 <p>如果发现标准输入的文件格式是压缩包，会使其为上下文压缩包，直接将其展开，将里面视为上下文，并开始构建。</p>
-<h2 id="Dockerfile指令详解"><a href="#Dockerfile指令详解" class="headerlink" title="Dockerfile指令详解"></a>Dockerfile指令详解</h2><h3 id="COPY复制文件"><a href="#COPY复制文件" class="headerlink" title="COPY复制文件"></a>COPY复制文件</h3><p>COPY是将源路径的文件复制到镜像内的目标路径位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="Dockerfile中其他12个指令详解"><a href="#Dockerfile中其他12个指令详解" class="headerlink" title="Dockerfile中其他12个指令详解"></a>Dockerfile中其他12个指令详解</h2><h3 id="COPY复制文件"><a href="#COPY复制文件" class="headerlink" title="COPY复制文件"></a>COPY复制文件</h3><p>COPY是将源路径的文件复制到镜像内的目标路径位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -640,12 +640,12 @@
 <span class="line">变更为</span>
 <span class="line">CMD [ &quot;sh&quot;, &quot;-c&quot;, &quot;echo $HOME&quot; ]</span>
 </pre></td></tr></table></figure></p>
-<p><strong>【注意】</strong><br><strong>容器前台执行与后台执行问题</strong><br>容器内没有后台服务的概念。<br>当使用CMD执行后台服务的相关命令时，例如：<code>CMD service nginx start</code>，发现容器容器执行后就立即退出了。这是因为对于容器来说启动程序就是容器应用程序，容器就是为了主进程存在的，主进程退出了，容器也就失去了存在的意义，存而退出了。详细的情况就是<code>CMD service nginx start</code>会被理解为<code>CMD [ &quot;sh&quot;, &quot;-c&quot;, &quot;service nginx start&quot;]</code>,既然主进程是sh，那么当这个service nginx start命令结束了，sh也就结束了，sh主进程退出了，容器自然就退出了。<br><strong>正确的做法：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>如果写了多个，只有<strong>最后一个生效</strong>。<br><strong>【注意】</strong><br><strong>容器前台执行与后台执行问题</strong><br>容器内没有后台服务的概念。<br>当使用CMD执行后台服务的相关命令时，例如：<code>CMD service nginx start</code>，发现容器容器执行后就立即退出了。这是因为对于容器来说启动程序就是容器应用程序，容器就是为了主进程存在的，主进程退出了，容器也就失去了存在的意义，存而退出了。详细的情况就是<code>CMD service nginx start</code>会被理解为<code>CMD [ &quot;sh&quot;, &quot;-c&quot;, &quot;service nginx start&quot;]</code>,既然主进程是sh，那么当这个service nginx start命令结束了，sh也就结束了，sh主进程退出了，容器自然就退出了。<br><strong>正确的做法：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 </pre></td><td class="code"><pre><span class="line">直接执行Nginx可执行文件，并要求前台执行</span>
 <span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span>
 </pre></td></tr></table></figure></p>
-<h3 id="ENTRYOINT入口点"><a href="#ENTRYOINT入口点" class="headerlink" title="ENTRYOINT入口点"></a>ENTRYOINT入口点</h3><p>ENTRYOINT目的和CMD指令一样，都是在指定容器中启动程序和参数。ENTRYOINT在运行时也可以代替，需用–entrypoint指定。当指定了ENTRYPOINT后，CMD就发生了改变，不再是直接运行其命令，而是将CMD的内容作为参数传给ENTRYPOINT指令，实际执行时，将变为<code>&lt;ENTRYPOINT&gt; &quot;&lt;CMD&gt;&quot;</code>。  </p>
+<h3 id="ENTRYOINT入口点"><a href="#ENTRYOINT入口点" class="headerlink" title="ENTRYOINT入口点"></a>ENTRYOINT入口点</h3><p>ENTRYOINT目的和CMD指令一样，都是在指定容器中启动程序和参数。ENTRYOINT在运行时也可以代替，需用–entrypoint指定。当指定了ENTRYPOINT后，CMD就发生了改变，不再是直接运行其命令，而是将CMD的内容作为参数传给ENTRYPOINT指令，实际执行时，将变为<code>&lt;ENTRYPOINT&gt; &quot;&lt;CMD&gt;&quot;</code>。如果写了多个，只有<strong>最后一个生效</strong>。  </p>
 <h4 id="让镜像变成像命令一样使用"><a href="#让镜像变成像命令一样使用" class="headerlink" title="让镜像变成像命令一样使用"></a>让镜像变成像命令一样使用</h4><p>当我们需要查询当前网络IP，那么可以使用CMD实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 </pre></td><td class="code"><pre><span class="line">FROM ubuntu:18.04</span>
@@ -700,8 +700,42 @@
 </pre></td><td class="code"><pre><span class="line">ENV VERSION=1.0 DEBUG=on</span>
 </pre></td></tr></table></figure></p>
 <h3 id="ARG构建函数"><a href="#ARG构建函数" class="headerlink" title="ARG构建函数"></a>ARG构建函数</h3><p>与ENV一样都是设置环境变量的，但至ARG设置的环境变量将来在容器中是不会存在的，是构建环境的环境变量，但也不能使用ARG保存密码之类的信息，因为在<code>docker history</code>中还是可以看到所有值的。</p>
-<h3 id="VOLUME定义匿名卷"><a href="#VOLUME定义匿名卷" class="headerlink" title="VOLUME定义匿名卷"></a>VOLUME定义匿名卷</h3><p>容器运行时应该尽量保持容器的存储层不发生操作，对与数据库类的需要保存动态数据的应用，其数据库文件应该保存在卷中（volume）。为了防止运行是用户忘记将动态文件保存所保存的目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时用户不指定挂载，其应用可以正常运行，不会像存储层写入大量数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="VOLUME定义匿名卷"><a href="#VOLUME定义匿名卷" class="headerlink" title="VOLUME定义匿名卷"></a>VOLUME定义匿名卷</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">VOLUME [&quot;&lt;路径1&gt;&quot;, &quot;&lt;路径2&gt;&quot;...]</span>
+<span class="line">VOLUME &lt;路径&gt;</span>
+</pre></td></tr></table></figure>
+<p>容器运行时应该尽量保持容器的存储层不发生操作，对与数据库类的需要保存动态数据的应用，其数据库文件应该保存在卷中（volume）。为了防止运行是用户忘记将动态文件保存所保存的目录挂载为卷，在Dockerfile中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时用户不指定挂载，其应用可以正常运行，不会像存储层写入大量数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">VOLUME /data</span>
+</pre></td></tr></table></figure></p>
+<p>这里/data目录就会在运行是自动挂载为匿名卷，任何向/data中写入的信息都不会记录进容器存储层，从而保证了容器存储层的无状态化。  </p>
+<h3 id="EXPOSE声明端口"><a href="#EXPOSE声明端口" class="headerlink" title="EXPOSE声明端口"></a>EXPOSE声明端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]</span>
+</pre></td></tr></table></figure>
+<p>EXPOSE指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务。<br>EXPOSE是定义容器打算使用什么端口，不会自动在宿主进行端口映射；而容器运行时使用 <strong>-p &lt;宿主端口&gt;:&lt;容器端口&gt;</strong>，是映射宿主端口和容器端口，也就是将容器对应的端口开放给外界访问。</p>
+<h3 id="WORKDIR指定工作目录"><a href="#WORKDIR指定工作目录" class="headerlink" title="WORKDIR指定工作目录"></a>WORKDIR指定工作目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">WORKDIR &lt;工作目录路径&gt;</span>
+</pre></td></tr></table></figure>
+<p>使用WORKDIR指令可以来指定工作目录，以后各层的当前目录级就改为指定的目录，如果目录不存在WORKDIR就会自动创建。<br>在介绍<code>RUN</code>指令时说过每一个RUN都是一层，所以<code>RUN cd /app</code>这类的指令可能会导致错误，因为这个命令只对当前RUN层有效。  </p>
+<h3 id="USER指定当前用户"><a href="#USER指定当前用户" class="headerlink" title="USER指定当前用户"></a>USER指定当前用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">USER &lt;用户名&gt;[:&lt;用户组&gt;]</span>
+</pre></td></tr></table></figure>
+<p>USER 指令和 WORKDIR 相似，都是改变环境状态并影响以后的层。但是与WORKDIR不同的是USER指定的<strong>用户必须是已经存在的</strong>。<br>当希望使用一个用户身份运行一个脚本时不要使用<code>su</code>或<code>sudo</code>,建议使用<code>gosu</code>。</p>
+<h3 id="HEALTHCHECK健康检查"><a href="#HEALTHCHECK健康检查" class="headerlink" title="HEALTHCHECK健康检查"></a>HEALTHCHECK健康检查</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">HEALTHCHECK [选项] CMD &lt;命令&gt;：设置检查容器健康状况的命令</span>
+<span class="line">HEALTHCHECK NONE：如果基础镜像有健康检查指令，使用这行可以屏蔽掉其健康检查指令</span>
+</pre></td></tr></table></figure>
+<p>【选项】  </p>
+<ul>
+<li>–interval=&lt;间隔&gt;：两次健康检查的间隔，默认为 30 秒；</li>
+<li>–timeout=&lt;时长&gt;：健康检查命令运行超时时间，如果超过这个时间，本次健康检查就被视为失败，默认 30 秒；</li>
+<li>–retries=&lt;次数&gt;：当连续失败指定次数后，则将容器状态视为 unhealthy，默认 3 次</li>
+</ul>
+<p>在没有 HEALTHCHECK 指令前，Docker 引擎只可以通过容器内主进程是否退出来判断容器是否状态异常。但是当容器无法退出时，容器无法提供服务。所以使用HEALTHCHECK可以真实的反应容器的实际状态。如果写了多个，只有<strong>最后一个生效</strong>。<br>当在一个镜像指定了 HEALTHCHECK 指令后，用其启动容器，初始状态会为 starting，在 HEALTHCHECK 指令检查成功后变为 healthy，如果连续一定次数失败，则会变为 unhealthy。<br>HEALTHCHECK后面命令的返回值决定了健康检查的结果：0→成功、1→失败、2→保留，不使用这个值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">HEALTHCHECK --interval=5s --timeout=3s CMD curl -fs http://localhost/ || exit 1</span>
+<span class="line">因为当CMD后的命令失败时会返回一个非0的正整数，所以需要给指定失败时的返回值</span>
 </pre></td></tr></table></figure></p>
 
       
@@ -820,7 +854,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -910,7 +944,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -948,7 +984,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dockerfile-定制镜像"><span class="nav-number">1.</span> <span class="nav-text">使用 Dockerfile 定制镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM指定镜像基础"><span class="nav-number">1.1.</span> <span class="nav-text">FROM指定镜像基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN执行命令"><span class="nav-number">1.2.</span> <span class="nav-text">RUN执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建镜像"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像构建上下文（context）"><span class="nav-number">2.1.</span> <span class="nav-text">镜像构建上下文（context）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从URL中构建镜像"><span class="nav-number">2.2.</span> <span class="nav-text">从URL中构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用给定的tar压缩包构建"><span class="nav-number">2.3.</span> <span class="nav-text">用给定的tar压缩包构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取Dockerfile进行构建"><span class="nav-number">2.4.</span> <span class="nav-text">从标准输入中读取Dockerfile进行构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取上下文压缩包进行构建"><span class="nav-number">2.5.</span> <span class="nav-text">从标准输入中读取上下文压缩包进行构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile指令详解"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile指令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY复制文件"><span class="nav-number">3.1.</span> <span class="nav-text">COPY复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD更高级的复制文件"><span class="nav-number">3.2.</span> <span class="nav-text">ADD更高级的复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMD容器命令"><span class="nav-number">3.3.</span> <span class="nav-text">CMD容器命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ENTRYOINT入口点"><span class="nav-number">3.4.</span> <span class="nav-text">ENTRYOINT入口点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#让镜像变成像命令一样使用"><span class="nav-number">3.4.1.</span> <span class="nav-text">让镜像变成像命令一样使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用运行前的准备工作"><span class="nav-number">3.4.2.</span> <span class="nav-text">应用运行前的准备工作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ENV设置环境变量"><span class="nav-number">3.5.</span> <span class="nav-text">ENV设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARG构建函数"><span class="nav-number">3.6.</span> <span class="nav-text">ARG构建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VOLUME定义匿名卷"><span class="nav-number">3.7.</span> <span class="nav-text">VOLUME定义匿名卷</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dockerfile-定制镜像"><span class="nav-number">1.</span> <span class="nav-text">使用 Dockerfile 定制镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM指定镜像基础"><span class="nav-number">1.1.</span> <span class="nav-text">FROM指定镜像基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN执行命令"><span class="nav-number">1.2.</span> <span class="nav-text">RUN执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建镜像"><span class="nav-number">2.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像构建上下文（context）"><span class="nav-number">2.1.</span> <span class="nav-text">镜像构建上下文（context）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从URL中构建镜像"><span class="nav-number">2.2.</span> <span class="nav-text">从URL中构建镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用给定的tar压缩包构建"><span class="nav-number">2.3.</span> <span class="nav-text">用给定的tar压缩包构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取Dockerfile进行构建"><span class="nav-number">2.4.</span> <span class="nav-text">从标准输入中读取Dockerfile进行构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从标准输入中读取上下文压缩包进行构建"><span class="nav-number">2.5.</span> <span class="nav-text">从标准输入中读取上下文压缩包进行构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile中其他12个指令详解"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile中其他12个指令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY复制文件"><span class="nav-number">3.1.</span> <span class="nav-text">COPY复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD更高级的复制文件"><span class="nav-number">3.2.</span> <span class="nav-text">ADD更高级的复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMD容器命令"><span class="nav-number">3.3.</span> <span class="nav-text">CMD容器命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ENTRYOINT入口点"><span class="nav-number">3.4.</span> <span class="nav-text">ENTRYOINT入口点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#让镜像变成像命令一样使用"><span class="nav-number">3.4.1.</span> <span class="nav-text">让镜像变成像命令一样使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用运行前的准备工作"><span class="nav-number">3.4.2.</span> <span class="nav-text">应用运行前的准备工作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ENV设置环境变量"><span class="nav-number">3.5.</span> <span class="nav-text">ENV设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARG构建函数"><span class="nav-number">3.6.</span> <span class="nav-text">ARG构建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VOLUME定义匿名卷"><span class="nav-number">3.7.</span> <span class="nav-text">VOLUME定义匿名卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXPOSE声明端口"><span class="nav-number">3.8.</span> <span class="nav-text">EXPOSE声明端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WORKDIR指定工作目录"><span class="nav-number">3.9.</span> <span class="nav-text">WORKDIR指定工作目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USER指定当前用户"><span class="nav-number">3.10.</span> <span class="nav-text">USER指定当前用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HEALTHCHECK健康检查"><span class="nav-number">3.11.</span> <span class="nav-text">HEALTHCHECK健康检查</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -969,7 +1005,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-18</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-19</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -981,7 +1017,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">38k</span>
+    <span title="站点总字数">42k</span>
   
 
   
@@ -990,7 +1026,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
   
 </div>
 
