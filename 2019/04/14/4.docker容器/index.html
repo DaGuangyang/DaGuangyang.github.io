@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="DaguangY">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/14/4.docker容器/图片docker.jpg">
-<meta property="og:updated_time" content="2019-04-14T20:26:57.230Z">
+<meta property="og:updated_time" content="2019-04-22T16:04:33.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4.docker容器">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/14/4.docker容器/图片docker.jpg">
@@ -444,7 +444,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-15 04:26:57" itemprop="dateModified" datetime="2019-04-15T04:26:57+08:00">2019-04-15</time>
+                <time title="修改时间：2019-04-23 00:04:33" itemprop="dateModified" datetime="2019-04-23T00:04:33+08:00">2019-04-23</time>
               
             
           </span>
@@ -497,7 +497,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">19</span>
+                <span title="本文字数">1.6k</span>
               
 
               
@@ -531,7 +531,52 @@
       
 
       
-        <p><img src="/2019/04/14/4.docker容器/图片docker.jpg" alt="docker"><br><a id="more"></a><br>容器是Docker容器有一核心概念。</p>
+        <p><img src="/2019/04/14/4.docker容器/图片docker.jpg" alt="docker"><br><a id="more"></a><br>容器是Docker容器又一核心概念。<br>容器是独立运行的一个或一组应用。可以理解为模拟运行的一整套操作系统。  </p>
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><h3 id="新建并启动容器"><a href="#新建并启动容器" class="headerlink" title="新建并启动容器"></a>新建并启动容器</h3><p>格式：<code>docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</code>  </p>
+<ul>
+<li>OPTIONS选项说明：<br><strong>-d：指定容器运行于前台还是后台，默认为false</strong><br><strong>-i：打开STDIN，用于控制台交互</strong><br><strong>-t：分配tty设备，该可以支持终端登录，默认为false，通常与-i一起使用</strong><br><strong>-p：端口映射，格式为：主机(宿主)端口:容器端口</strong><br><strong>–name：为容器指定一个名称</strong><br>-u： 指定容器的用户<br>-w：指定容器的工作目录<br>-e：指定环境变量，容器中可以使用该环境变量<br>-m：指定容器的内存上限<br>-h：指定容器的主机名<br>-v：给容器挂载存储卷，挂载到容器的某个目录  </li>
+</ul>
+<p>在执行<code>docker run</code>时，Docker在后台运行的标准操作包括  </p>
+<ul>
+<li>检查本地是否存在指定的镜像，不存在就从公有仓库下载  </li>
+<li>利用镜像创建并启动一个容器  </li>
+<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读写层</li>
+<li>从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去</li>
+<li>从地址池配置一个 ip 地址给容器</li>
+<li>执行用户指定的应用程序</li>
+<li>执行完毕后容器被终止</li>
+</ul>
+<h3 id="启动已经终止的容器"><a href="#启动已经终止的容器" class="headerlink" title="启动已经终止的容器"></a>启动已经终止的容器</h3><p><code>docker start 容器</code>  </p>
+<h2 id="后台运行容器"><a href="#后台运行容器" class="headerlink" title="后台运行容器"></a>后台运行容器</h2><p>使用<code>docker run -d 镜像</code>将一个镜像的容器放在后台运行，若该镜像有输出结果，此时因在后台执行，所以不会将输出结果打印在屏幕上，但可以使用<code>docker logs 容器</code>查看容器日志。<br><em>容器是否会长久运行，是和 docker run 指定的命令有关，和 -d 参数无关。例如一个后台运行的容器的主进程只是将一串字符输出，那么当这一串字符输出完毕后容器就会自动停止</em>  </p>
+<h2 id="终止容器、重启容器"><a href="#终止容器、重启容器" class="headerlink" title="终止容器、重启容器"></a>终止容器、重启容器</h2><p><code>docker stop 容器</code>终止容器<br><code>docker restart 容器</code>重启容器</p>
+<h2 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h2><p>在使用当使用<code>docker run -d</code>新建一个容器时，有些时候需要进入到容器中进行操作，可以使用<code>docker attach</code>或者<code>docker exec</code>,<strong>推荐使用docker exec进入到容器</strong>。  </p>
+<h3 id="docker-attach"><a href="#docker-attach" class="headerlink" title="docker attach"></a>docker attach</h3><p>当使用<code>docker attach 镜像</code>进入到一个后台运行的容器中后,使用<code>exit</code>退出会导致容器中终止  </p>
+<h3 id="docker-exec"><a href="#docker-exec" class="headerlink" title="docker exec"></a>docker exec</h3><p>使用<code>docker exec -it 镜像</code>进入到一个后台运行的容器中后,退不出会导致容器中终止  </p>
+<p>##导出和导入容器  </p>
+<h3 id="导出容器"><a href="#导出容器" class="headerlink" title="导出容器"></a>导出容器</h3><p>如果要导出本地某个容器，可以使用<code>docker export</code>命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker export 7691a814370e &gt; ubuntu.tar</span>
+</pre></td></tr></table></figure></p>
+<p>这样将<strong>导出容器快照</strong>到本地文件。  </p>
+<h3 id="导出容器快照"><a href="#导出容器快照" class="headerlink" title="导出容器快照"></a>导出容器快照</h3><p>可使用<code>docker import</code>从容器快照文件中再导入为镜像，并可以重新指定标签等元数据信息（容器快照文件将丢弃历史数据、元数据信息）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">cat ubuntu.tar | docker import - test/ubuntu:v1.0 </span>
+<span class="line">docker import http://example.com/exampleimage.tgz example/imagerepo</span>
+</pre></td></tr></table></figure></p>
+<p><em><code>docker load</code> 可以将镜像存储文件导入到本地镜像库，镜像存储文件将保存完整记录，体积较大</em></p>
+<h2 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker rm 容器</span>
+</pre></td></tr></table></figure>
+<p>可以删除已经停止的容器。若要删除一个运行中的容器可以添加-f选项</p>
+<h2 id="清理所有处于终止状态的容器"><a href="#清理所有处于终止状态的容器" class="headerlink" title="清理所有处于终止状态的容器"></a>清理所有处于终止状态的容器</h2><p>用以下命令来查看所有已经创建的包括终止状态的容器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">docker ls -a</span>
+<span class="line">或</span>
+<span class="line">docekr container ls -a`</span>
+</pre></td></tr></table></figure></p>
+<p>使用以下命令来删除所有处于种植状态的容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker container prune</span>
+</pre></td></tr></table></figure></p>
 
       
     </div>
@@ -624,8 +669,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -640,7 +694,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -663,7 +717,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -732,7 +788,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -760,6 +824,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动容器"><span class="nav-number">1.</span> <span class="nav-text">启动容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建并启动容器"><span class="nav-number">1.1.</span> <span class="nav-text">新建并启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动已经终止的容器"><span class="nav-number">1.2.</span> <span class="nav-text">启动已经终止的容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台运行容器"><span class="nav-number">2.</span> <span class="nav-text">后台运行容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终止容器、重启容器"><span class="nav-number">3.</span> <span class="nav-text">终止容器、重启容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入容器"><span class="nav-number">4.</span> <span class="nav-text">进入容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-attach"><span class="nav-number">4.1.</span> <span class="nav-text">docker attach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-exec"><span class="nav-number">4.2.</span> <span class="nav-text">docker exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出容器"><span class="nav-number">4.3.</span> <span class="nav-text">导出容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出容器快照"><span class="nav-number">4.4.</span> <span class="nav-text">导出容器快照</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除容器"><span class="nav-number">5.</span> <span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清理所有处于终止状态的容器"><span class="nav-number">6.</span> <span class="nav-text">清理所有处于终止状态的容器</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -774,7 +855,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-19</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-28</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -786,7 +867,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">42k</span>
+    <span title="站点总字数">58k</span>
   
 
   
@@ -795,7 +876,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">38 分钟</span>
+    <span title="站点阅读时长">53 分钟</span>
   
 </div>
 
