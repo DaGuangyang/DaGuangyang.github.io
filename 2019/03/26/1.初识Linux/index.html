@@ -116,7 +116,7 @@
 <meta property="og:description" content="Linux哲学思想、命令行接口、文件系统、终端terminal、终端设备、远程连接">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/03/26/1.初识Linux/linux.png">
-<meta property="og:updated_time" content="2019-04-28T14:18:50.903Z">
+<meta property="og:updated_time" content="2019-05-21T23:13:32.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1.初识Linux">
 <meta name="twitter:description" content="Linux哲学思想、命令行接口、文件系统、终端terminal、终端设备、远程连接">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-28 22:18:50" itemprop="dateModified" datetime="2019-04-28T22:18:50+08:00">2019-04-28</time>
+                <time title="修改时间：2019-05-22 07:13:32" itemprop="dateModified" datetime="2019-05-22T07:13:32+08:00">2019-05-22</time>
               
             
           </span>
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.4k</span>
+                <span title="本文字数">1.8k</span>
               
 
               
@@ -514,7 +514,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -545,15 +545,30 @@
 <li><strong>GUI（图形界面）</strong>：GNome、KDE</li>
 <li><strong>CLI（命令行界面）</strong>：bash、zsh、csh  · · · ·；<code>echo $SHELL</code>&emsp;查看shell类型</li>
 </ul>
+<h2 id="设置语言格式"><a href="#设置语言格式" class="headerlink" title="设置语言格式"></a>设置语言格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">localectl :查看语言环境</span>
+<span class="line">localectl -h :查看帮助</span>
+<span class="line">localectl list-locales ：查看支持的语言环境</span>
+<span class="line">localectl set-local LANG=语言格式 ：设置语言环境</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">locale 查看不同环境的设定，其展示的每种变量的值都可以通过localectl set-local来进行修改</span>
+</pre></td></tr></table></figure>
 <h2 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h2><p>基于ssh协议进行远程连接  </p>
 <ol>
-<li><code>ss -tml</code>&emsp;查看系统是否监听与tcp协议的22号端口  </li>
+<li><code>ss -tnl</code>&emsp;查看系统是否监听与tcp协议的22号端口  </li>
 <li><code>ifconfig</code>&emsp;查看系统的IP地址  </li>
 <li>确保防火墙关闭：<ul>
 <li><code>iptables -L -n</code>&emsp;查看防火墙规则  </li>
-<li><code>service iptables -F</code>&emsp;清空防火墙规则，只对当前进程有效</li>
-<li><code>service iptables stop</code>&emsp;关闭防火墙</li>
+<li><code>service iptables stop</code>&emsp;关闭防火墙，只对当前进程有效</li>
+<li><code>service iptables status</code>&emsp;查看防火墙状态</li>
 <li><code>chkconfig iptables off</code>&emsp;设置为以后不会启动</li>
+<li><code>systemctl disable friewalld.service</code>&emsp;Centos7确保防火墙开机不启动</li>
+<li><code>systemctl stop firewalld.service</code>&emsp;Centos7关闭防火墙</li>
+<li><code>systemctl status firewalld.service</code>&emsp;Centos7查看防火墙状态</li>
 </ul>
 </li>
 </ol>
@@ -679,7 +694,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -783,7 +798,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -821,7 +840,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux相关介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux相关介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux哲学思想"><span class="nav-number">1.1.</span> <span class="nav-text">linux哲学思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端terminal"><span class="nav-number">1.2.</span> <span class="nav-text">终端terminal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程连接"><span class="nav-number">1.3.</span> <span class="nav-text">远程连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端设备"><span class="nav-number">1.4.</span> <span class="nav-text">终端设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行接口（CLI）"><span class="nav-number">1.5.</span> <span class="nav-text">命令行接口（CLI）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统"><span class="nav-number">1.6.</span> <span class="nav-text">文件系统</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux相关介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux相关介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux哲学思想"><span class="nav-number">1.1.</span> <span class="nav-text">linux哲学思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端terminal"><span class="nav-number">1.2.</span> <span class="nav-text">终端terminal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言格式"><span class="nav-number">1.3.</span> <span class="nav-text">设置语言格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程连接"><span class="nav-number">1.4.</span> <span class="nav-text">远程连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端设备"><span class="nav-number">1.5.</span> <span class="nav-text">终端设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行接口（CLI）"><span class="nav-number">1.6.</span> <span class="nav-text">命令行接口（CLI）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统"><span class="nav-number">1.7.</span> <span class="nav-text">文件系统</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -842,7 +861,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-28</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-05-22</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -854,7 +873,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">58k</span>
+    <span title="站点总字数">62k</span>
   
 
   
@@ -863,7 +882,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">53 分钟</span>
+    <span title="站点阅读时长">56 分钟</span>
   
 </div>
 

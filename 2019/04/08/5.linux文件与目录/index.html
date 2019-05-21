@@ -116,7 +116,7 @@
 <meta property="og:description" content="文件、目录">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/5.linux文件与目录/linux.png">
-<meta property="og:updated_time" content="2019-04-10T16:46:25.712Z">
+<meta property="og:updated_time" content="2019-05-07T16:00:13.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6.linux文件与目录">
 <meta name="twitter:description" content="文件、目录">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-11 00:46:25" itemprop="dateModified" datetime="2019-04-11T00:46:25+08:00">2019-04-11</time>
+                <time title="修改时间：2019-05-08 00:00:13" itemprop="dateModified" datetime="2019-05-08T00:00:13+08:00">2019-05-08</time>
               
             
           </span>
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2k</span>
+                <span title="本文字数">2.1k</span>
               
 
               
@@ -540,13 +540,13 @@
 <p><code>pwd</code><br>显示当前工作目录路径<br>&emsp;-p：显示软连接指向文件的路径，而非软连接文件的路径  </p>
 <p><code>mkdir</code><br>创建新的目录<br>&emsp;-m：在创建目录时设置目录权限<br>&emsp;-p：递归创建目录  </p>
 <p><code>rmdir</code><br>删除<strong>空</strong>目录<br>&emsp;-p：递归删除空目录  </p>
-<h2 id="查看文件与目录的信息"><a href="#查看文件与目录的信息" class="headerlink" title="查看文件与目录的信息"></a>查看文件与目录的信息</h2><p><code>ls</code><br>&emsp;-a：显示所有文件，包括隐藏文件<br>&emsp;-l：显示文件的长信息<br>&emsp;-t：以时间进行排序<br>&emsp;-r：反向排序<br>&emsp;-d：仅列出目录本身，而非目录下的所有文件  </p>
+<h2 id="查看文件与目录的信息"><a href="#查看文件与目录的信息" class="headerlink" title="查看文件与目录的信息"></a>查看文件与目录的信息</h2><p><code>ls</code><br>&emsp;-a：显示所有文件，包括隐藏文件<br>&emsp;-A：显示除 <strong>.</strong> 和 <strong>..</strong>以外的所有文件，包括隐藏文件<br>&emsp;-l：显示文件的长信息<br>&emsp;-t：以时间进行排序<br>&emsp;-r：反向排序<br>&emsp;-d：仅列出目录本身，而非目录下的所有文件  </p>
 <p><code>tree</code><br>以树的形式递归展示当前目录下的文件和目录，系统中可能没有该命令，使用<code>yum install tree</code>来进行安装  </p>
 <p><code>stat FILE</code><br>显示文件状态<br><strong>access</strong>：最近访问时间<br><strong>modify</strong>：最近修改时间<br><strong>change</strong>：最近状态改动时间  </p>
 <h2 id="文件与目录的复、删除、移动"><a href="#文件与目录的复、删除、移动" class="headerlink" title="文件与目录的复、删除、移动"></a>文件与目录的复、删除、移动</h2><p><code>cp</code><br>&emsp;-p：连同档案的属性（权限、时间、用户）一并复制<br>&emsp;-r：递归复制<br>&emsp;-i：当目标目录下有同名文件时进行提示  </p>
 <p><code>rm</code><br>删除<br>&emsp;-r：递归删除<br>&emsp;-f：强制删除，忽略不存在的文件<br>&emsp;-i：提示确认  </p>
 <p><code>mv</code><br>移动或重命名<br>&emsp;-f:强制移动<br>&emsp;-i：提示确认  </p>
-<h2 id="取得路径的文件名或目录名"><a href="#取得路径的文件名或目录名" class="headerlink" title="取得路径的文件名或目录名"></a>取得<strong>路径</strong>的文件名或目录名</h2><p><code>basename</code><br>&emsp;取得文件或目录的基本名称<br><code>dirname</code><br>&emsp;取得文件或目录的目录名  </p>
+<h2 id="取得路径的文件名或目录名"><a href="#取得路径的文件名或目录名" class="headerlink" title="取得路径的文件名或目录名"></a>取得<strong>路径</strong>的文件名或目录名</h2><p><code>basename</code><br>&emsp;从路径中取得文件或目录的基本名称<br><code>dirname</code><br>&emsp;从路径中取得文件或目录的目录名  </p>
 <h2 id="文件内容查看"><a href="#文件内容查看" class="headerlink" title="文件内容查看"></a>文件内容查看</h2><h3 id="直接展示文件内容"><a href="#直接展示文件内容" class="headerlink" title="直接展示文件内容"></a>直接展示文件内容</h3><p><code>cat</code><br>从文件第一行开始显示<br>&emsp;-n：列出行号，空白行也有行号</p>
 <p><code>tac</code><br>从文件的最后一行开始倒序显示  </p>
 <h3 id="翻页展示文件内容"><a href="#翻页展示文件内容" class="headerlink" title="翻页展示文件内容"></a>翻页展示文件内容</h3><p><code>more</code><br>按键：<br>&emsp;space：向下翻一页<br>&emsp;Enter：向下翻一行<br>&emsp;b：往回翻页<br>&emsp;/STRING：从当前向下查找字符串<br>&emsp;q：退出  </p>
@@ -558,7 +558,7 @@
 <p><code>cut</code><br>文本截取显示工具；将两个文件或多个文件合并<br>-d：指定分隔符，默认为空格<br>-f NUM：显示第几段，NUM可以为NUM-、<u>NUM1-NUM2</u>、-NUM、<u>NUM1，NUM2</u></p>
 <p><code>sort</code><br>将文件内容按行进行排序，并将排序结果标准输出<br>-t CHAR：指定分隔符<br>-k NUM：对第NUM段进行排序<br>-n：基于数值大小进行排序<br>-r：逆序排序<br>-f：不区分大小写<br>-u：重复的行只保留一行</p>
 <p><code>uniq</code><br>按行统计<br>-c：统计每一行出现的次数<br>-d：只显示有重复行的行<br>-u：只显示没有重复行的行  </p>
-<h2 id="修改文件时间或创建空文件"><a href="#修改文件时间或创建空文件" class="headerlink" title="修改文件时间或创建空文件"></a>修改文件时间或创建空文件</h2><p><code>touch [选项]</code><br>选项：<br>&emsp;-a：修改atime为当前时间，access time时间，访问时间<br>&emsp;-m：修改mtime为当前时间，modify time时间，内容修改时间<br>&emsp;-c：仅修改文件时间，若文件不存在则不创建文件<br>&emsp;-t：指定修改的时间，格式[YYYYMMDDhhmm]  </p>
+<h2 id="修改文件时间或创建空文件"><a href="#修改文件时间或创建空文件" class="headerlink" title="修改文件时间或创建空文件"></a>修改文件时间或创建空文件</h2><p><code>touch [选项]</code><br>选项：<br>&emsp;-a：修改atime为当前时间，access time时间，访问时间<br>&emsp;-m：修改mtime为当前时间，modify time时间，内容修改时间<br>&emsp;-c：仅修改文件时间，若文件不存在则不创建文件<br>&emsp;-t：指定修改的时间，格式[YYYYMMDDhhmm],需与前面三个修改时间的选项一起使用  </p>
 <h2 id="搜索文档"><a href="#搜索文档" class="headerlink" title="搜索文档"></a>搜索文档</h2><p><code>which COMMAND</code><br>显示外部命令文件完整路径名，该命令是根据\$PATH路径进行查找，所以只能查看外部命令的命令文件<br>还能查看到该命令的别名  </p>
 <p><code>whereis [选项] COMMAND</code><br>显示命令完整路径，手册页路径<br>选项：<br>&emsp;-b:只显示命令的二进制程序路径<br>&emsp;-m：只显示命令的手册页路径  </p>
 
@@ -680,7 +680,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -784,7 +784,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -843,7 +847,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-04-28</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-05-22</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -855,7 +859,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">58k</span>
+    <span title="站点总字数">62k</span>
   
 
   
@@ -864,7 +868,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">53 分钟</span>
+    <span title="站点阅读时长">56 分钟</span>
   
 </div>
 
