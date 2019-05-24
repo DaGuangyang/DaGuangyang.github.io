@@ -116,7 +116,7 @@
 <meta property="og:description" content="Linux哲学思想、命令行接口、文件系统、终端terminal、终端设备、远程连接">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/03/26/1.初识Linux/linux.png">
-<meta property="og:updated_time" content="2019-05-21T23:13:32.428Z">
+<meta property="og:updated_time" content="2019-05-22T08:42:58.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1.初识Linux">
 <meta name="twitter:description" content="Linux哲学思想、命令行接口、文件系统、终端terminal、终端设备、远程连接">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-22 07:13:32" itemprop="dateModified" datetime="2019-05-22T07:13:32+08:00">2019-05-22</time>
+                <time title="修改时间：2019-05-22 16:42:58" itemprop="dateModified" datetime="2019-05-22T16:42:58+08:00">2019-05-22</time>
               
             
           </span>
@@ -572,11 +572,11 @@
 </ul>
 </li>
 </ol>
-<h2 id="终端设备"><a href="#终端设备" class="headerlink" title="终端设备"></a>终端设备</h2><p><code>tty</code>&emsp;查看该进程使用的终端类型  </p>
+<h2 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h2><p><code>tty</code>&emsp;查看该进程使用的终端类型  </p>
 <ul>
 <li><strong>本地终端</strong><br>使用VGA连接主机和显示器，用PS/2或USB连接主机和键盘，这样的一个显示器和键盘组合就是一个本地终端</li>
 <li><strong>使用串口连接远程终端</strong><br>用过串口线把<strong>主机1</strong>连接到另外一个有显示器和键盘的<strong>主机2</strong>，在<strong>主机2</strong>通过终端模拟程序</li>
-<li><strong>使用TCP/IP协议承载的远程终端</strong><br>类似与SSH这中  </li>
+<li><strong>使用TCP/IP协议承载的远程终端</strong><br>类似与SSH这中连接方式  </li>
 </ul>
 <p>&emsp;&emsp;前两者都是在本地直接关联物理设备这种终端叫做物理设备；不直接关联物理设备的终端叫做伪终端<br>&emsp;&emsp;在linux中 <strong>/dev/tty1</strong>-<strong>/dev/tty63</strong>都是代表<strong>本地终端</strong>，可以通过CTRL+ALT+F(1-6)三个按键在终端之间切换，切换到的终端就成为<strong>焦点终端</strong>，例如使用CTRL+ALT+F1，切换到/dev/tty1,/dev/tty1此时就被称为<strong>焦点终端设备</strong>;<strong>/dev/console指代当前的终端设备，即焦点终端</strong>，只有在使用本地终端（/dev/tty1-/dev/tty63）时向焦点终端（/dev/console）写东西才会在当前显示；<strong>/dev/tty指代当前终端</strong>，使用任意的终端类型，向/dev/tty写东西都会在当前显示；串口连接的终端为/dev/ttyS1、/dev/ttyS2….<br>&emsp;&emsp;简单来讲，当有ssh客户端连接后，sshd会fork一个进程，然后在子进程中打开一个叫做/dev/pts/1(或者2,3,4,5…)的设备，然后和sshd进程的/dev/ptmx配对，这样在ptmx与pts之间就构成了一条管道，数据可以顺利被导入到sshd，然后通过TCP/IP封装发往ssh client所在的机器。  </p>
 <h2 id="命令行接口（CLI）"><a href="#命令行接口（CLI）" class="headerlink" title="命令行接口（CLI）"></a>命令行接口（CLI）</h2><p><code>[root@locahost ~]#</code><br><strong>root</strong>:表示当前用户为root<br><strong>locahost</strong>：表示当前主机名为locahost<br><strong>~</strong>:表示当前工作目录为当前用户的家目录<br><strong>#</strong>：命令提示符；root为#；普通用户为$</p>
@@ -840,7 +840,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux相关介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux相关介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux哲学思想"><span class="nav-number">1.1.</span> <span class="nav-text">linux哲学思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端terminal"><span class="nav-number">1.2.</span> <span class="nav-text">终端terminal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言格式"><span class="nav-number">1.3.</span> <span class="nav-text">设置语言格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程连接"><span class="nav-number">1.4.</span> <span class="nav-text">远程连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端设备"><span class="nav-number">1.5.</span> <span class="nav-text">终端设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行接口（CLI）"><span class="nav-number">1.6.</span> <span class="nav-text">命令行接口（CLI）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统"><span class="nav-number">1.7.</span> <span class="nav-text">文件系统</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux相关介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux相关介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux哲学思想"><span class="nav-number">1.1.</span> <span class="nav-text">linux哲学思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端terminal"><span class="nav-number">1.2.</span> <span class="nav-text">终端terminal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言格式"><span class="nav-number">1.3.</span> <span class="nav-text">设置语言格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程连接"><span class="nav-number">1.4.</span> <span class="nav-text">远程连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端"><span class="nav-number">1.5.</span> <span class="nav-text">终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行接口（CLI）"><span class="nav-number">1.6.</span> <span class="nav-text">命令行接口（CLI）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统"><span class="nav-number">1.7.</span> <span class="nav-text">文件系统</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -861,7 +861,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-05-22</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019-05-24</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
