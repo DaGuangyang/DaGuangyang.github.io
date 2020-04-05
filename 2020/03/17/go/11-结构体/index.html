@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Go 结构体">
+<meta name="keywords" content="结构体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11-结构体">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/go/11-结构体/index.html">
+<meta property="og:site_name" content="DaguangY">
+<meta property="og:description" content="Go 结构体">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/go/11-结构体/go.jpg">
+<meta property="og:updated_time" content="2020-03-17T23:29:52.321Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="11-结构体">
+<meta name="twitter:description" content="Go 结构体">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/17/go/11-结构体/go.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2020/03/17/go/11-结构体/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>11-结构体 | DaguangY</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DaguangY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">All I need is a miracle</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/go/11-结构体/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaguangYang">
+      <meta itemprop="description" content="The fire in my heart it will never die">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DaguangY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">11-结构体
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-17 23:37:21" itemprop="dateCreated datePublished" datetime="2020-03-17T23:37:21+08:00">2020-03-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-18 07:29:52" itemprop="dateModified" datetime="2020-03-18T07:29:52+08:00">2020-03-18</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2020/03/17/go/11-结构体/go.jpg" alt="Go">  </p>
+<p><center>Go 结构体</center><br><a id="more"></a></p>
+<h1 id="类型别名和自定义类型"><a href="#类型别名和自定义类型" class="headerlink" title="类型别名和自定义类型"></a>类型别名和自定义类型</h1><h2 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h2><p>Go语言中可以使用<code>type</code>来进行自定义类型。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">type</span> newType <span class="keyword">int</span></span>
+<span class="line">	<span class="keyword">var</span> a newType = <span class="number">2</span></span>
+<span class="line">	<span class="keyword">var</span> b newType = <span class="number">1</span></span>
+<span class="line">	fmt.Print(a + b) <span class="comment">//3</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>通过type自定义的类型newType是一种新的类型，但它具有<code>int</code>的特性。  </p>
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><p>类型别名是<code>Go1.9</code>版本添加的新的功能。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> NEWNAME = TYPE</span>
+</pre></td></tr></table></figure></p>
+<p>NEWNAME与TYPE本质上是同一个类型，例如基本数据类型中的<code>byte</code> 与 <code>uint8</code>、<code>rune</code> 与 <code>int32</code><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="keyword">byte</span> = <span class="keyword">uint8</span></span>
+<span class="line"><span class="keyword">type</span> <span class="keyword">rune</span> = <span class="keyword">int32</span></span>
+</pre></td></tr></table></figure></p>
+<h2 id="自定义类型与类型别名之间的区别"><a href="#自定义类型与类型别名之间的区别" class="headerlink" title="自定义类型与类型别名之间的区别"></a>自定义类型与类型别名之间的区别</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">type</span> newType1 <span class="keyword">int</span>  </span>
+<span class="line">	<span class="keyword">type</span> newType2 = <span class="keyword">int</span></span>
+<span class="line">	<span class="keyword">var</span> a newType1</span>
+<span class="line">	<span class="keyword">var</span> b newType2</span>
+<span class="line">	fmt.Printf(<span class="string">"a的类型：%T\n"</span>, a) <span class="comment">//a的类型：main.newType1</span></span>
+<span class="line">	fmt.Printf(<span class="string">"b的类型：%T"</span>, b)   <span class="comment">//b的类型：int</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>main.newType1的意思是main包下的<code>newType1</code>类型。  </p>
+<h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><p>Go语言使用<code>struct</code>来实现面向对象。  </p>
+<h2 id="结构体的定义"><a href="#结构体的定义" class="headerlink" title="结构体的定义"></a>结构体的定义</h2><p>使用<code>type</code>和<code>struct</code>来定义结构体。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> 类型名 <span class="keyword">struct</span>&#123;</span>
+<span class="line">    字段名 类型</span>
+<span class="line">    字段名 类型</span>
+<span class="line">    字段名 类型</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p><strong>类型名</strong>：表示结构体的名称，在同一个包内该名称不能重复。<br><strong>字段名</strong>：表示结构体字段名，结构体中字段名是唯一的。<br><strong>类型</strong>：表示结构体字段类型  </p>
+<p><strong><em>示例1</em></strong><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span>&#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	sex <span class="keyword">string</span></span>
+<span class="line">	age <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p><strong><em>示例2</em></strong><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="结构体实例化"><a href="#结构体实例化" class="headerlink" title="结构体实例化"></a>结构体实例化</h2><p>结构体本身也是一种类型，可以向内置类型一样使用<code>var</code>进行声明。  </p>
+<h3 id="基本实例化"><a href="#基本实例化" class="headerlink" title="基本实例化"></a>基本实例化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">var</span> user people</span>
+<span class="line">	user.name = <span class="string">"小明"</span></span>
+<span class="line">	user.sex = <span class="string">"男"</span></span>
+<span class="line">    user.age = <span class="number">20</span></span>
+<span class="line">    <span class="comment">//user:=people&#123;name:"小明", sex:"男", age:20&#125;  </span></span>
+<span class="line">	fmt.Printf(<span class="string">"user=%v\n"</span>, user)  <span class="comment">//user=&#123;小明 男 20&#125;</span></span>
+<span class="line">	fmt.Printf(<span class="string">"user=%#v\n"</span>, user) <span class="comment">//user=main.people&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="匿名结构体"><a href="#匿名结构体" class="headerlink" title="匿名结构体"></a>匿名结构体</h3><p>在一些临时数据的情况下可以使用匿名结构体。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">var</span> user <span class="keyword">struct</span> &#123;</span>
+<span class="line">		name, sex <span class="keyword">string</span></span>
+<span class="line">		age       <span class="keyword">int</span></span>
+<span class="line">	&#125;</span>
+<span class="line">	user.name = <span class="string">"小明"</span></span>
+<span class="line">	user.sex = <span class="string">"男"</span></span>
+<span class="line">	user.age = <span class="number">20</span></span>
+<span class="line">	fmt.Printf(<span class="string">"user=%v\n"</span>, user)  <span class="comment">//user=&#123;小明 男 20&#125;</span></span>
+<span class="line">	fmt.Printf(<span class="string">"user=%#v\n"</span>, user) <span class="comment">//user=struct &#123; name string; sex string; age int &#125;&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="创建指针类型结构体"><a href="#创建指针类型结构体" class="headerlink" title="创建指针类型结构体"></a>创建指针类型结构体</h3><p>可以使用<code>new</code>关键字对结构体进行实例化，得到的是结构体的内存地址。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">var</span> user = <span class="built_in">new</span>(people)</span>
+<span class="line">	fmt.Printf(<span class="string">"%T\n"</span>, user)  <span class="comment">//*main.people</span></span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, user) <span class="comment">//&amp;main.people&#123;name:"", sex:"", age:0&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>可以看出<code>user</code>是一个<code>*main.people</code>类型的结构体指针。<br>Go语言中结构体指针可以使用<code>.</code>来访问结构体的成员。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">var</span> user = <span class="built_in">new</span>(people)</span>
+<span class="line">	user.name = <span class="string">"小明"</span></span>
+<span class="line">	user.sex = <span class="string">"男"</span></span>
+<span class="line">	user.age = <span class="number">20</span></span>
+<span class="line">	fmt.Printf(<span class="string">"%#v"</span>, user) <span class="comment">//&amp;main.people&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>其中<code>user.name = &quot;小明&quot;</code>等赋值操作，在底层是<code>(*user).name = &quot;小明&quot;</code>  </p>
+<h3 id="取结构体的地址实例化"><a href="#取结构体的地址实例化" class="headerlink" title="取结构体的地址实例化"></a>取结构体的地址实例化</h3><p>使用<code>&amp;</code>对结构体进行取地址操作相当于对结构体进行了一次<code>new</code>实例化的操作。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	user := &amp;people&#123;&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%T\n"</span>, user)  <span class="comment">//*main.people</span></span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, user) <span class="comment">//&amp;main.people&#123;name:"", sex:"", age:0&#125;</span></span>
+<span class="line">	user.name = <span class="string">"小明"</span></span>
+<span class="line">	user.sex = <span class="string">"男"</span></span>
+<span class="line">	user.age = <span class="number">20</span></span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, user) <span class="comment">//&amp;main.people&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>可以看出<code>user</code>是一个结构体指针</p>
+<h2 id="结构体初始化"><a href="#结构体初始化" class="headerlink" title="结构体初始化"></a>结构体初始化</h2><p>从上面指针类型结构体中可以看出没有进行初始化的结构体，其成员变量都是对应类型的零值。  </p>
+<h3 id="使用键值对进行初始化"><a href="#使用键值对进行初始化" class="headerlink" title="使用键值对进行初始化"></a>使用键值对进行初始化</h3><ol>
+<li><p>使用键值对对结构体进行初始化  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	user := people&#123;name: <span class="string">"小明"</span>, sex: <span class="string">"男"</span>, age: <span class="number">20</span>&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, user) <span class="comment">//main.people&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>使用键值对对指针类型结构体进行初始化  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	user := &amp;people&#123;name: <span class="string">"小明"</span>, sex: <span class="string">"男"</span>, age: <span class="number">20</span>&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, user) <span class="comment">//&amp;main.people&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;s</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>使用值列表进行初始化  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name, sex <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	user := &amp;people&#123;</span>
+<span class="line">        <span class="string">"小明"</span>, </span>
+<span class="line">        <span class="string">"男"</span>, </span>
+<span class="line">        <span class="number">20</span>&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, user) <span class="comment">//&amp;main.people&#123;name:"小明", sex:"男", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>此种初始化方式注意事项</strong>  </p>
+<ol>
+<li>必须初始化所有结构体的字段  </li>
+<li>初始值的顺序要与结构体定义字段的顺序一致  </li>
+<li>这种方式不能与键值对初始化方式混用  </li>
+</ol>
+<h2 id="结构体内存占用布局"><a href="#结构体内存占用布局" class="headerlink" title="结构体内存占用布局"></a>结构体内存占用布局</h2><p>结构体中的字段占用的内存地址是连续的。<br>内存地址是以字节为单位的十六进制的数字，所以我们使用int8(8bit=1byte),来进行实验<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">type</span> test <span class="keyword">struct</span> &#123;</span>
+<span class="line">		a <span class="keyword">int8</span></span>
+<span class="line">		b <span class="keyword">int8</span></span>
+<span class="line">		c <span class="keyword">int8</span></span>
+<span class="line">		d <span class="keyword">int8</span></span>
+<span class="line">	&#125;</span>
+<span class="line">	n := test&#123;</span>
+<span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>,</span>
+<span class="line">	&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"n.a %p\n"</span>, &amp;n.a) <span class="comment">//n.a 0xc000070068</span></span>
+<span class="line">	fmt.Printf(<span class="string">"n.b %p\n"</span>, &amp;n.b) <span class="comment">//n.b 0xc000070069</span></span>
+<span class="line">	fmt.Printf(<span class="string">"n.c %p\n"</span>, &amp;n.c) <span class="comment">//n.c 0xc00007006a</span></span>
+<span class="line">	fmt.Printf(<span class="string">"n.d %p\n"</span>, &amp;n.d) <span class="comment">//n.d 0xc00007006b</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	age  <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newPeople</span><span class="params">(name <span class="keyword">string</span>, age <span class="keyword">int</span>)</span> *<span class="title">people</span></span> &#123;</span>
+<span class="line">	<span class="keyword">return</span> &amp;people&#123;</span>
+<span class="line">		name,</span>
+<span class="line">		age,</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := newPeople(<span class="string">"小明"</span>, <span class="number">20</span>)</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v"</span>, a) <span class="comment">//&amp;main.people&#123;name:"小明", age:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="方法和接受者"><a href="#方法和接受者" class="headerlink" title="方法和接受者"></a>方法和接受者</h2><p>Go语言中的<code>方法（method）</code>是作用与特定类型变量的函数吗。这种特定类型叫做<code>接受者</code>。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(接收者变量 接收者类型)</span> 方法名<span class="params">(参数列表)</span> <span class="params">(返回参数)</span></span> &#123;</span>
+<span class="line">    函数体</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p><strong>接受者变量</strong>:接受者变量名官方建议使用接收者类型的小写首字母，例如：接收者类型是<code>people</code>结构体类型，那么接收者变量名应为<code>p</code>。<br><strong>接收者类型</strong>:接收者类型和参数类似，可以是指针类型和非指针类型。<br><strong>方法名、参数列表、返回参数</strong>：具体格式与函数定义相同。  </p>
+<p><strong>举例：</strong><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//people结构体</span></span>
+<span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	age  <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//people构造函数</span></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newPeople</span><span class="params">(name <span class="keyword">string</span>, age <span class="keyword">int</span>)</span> *<span class="title">people</span></span> &#123;</span>
+<span class="line">	<span class="keyword">return</span> &amp;people&#123;</span>
+<span class="line">		name,</span>
+<span class="line">		age,</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//people方法</span></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p people)</span> <span class="title">study</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	fmt.Printf(<span class="string">"%s热爱学习"</span>, p.name)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := newPeople(<span class="string">"小明"</span>, <span class="number">20</span>)</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, a) <span class="comment">//&amp;main.people&#123;name:"小明", age:20&#125;</span></span>
+<span class="line">	a.study()              <span class="comment">//小明热爱学习</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="指针类型的接受者"><a href="#指针类型的接受者" class="headerlink" title="指针类型的接受者"></a>指针类型的接受者</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	age  <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newPeople</span><span class="params">(name <span class="keyword">string</span>, age <span class="keyword">int</span>)</span> *<span class="title">people</span></span> &#123;</span>
+<span class="line">	<span class="keyword">return</span> &amp;people&#123;</span>
+<span class="line">		name,</span>
+<span class="line">		age,</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *people)</span> <span class="title">changAge</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	p.age = <span class="number">30</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := newPeople(<span class="string">"小明"</span>, <span class="number">20</span>)</span>
+<span class="line">	a.changAge()</span>
+<span class="line">	fmt.Print(a.age) <span class="comment">//30</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>调用方法时修改接收者指针的任意成员变量，在方法结束后，修改都是有效的。  </p>
+<h3 id="值类型的接受者"><a href="#值类型的接受者" class="headerlink" title="值类型的接受者"></a>值类型的接受者</h3><p>当方法作用于值类型接收者时，Go语言会在代码运行时将接收者的值复制一份。在值类型接收者的方法中可以获取接收者的成员值，但修改操作只是针对副本，无法修改接收者变量本身。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	age  <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newPeople</span><span class="params">(name <span class="keyword">string</span>, age <span class="keyword">int</span>)</span> *<span class="title">people</span></span> &#123;</span>
+<span class="line">	<span class="keyword">return</span> &amp;people&#123;</span>
+<span class="line">		name,</span>
+<span class="line">		age,</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p people)</span> <span class="title">changAge</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	p.age = <span class="number">30</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := newPeople(<span class="string">"小明"</span>, <span class="number">20</span>)</span>
+<span class="line">	a.changAge()</span>
+<span class="line">	fmt.Print(a.age) <span class="comment">//20</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="什么时候应该使用指针类型接收者"><a href="#什么时候应该使用指针类型接收者" class="headerlink" title="什么时候应该使用指针类型接收者"></a>什么时候应该使用指针类型接收者</h3><ol>
+<li>需要修改接收者中的值。  </li>
+<li>接收者是拷贝代价比较大的大对象。  </li>
+<li>保证一致性，如果有某个方法使用了指针接收者，那么其他的方法也应该使用指针接收者。  </li>
+</ol>
+<h2 id="方法的接收类型是任意的"><a href="#方法的接收类型是任意的" class="headerlink" title="方法的接收类型是任意的"></a>方法的接收类型是任意的</h2><p>方法的接收类型是任意的，不仅仅是结构体。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">string</span></span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p people)</span> <span class="title">study</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	fmt.Printf(<span class="string">"%s热爱学习"</span>, p)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	<span class="keyword">var</span> name people = <span class="string">"小明"</span></span>
+<span class="line">	name.study() <span class="comment">//小明热爱学习</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p><strong>注意：非本地类型不能定义方法，也就是说我们不能给别的包的类型定义方法。</strong> <code>people</code>是一个新的自定类型，并且这个类型是在当前包中的，所以可以定义方法。而<code>string</code>这种内置类型是不能直接定义方法的，需要通过这种方式来进行定义方法。  </p>
+<h2 id="结构体的匿名字段"><a href="#结构体的匿名字段" class="headerlink" title="结构体的匿名字段"></a>结构体的匿名字段</h2><p>结构体允许其成员字段在声明时没有字段名而只有类型，这种没有名字的字段就称为匿名字段。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	<span class="keyword">int</span>  <span class="comment">//匿名字段</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := people&#123;<span class="string">"小明"</span>, <span class="number">20</span>&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v"</span>, a) <span class="comment">//main.people&#123;name:"小明", int:20&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>匿名字段默认采用类型名作为字段名，结构体要求字段名称必须唯一，因此一个结构体中同种类型的匿名字段只能有一个。  </p>
+<h2 id="嵌套结构体"><a href="#嵌套结构体" class="headerlink" title="嵌套结构体"></a>嵌套结构体</h2><p>一个结构体中可以嵌套包含另一个结构体或结构体指针。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> class <span class="keyword">struct</span> &#123;</span>
+<span class="line">	id         <span class="keyword">int</span></span>
+<span class="line">	headmaster <span class="keyword">string</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name      <span class="keyword">string</span></span>
+<span class="line">	age       <span class="keyword">int</span></span>
+<span class="line">	classInfo class</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := student&#123;<span class="string">"小明"</span>, <span class="number">20</span>, class&#123;<span class="number">1</span>, <span class="string">"王老师"</span>&#125;&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v"</span>, a) <span class="comment">//main.student&#123;name:"小明", age:20, classInfo:main.class&#123;id:1, headmaster:"王老师"&#125;&#125;</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="嵌套匿名结构体"><a href="#嵌套匿名结构体" class="headerlink" title="嵌套匿名结构体"></a>嵌套匿名结构体</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> class <span class="keyword">struct</span> &#123;</span>
+<span class="line">	id         <span class="keyword">int</span></span>
+<span class="line">	headmaster <span class="keyword">string</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	age  <span class="keyword">int</span></span>
+<span class="line">	class</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := student&#123;<span class="string">"小明"</span>, <span class="number">20</span>, class&#123;<span class="number">1</span>, <span class="string">"王老师"</span>&#125;&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, a)  <span class="comment">//main.student&#123;name:"小明", age:20, class:main.class&#123;id:1, headmaster:"王老师"&#125;&#125;</span></span>
+<span class="line">	fmt.Println(a.class.id) <span class="comment">//1</span></span>
+<span class="line">	fmt.Println(a.id)       <span class="comment">//1</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>可以看出想要访问匿名结构体中的字段可以有两种方式：</p>
+<ol>
+<li><strong>推荐使用的方式：</strong> 通过<code>结构体.匿名结构体.字段名</code>来访问  </li>
+<li>直接通过<code>结构体.匿名结构体字段名</code> 来访问。（当访问结构体成员时会先在结构体中查找该字段，找不到再去匿名结构体中查找）  </li>
+</ol>
+<h3 id="嵌套结构体的字段名冲突"><a href="#嵌套结构体的字段名冲突" class="headerlink" title="嵌套结构体的字段名冲突"></a>嵌套结构体的字段名冲突</h3><p>当一个结构体中有多个字段为结构体时，这多个结构体内的字段名可能会有相同的字段名，所以此时防止出现错误，最好使用<code>结构体.子结构体.字段名</code>的方式来进行访问。  </p>
+<h2 id="结构体的“继承”"><a href="#结构体的“继承”" class="headerlink" title="结构体的“继承”"></a>结构体的“继承”</h2><p>结构体的继承是通过在<strong>子结构体</strong>中嵌套<strong>父结构体</strong>实现的，子结构体可以继承父结构体的方法。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> people <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name <span class="keyword">string</span></span>
+<span class="line">	age  <span class="keyword">int</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p people)</span> <span class="title">language</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	fmt.Println(<span class="string">"人类是有自己的语言的"</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</span>
+<span class="line">	classId <span class="keyword">int</span></span>
+<span class="line">	teacher <span class="keyword">string</span></span>
+<span class="line">	people</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s student)</span> <span class="title">study</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	fmt.Println(<span class="string">"学生应该好好学习"</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	a := student&#123;<span class="number">1</span>, <span class="string">"王老师"</span>, people&#123;<span class="string">"小明"</span>, <span class="number">20</span>&#125;&#125;</span>
+<span class="line">	a.language() <span class="comment">//人类是有自己的语言的</span></span>
+<span class="line">	a.study()    <span class="comment">//学生应该好好学习</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="结构体字段的可见性"><a href="#结构体字段的可见性" class="headerlink" title="结构体字段的可见性"></a>结构体字段的可见性</h2><p>结构体中<strong>字段大写开头表示可公开访问</strong>，<strong>小写表示私有（仅在定义当前结构体的包中可访问）</strong>。  </p>
+<h2 id="结构体与JSON序列化"><a href="#结构体与JSON序列化" class="headerlink" title="结构体与JSON序列化"></a>结构体与JSON序列化</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//Student 学生</span></span>
+<span class="line"><span class="keyword">type</span> Student <span class="keyword">struct</span> &#123;</span>
+<span class="line">	ID     <span class="keyword">int</span></span>
+<span class="line">	Gender <span class="keyword">string</span></span>
+<span class="line">	Name   <span class="keyword">string</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//Class 班级</span></span>
+<span class="line"><span class="keyword">type</span> Class <span class="keyword">struct</span> &#123;</span>
+<span class="line">	Title    <span class="keyword">string</span></span>
+<span class="line">	Students []*Student</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	c := &amp;Class&#123;</span>
+<span class="line">		Title:    <span class="string">"101"</span>,</span>
+<span class="line">		Students: <span class="built_in">make</span>([]*Student, <span class="number">0</span>, <span class="number">200</span>),</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span>
+<span class="line">		stu := &amp;Student&#123;</span>
+<span class="line">			Name:   fmt.Sprintf(<span class="string">"stu%02d"</span>, i),</span>
+<span class="line">			Gender: <span class="string">"男"</span>,</span>
+<span class="line">			ID:     i,</span>
+<span class="line">		&#125;</span>
+<span class="line">		c.Students = <span class="built_in">append</span>(c.Students, stu)</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="comment">//JSON序列化：结构体--&gt;JSON格式的字符串</span></span>
+<span class="line">	data, err := json.Marshal(c)</span>
+<span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span>
+<span class="line">		fmt.Println(<span class="string">"json marshal failed"</span>)</span>
+<span class="line">		<span class="keyword">return</span></span>
+<span class="line">	&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"json:%s\n"</span>, data)</span>
+<span class="line">	<span class="comment">//JSON反序列化：JSON格式的字符串--&gt;结构体</span></span>
+<span class="line">	str := <span class="string">`&#123;"Title":"101","Students":[&#123;"ID":0,"Gender":"男","Name":"stu00"&#125;,&#123;"ID":1,"Gender":"男","Name":"stu01"&#125;,&#123;"ID":2,"Gender":"男","Name":"stu02"&#125;,&#123;"ID":3,"Gender":"男","Name":"stu03"&#125;,&#123;"ID":4,"Gender":"男","Name":"stu04"&#125;,&#123;"ID":5,"Gender":"男","Name":"stu05"&#125;,&#123;"ID":6,"Gender":"男","Name":"stu06"&#125;,&#123;"ID":7,"Gender":"男","Name":"stu07"&#125;,&#123;"ID":8,"Gender":"男","Name":"stu08"&#125;,&#123;"ID":9,"Gender":"男","Name":"stu09"&#125;]&#125;`</span></span>
+<span class="line">	c1 := &amp;Class&#123;&#125;</span>
+<span class="line">	err = json.Unmarshal([]<span class="keyword">byte</span>(str), c1)</span>
+<span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span>
+<span class="line">		fmt.Println(<span class="string">"json unmarshal failed!"</span>)</span>
+<span class="line">		<span class="keyword">return</span></span>
+<span class="line">	&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%#v\n"</span>, c1)</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="结构体标签（Tag）"><a href="#结构体标签（Tag）" class="headerlink" title="结构体标签（Tag）"></a>结构体标签（Tag）</h2><p><code>Tag</code>在结构体字段的后方进行定义。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Test <span class="keyword">struct</span> &#123;</span>
+<span class="line">    A <span class="keyword">int</span> <span class="string">`key1:"value1" key2:"value2"`</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p><strong>注意事项</strong>： 为结构体编写Tag时，必须严格遵守键值对的规则。结构体标签的解析代码的容错能力很差，一旦格式写错，编译和运行时都不会提示任何错误，通过反射也无法正确取值。例如不要在key和value之间添加空格。<br>结构体标签在将结构体转换为JSON时是非常有用的。<br>| 标签                                  | 作用                                                                    |<br>| :———————————— | :———————————————————————- |<br>| <code>A int `json:&quot;-&quot;`</code>                | 字段被本包忽略                                                          |<br>| <code>A int `json:&quot;myName&quot;`</code>           | 字段在json里的键为”myName”                                              |<br>| <code>A int `json:&quot;myName,omitempty&quot;`</code> | 字段在json里的键为”myName”且如果字段为空值将在对象中省略掉              |<br>| <code>A int `json:&quot;,omitempty&quot;`</code>        | 字段在json里的键为”A”（默认值），但如果字段为空值会跳过；注意前导的逗号 |</p>
+<p><strong>示例：</strong><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Test <span class="keyword">struct</span> &#123;</span>
+<span class="line">	A <span class="keyword">int</span> <span class="string">`json:"id"`</span></span>
+<span class="line">	b <span class="keyword">int</span></span>
+<span class="line">	C <span class="keyword">int</span> <span class="string">`json:"-"`</span></span>
+<span class="line">	D <span class="keyword">int</span> <span class="string">`json:"d,omitempty"`</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	s1 := Test&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span>
+<span class="line">	data, err := json.Marshal(s1)</span>
+<span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span>
+<span class="line">		fmt.Println(<span class="string">"json marshal failed"</span>)</span>
+<span class="line">	&#125;</span>
+<span class="line">	fmt.Printf(<span class="string">"%s\n"</span>, data)  <span class="comment">//&#123;"id":1,"d":4&#125;      data的类型为[]byte</span></span>
+<span class="line">    fmt.Println(<span class="keyword">string</span>(data)) <span class="comment">//&#123;"id":1,"d":4&#125;      将[]byte类型转换为string</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="补充知识点"><a href="#补充知识点" class="headerlink" title="补充知识点"></a>补充知识点</h2><p>因为slice和map这两种数据类型都包含了指向底层数据的指针，因此我们在需要复制它们时要特别注意。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span>
+<span class="line">	name   <span class="keyword">string</span></span>
+<span class="line">	age    <span class="keyword">int8</span></span>
+<span class="line">	dreams []<span class="keyword">string</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Person)</span> <span class="title">SetDreams</span><span class="params">(dreams []<span class="keyword">string</span>)</span></span> &#123;</span>
+<span class="line">	p.dreams = dreams   </span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span>
+<span class="line">	p1 := Person&#123;name: <span class="string">"小王子"</span>, age: <span class="number">18</span>&#125;</span>
+<span class="line">	data := []<span class="keyword">string</span>&#123;<span class="string">"吃饭"</span>, <span class="string">"睡觉"</span>, <span class="string">"打豆豆"</span>&#125;</span>
+<span class="line">	p1.SetDreams(data)</span>
+<span class="line"></span>
+<span class="line">	data[<span class="number">1</span>] = <span class="string">"不睡觉"</span></span>
+<span class="line">	fmt.Println(p1.dreams) <span class="comment">// [吃饭 不睡觉 打豆豆]</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>因为方法的函数体使得<code>p.dreams</code>和<code>dreams</code>的内存地址相同，所以在修改了<code>data[1]</code>后，p1的值也发生了变化。<br><strong>修改方法</strong><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Person)</span> <span class="title">SetDreams</span><span class="params">(dreams []<span class="keyword">string</span>)</span></span> &#123;</span>
+<span class="line">    p.dreams = <span class="built_in">make</span>([]<span class="keyword">string</span>,<span class="built_in">len</span>(dreams))</span>
+<span class="line">    <span class="built_in">copy</span>(p.dreams,dreams)</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/结构体/" rel="tag"># 结构体</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/17/go/10-指针/" rel="next" title="10-指针">
+                <i class="fa fa-chevron-left"></i> 10-指针
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/18/go/Go坑之for-range/" rel="prev" title="Go坑之for-range">
+                Go坑之for-range <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DaguangYang</p>
+              <div class="site-description motion-element" itemprop="description">The fire in my heart it will never die</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#类型别名和自定义类型"><span class="nav-number">1.</span> <span class="nav-text">类型别名和自定义类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义类型"><span class="nav-number">1.1.</span> <span class="nav-text">自定义类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型别名"><span class="nav-number">1.2.</span> <span class="nav-text">类型别名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义类型与类型别名之间的区别"><span class="nav-number">1.3.</span> <span class="nav-text">自定义类型与类型别名之间的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结构体"><span class="nav-number">2.</span> <span class="nav-text">结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体的定义"><span class="nav-number">2.1.</span> <span class="nav-text">结构体的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体实例化"><span class="nav-number">2.2.</span> <span class="nav-text">结构体实例化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本实例化"><span class="nav-number">2.2.1.</span> <span class="nav-text">基本实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匿名结构体"><span class="nav-number">2.2.2.</span> <span class="nav-text">匿名结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建指针类型结构体"><span class="nav-number">2.2.3.</span> <span class="nav-text">创建指针类型结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取结构体的地址实例化"><span class="nav-number">2.2.4.</span> <span class="nav-text">取结构体的地址实例化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体初始化"><span class="nav-number">2.3.</span> <span class="nav-text">结构体初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用键值对进行初始化"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用键值对进行初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体内存占用布局"><span class="nav-number">2.4.</span> <span class="nav-text">结构体内存占用布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-number">2.5.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法和接受者"><span class="nav-number">2.6.</span> <span class="nav-text">方法和接受者</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指针类型的接受者"><span class="nav-number">2.6.1.</span> <span class="nav-text">指针类型的接受者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#值类型的接受者"><span class="nav-number">2.6.2.</span> <span class="nav-text">值类型的接受者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候应该使用指针类型接收者"><span class="nav-number">2.6.3.</span> <span class="nav-text">什么时候应该使用指针类型接收者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法的接收类型是任意的"><span class="nav-number">2.7.</span> <span class="nav-text">方法的接收类型是任意的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体的匿名字段"><span class="nav-number">2.8.</span> <span class="nav-text">结构体的匿名字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套结构体"><span class="nav-number">2.9.</span> <span class="nav-text">嵌套结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套匿名结构体"><span class="nav-number">2.9.1.</span> <span class="nav-text">嵌套匿名结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套结构体的字段名冲突"><span class="nav-number">2.9.2.</span> <span class="nav-text">嵌套结构体的字段名冲突</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体的“继承”"><span class="nav-number">2.10.</span> <span class="nav-text">结构体的“继承”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体字段的可见性"><span class="nav-number">2.11.</span> <span class="nav-text">结构体字段的可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体与JSON序列化"><span class="nav-number">2.12.</span> <span class="nav-text">结构体与JSON序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体标签（Tag）"><span class="nav-number">2.13.</span> <span class="nav-text">结构体标签（Tag）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识点"><span class="nav-number">2.14.</span> <span class="nav-text">补充知识点</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-04-06</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DaguangYang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">142k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">2:10</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
