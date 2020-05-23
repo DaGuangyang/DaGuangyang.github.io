@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="清单配置详解">
+<meta name="keywords" content="Ad-Hoc命令集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3-ansible Ad-Hoc命令集">
+<meta property="og:url" content="http://yoursite.com/2019/07/13/ansible/3-Ad-Hoc命令集/index.html">
+<meta property="og:site_name" content="DaguangY">
+<meta property="og:description" content="清单配置详解">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/ansible/3-Ad-Hoc命令集/ansible.jpg">
+<meta property="og:updated_time" content="2020-05-10T06:41:11.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3-ansible Ad-Hoc命令集">
+<meta name="twitter:description" content="清单配置详解">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/13/ansible/3-Ad-Hoc命令集/ansible.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/13/ansible/3-Ad-Hoc命令集/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>3-ansible Ad-Hoc命令集 | DaguangY</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DaguangY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">All I need is a miracle</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/ansible/3-Ad-Hoc命令集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaguangYang">
+      <meta itemprop="description" content="The fire in my heart it will never die">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DaguangY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">3-ansible Ad-Hoc命令集
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-13 21:18:33" itemprop="dateCreated datePublished" datetime="2019-07-13T21:18:33+08:00">2019-07-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-05-10 14:41:11" itemprop="dateModified" datetime="2020-05-10T14:41:11+08:00">2020-05-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">20k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">18 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2019/07/13/ansible/3-Ad-Hoc命令集/ansible.jpg" alt="ansible"><br>清单配置详解<br><a id="more"></a><br>ansible有两种完成任务的方式：  </p>
+<ol>
+<li>Ad-Hoc：也就是ansible命令，相当于linux命令  </li>
+<li>ansible-playbook：ansible-playbook命令，相当于shell脚本  </li>
+</ol>
+<h1 id="Ad-Hoc用法"><a href="#Ad-Hoc用法" class="headerlink" title="Ad-Hoc用法"></a>Ad-Hoc用法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ansible &lt;host-pattern&gt; [options]</span>
+</pre></td></tr></table></figure>
+<p><strong>[options]</strong>  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>-v</strong></td>
+<td style="text-align:left">输出详细信息，-vvv输出更加详细的信息</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-i PATH</strong></td>
+<td style="text-align:left">指定inventory配置文件，默认是/etc/ansible/hosts</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-f NUM</strong></td>
+<td style="text-align:left">指定并发数，默认是使用的ansible.cfg中forks=5</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-m NAME</strong></td>
+<td style="text-align:left">指定使用的模块名</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-M PATH</strong></td>
+<td style="text-align:left">指定模块的存放路径</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-a ‘xxxxx’</strong></td>
+<td style="text-align:left">模块参数</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-k ：</strong></td>
+<td style="text-align:left">认证密码</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-K ：</strong></td>
+<td style="text-align:left">sudo时使用的密码</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-o ：</strong></td>
+<td style="text-align:left">标准输出至一行</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-b ：</strong></td>
+<td style="text-align:left">相当于sudo命令</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-t PATH</strong></td>
+<td style="text-align:left">将输出信息保存在PATH目录下，文件名为远程主机名</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-T seconds</strong></td>
+<td style="text-align:left">设置最大超时时间，单位秒</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-B seconds</strong></td>
+<td style="text-align:left">后台执行命令，超过指定秒后终止运行的命令</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-P seconds</strong></td>
+<td style="text-align:left">定期返回后台任务进度</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-u USERNAME</strong></td>
+<td style="text-align:left">指定以哪一个远程主机的用户进行远程</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>-U USERNAME</strong></td>
+<td style="text-align:left">相当于远程主机后执行sudo USERNAME</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>–list-hosts</strong></td>
+<td style="text-align:left">列出符合条件的所有主机列表</td>
+</tr>
+</tbody>
+</table>
+<p>当命令执行多台主机时，执行的主机是没有固定先后顺序的，且受并发数（默认5）限制，同一时间输出主机信息小于等于5都是正常的。  </p>
+<ul>
+<li><p>示例1<br>查看主机内存情况  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">#command、script、shell，都可以实现远程shell命令运行</span>
+<span class="line">ansible test3 -m command -a &apos;free -m&apos;    #command运行远程权限范围所有的shell命令</span>
+<span class="line">ansible test3 -m shell -a &apos;free -m&apos;      #shell模块还可以执行远程主机的shell脚本文件，执行脚本时`-a`参数后跟脚本的路径</span>
+<span class="line">ansible test3 -m script -a &apos;free -m&apos;     #script模块可以在远程主机执行主控端存储的shell脚本文件，相当于scp+shell组合，执行脚本时`-a`参数后跟脚本的路径</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>示例2<br>使用yum安装指定软件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ansible test3 -m yum -a &apos;name=vim state=installed&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>name</strong>：后跟要操作的包名<br><strong>state</strong>：表示对包执行的操作，installed（安装）、latest（更新或者安装最新）、removed（卸载）  </p>
+<ul>
+<li>示例3<br>启动某一项服务，并设置开机启动  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ansible test3 -m service -a&apos;name=xxxx state=started enabled=yes&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="常用模块"><a href="#常用模块" class="headerlink" title="常用模块"></a>常用模块</h1><h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ul>
+<li>fetch<br>将远程主机的文件拉取到ansible主机。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ansible test3 -m fetch -a&apos;src=/etc/fstab dest=/home/test&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>src</strong>：表示要拉取的远程主机的文件或目录路径<br><strong>dest</strong>：表示将文件存放在ansible的路径<br>拉取到ansible主机的fstab文件路径是/home/test/test3/etc/fstab,说明在指定dest路径下会自动创一个主机的文件夹（/home/test/test3），然后在该主机文件夹下也会自动创建拉取的文件在远程主机中的路径结构以及文件。  </p>
+<ul>
+<li><p>copy<br>将ansible主机上的文件拷贝到远程主机上。<br><strong>src</strong>：用于指定需要copy的文件或目录<br><strong>dest</strong>：用于指定文件将被拷贝到远程主机的哪个目录中，dest为必须参数<br><strong>content</strong>：当不使用src指定拷贝的文件时，可以使用content直接指定文件内容，src与content两个参数必有其一，否则会报错。<br><strong>force</strong> ：当远程主机的目标路径中已经存在同名文件，并且与ansible主机中的文件内容不同时，是否强制覆盖，可选值有yes和no，默认值为yes，表示覆盖，如果设置为no，则不会执行覆盖拷贝操作，远程主机中的文件保持不变。<br><strong>backup</strong>：当远程主机的目标路径中已经存在同名文件，并且与ansible主机中的文件内容不同时，是否对远程主机的文件进行备份，可选值有yes和no，当设置为yes时，会先备份远程主机中的文件，然后再将ansible主机中的文件拷贝到远程主机。<br><strong>owner</strong> ：指定文件拷贝到远程主机后的属主，但是远程主机上必须有对应的用户，否则会报错。<br><strong>group</strong> ：指定文件拷贝到远程主机后的属组，但是远程主机上必须有对应的组，否则会报错。<br><strong>mode</strong> ：指定文件拷贝到远程主机后的权限，如果你想将权限设置为”rw-r–r–”，则可以使用mode=0644表示，如果你想要在user对应的权限位上添加执行权限，则可以使用mode=u+x表示。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">#将ansible主机中/home/yyg/test.txt复制到test3的/home/yyg下</span>
+<span class="line">ansible test3 -m copy -a&apos;src=/home/yyg/test.txt dest=/home/yyg&apos;</span>
+<span class="line"></span>
+<span class="line">#在远程主机的/home/yyg/目录下生成文件test2.txt，改文件有两行第一行123第二行456</span>
+<span class="line">ansible test3 -m copy -a&apos;content=&quot;123\n456\n&quot; dest=/home/yyg/test2.txt&apos;   #使用content时，dest必须是一个文件</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>file<br>对文件的基本操作：创建文件或目录、删除文件或目录、修改文件权限等<br><strong>path</strong>：指定要操作的文件或目录【必须参数】<br><strong>state</strong>：可选参数  </p>
+<ul>
+<li>directory：指定的path为一个目录，并创建目录；若目录存在则不进行操作  </li>
+<li>touch：指定的path是文件，并创建文件；若存在则更新文件的时间戳  </li>
+<li>link：指定的path是软连接  </li>
+<li>hard：指定的path是硬连接  </li>
+<li>absent：删除目录或者文件</li>
+</ul>
+<p><strong>src</strong>:当state是link或者hard时，还参数指向的是链接源<br><strong>owner</strong>:用于指定被操作文件的属主，属主对应的用户必须在远程主机中存在，否则会报错。<br><strong>group</strong>:用于指定被操作文件的属组，属组对应的组必须在远程主机中存在，否则会报错。<br><strong>mode</strong>：设置文件的权限，例如mode=777<br><strong>recurse</strong>：当要操作目录时，recurse=yes表示递归操作  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line">#在test3上创建一个/home/yyg/test.txt文件  </span>
+<span class="line">ansible test3 -m file -a&apos;path=/home/yyg/test.txt state=touch&apos;</span>
+<span class="line"></span>
+<span class="line">#在test3上创建一个/home/yyg/dd 目录</span>
+<span class="line">ansible test3 -m file -a&apos;path=/home/yyg/dd state=directory&apos;</span>
+<span class="line"></span>
+<span class="line">#为test3上/home/yyg/test.txt创建一个/home/yyg/test.link软连接</span>
+<span class="line">ansible test3 -m file -a&apos;path=/home/yyg/test.link state=link src=/home/yyg/test.txt&apos;</span>
+<span class="line"></span>
+<span class="line">#为test3上/home/yyg/test.txt创建一个/home/yyg/test.hard软连接</span>
+<span class="line">ansible test3 -m file -a&apos;path=/home/yyg/test.hard state=hard src=/home/yyg/test.txt&apos;</span>
+<span class="line"></span>
+<span class="line">#删除test3上的/home/yyg/test.hard</span>
+<span class="line">ansible test3 -m file -a&apos;path=/home/yyg/test.hard state=absent&apos;</span>
+<span class="line"></span>
+<span class="line">#将test3上的/home/yyg/test.txt文件，属主为yyg、属组为yyg、权限改为777</span>
+<span class="line">ansible test3 -m file -a&apos;path=/home/yyg/test.txt owner=yyg group=yyg mode=777&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>blockinfile<br>向指定的文件（默认尾部）插入文本，并自动插入标记<br><strong>path</strong>:指定操作的文件<br><strong>block</strong>:要插入的文本<br><strong>marker</strong>：自定义标记，默认会在插入的文本上行和下行插入<code># BEGIN ANSIBLE MANAGED BLOCK</code>、<code># END ANSIBLE MANAGED BLOCK</code>。当marker=marker=”{mark} 2020-04-20”，标记就会变成<code>BEGIN 2020-04-20</code>、<code>END 2020-04-20</code>，当然也可以不加{mark}<br><strong>state</strong>：默认参数为present表示更新标记的文本；当state=absent时，表示删除标记的文本<br><strong>backup</strong>:表示修改文件之前是否进行备份。<br><strong>insertbefore</strong>：可以与正则表达式一起使用，表示将文本添加在正则匹配的行后（有多行可以匹配时，以最后一个满足正则的行为准）<br><strong>insertafter</strong>：可以与正则表达式一起使用，表示将文本添加在正则匹配的行前（有多行可以匹配时，以最后一个满足正则的行为准）；当insertafter=BOF时表示将文本插入在文件开头。<br><strong>create</strong>: 操作的文件不存在时是否进行创建，默认create=no  </p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">#向test3的/home/yyg/test.txt插入两行数字</span>
+<span class="line">ansible test3 -m blockinfile -a &apos;path=/home/yyg/test.txt block=&quot;123\n456\n&quot;&apos;</span>
+<span class="line"></span>
+<span class="line">[root@test3 yyg]# more /home/yyg/test.txt </span>
+<span class="line"># BEGIN ANSIBLE MANAGED BLOCK      </span>
+<span class="line">123</span>
+<span class="line">456</span>
+<span class="line"># END ANSIBLE MANAGED BLOCK</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line">#向test3的/home/yyg/test.txt插入三行数字并自定义标记</span>
+<span class="line">ansible test3 -m blockinfile -a &apos;path=/home/yyg/test.txt marker=&quot;&#123;mark&#125; 2020-04-20&quot;  block=&quot;123\n456\n789\n&quot;&apos;</span>
+<span class="line"></span>
+<span class="line">[root@test3 yyg]# more /home/yyg/test.txt </span>
+<span class="line"># BEGIN ANSIBLE MANAGED BLOCK</span>
+<span class="line">123</span>
+<span class="line">456</span>
+<span class="line"># END ANSIBLE MANAGED BLOCK</span>
+<span class="line">BEGIN 2020-04-20</span>
+<span class="line">123</span>
+<span class="line">456</span>
+<span class="line">789</span>
+<span class="line">END 2020-04-20</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">#对test3下/home/yyg/test.txt默认标记的文本进行修改</span>
+<span class="line">ansible test3 -m blockinfile -a&apos;path=/home/yyg/test.txt block=&quot;789\n456\n123\n&quot;&apos;</span>
+<span class="line">#可以查出这次的操作是针对默认标记的文本进行的修改</span>
+<span class="line">[root@test3 yyg]# more /home/yyg/test.txt </span>
+<span class="line"># BEGIN ANSIBLE MANAGED BLOCK</span>
+<span class="line">789</span>
+<span class="line">456</span>
+<span class="line">123</span>
+<span class="line"># END ANSIBLE MANAGED BLOCK</span>
+<span class="line">BEGIN 2020-04-20</span>
+<span class="line">123</span>
+<span class="line">456</span>
+<span class="line">789</span>
+<span class="line">END 2020-04-20</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>lineinfile<br>确保文件中有指定的一行；替换指定的一行；删除指定文本<br><strong>path</strong>:指定要操作的文件<br><strong>line</strong>:指定要操作的文本<br><strong>state</strong>:默认是present，absent为删除指定的文本<br><strong>regexp</strong>:使用正则表达式匹配对应的行,当替换文本时，如果有多行文本都能被匹配，则只有最后面被匹配到的那行文本才会被替换;当删除文本时，如果有多行文本都能被匹配，这么这些行都会被删除。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">[root@test3 yyg]# more linefile </span>
+<span class="line">test test 11111</span>
+<span class="line"></span>
+<span class="line">#确保/home/yyg/linefile有`test test`这一行</span>
+<span class="line">ansible test3 -m lineinfile -a&apos;path=/home/yyg/linefile line=&quot;test test&quot;&apos;</span>
+<span class="line"></span>
+<span class="line">#若是linefile中有test test这一行则linefile文件不会有改变</span>
+<span class="line">#【注意这里是匹配的整行，所以才会在文件尾加了test test】</span>
+<span class="line">[root@test3 yyg]# more linefile </span>
+<span class="line">test test 11111</span>
+<span class="line">test test</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line">[root@test3 yyg]# more linefile1 </span>
+<span class="line">1test</span>
+<span class="line">2test</span>
+<span class="line">3test</span>
+<span class="line">3test</span>
+<span class="line">4test</span>
+<span class="line"></span>
+<span class="line">#替换/home/yyg/linefile1中`3test`这一行为linefile</span>
+<span class="line">ansible test3 -m lineinfile -a&apos;path=/home/yyg/linefile1 regexp=&quot;^3&quot; line=&quot;linefile&quot;&apos;</span>
+<span class="line"></span>
+<span class="line">#【注意只对匹配的最后一行进行替换，若没有匹配的行则会在文件尾添加 linefile 】</span>
+<span class="line">#【若想要在没有匹配行时不再文件尾添加文本 则需要在lineinfile模块参数中加上backrefs=yes】</span>
+<span class="line">[root@qweasdzxc yyg]# more linefile1 </span>
+<span class="line">1test</span>
+<span class="line">2test</span>
+<span class="line">3test</span>
+<span class="line">linefile</span>
+<span class="line">4test</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line">[root@qweasdzxc yyg]# more linefile2</span>
+<span class="line">1test</span>
+<span class="line">2test</span>
+<span class="line">3test123</span>
+<span class="line">3test</span>
+<span class="line">3test</span>
+<span class="line">4test</span>
+<span class="line"></span>
+<span class="line">#删除test3下/home/yyg/linefile2中是&quot;3test&quot;的行</span>
+<span class="line">ansible test3 -m lineinfile -a&apos;path=/home/yyg/linefile2 line=&quot;3test&quot; state=absent&apos;</span>
+<span class="line"></span>
+<span class="line">#会将所有&quot;3test&quot;行删除，3test123则不会被删除</span>
+<span class="line">[root@qweasdzxc yyg]# more linefile2</span>
+<span class="line">1test</span>
+<span class="line">2test</span>
+<span class="line">3test123</span>
+<span class="line">4test</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line">[root@qweasdzxc yyg]# more linefile3</span>
+<span class="line">1test</span>
+<span class="line">2test</span>
+<span class="line">3test123</span>
+<span class="line">3test</span>
+<span class="line">3test</span>
+<span class="line">4test</span>
+<span class="line"></span>
+<span class="line">#删除test3下/home/yyg/linefile3中有&quot;3test&quot;字符的行</span>
+<span class="line">ansible test3 -m lineinfile -a&apos;path=/home/yyg/linefile3 regexp=&quot;.*3test.*&quot; state=absent&apos;</span>
+<span class="line"></span>
+<span class="line">#【注意参数line和regexp的区别】</span>
+<span class="line">[root@qweasdzxc yyg]# more linefile3</span>
+<span class="line">1test</span>
+<span class="line">2test</span>
+<span class="line">4test</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>find<br>在远程主机中查找符合条件的文件。<br><strong>path</strong>：必须参数，指定在那个路径下查找文件（不会在子目录中查找），可以有多个路径，路径之间用逗号隔开<br><strong>recurse</strong>：默认是no，递归查找path下的子目录时需设定为yes<br><strong>hidden</strong>：默认no，设置为yes时查找隐藏文件<br><strong>file_type</strong>：默认情况下只会查找“文件”，当需要查找其他类型时，需进行指定：any、dierctory、file、link<br><strong>patterns</strong>：指定查找的文件名，可以使用通配符。<br><strong>use_regex</strong>：当patterns需使用正则表达式时，需设置为yes<br><strong>contains</strong>：指定一个正则表达式搜索文件中的内容<br><strong>age</strong>:根据文件mtime时间进行查找，单位有秒(s)、分(m)、时(h)、天(d)、星期(w)。age=3d（mtime在3天前的文件）、age=-3d（mtime在进3天内的文件）<br><strong>age_stamp</strong>：指定搜索的是文件的什么时间atime、ctime、mtime<br><strong>size</strong>:根据文件的大小进行查找（单位t、g、m、k、b），size=3m（大于3m的文件）、size=-3m（小于等于3m的文件）  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+</pre></td><td class="code"><pre><span class="line">在test3主机的/home/yyg目录中查找文件内容中包含abc字符串的文件，隐藏文件会被忽略，不会进行递归查找。</span>
+<span class="line">[root@zabbix ~]# ansible test3 -m find -a&apos;paths=/home/yyg contains=&quot;.*abc.*&quot;&apos;</span>
+<span class="line">test3 | SUCCESS =&gt; &#123;</span>
+<span class="line">    &quot;ansible_facts&quot;: &#123;</span>
+<span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span>
+<span class="line">    &#125;, </span>
+<span class="line">    &quot;changed&quot;: false, </span>
+<span class="line">    &quot;examined&quot;: 14, </span>
+<span class="line">    &quot;files&quot;: [</span>
+<span class="line">        &#123;</span>
+<span class="line">            &quot;atime&quot;: 1587594438.3750508, </span>
+<span class="line">            &quot;ctime&quot;: 1587594438.3750508, </span>
+<span class="line">            &quot;dev&quot;: 64768, </span>
+<span class="line">            &quot;gid&quot;: 0, </span>
+<span class="line">            &quot;gr_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;inode&quot;: 50780728, </span>
+<span class="line">            &quot;isblk&quot;: false, </span>
+<span class="line">            &quot;ischr&quot;: false, </span>
+<span class="line">            &quot;isdir&quot;: false, </span>
+<span class="line">            &quot;isfifo&quot;: false, </span>
+<span class="line">            &quot;isgid&quot;: false, </span>
+<span class="line">            &quot;islnk&quot;: false, </span>
+<span class="line">            &quot;isreg&quot;: true, </span>
+<span class="line">            &quot;issock&quot;: false, </span>
+<span class="line">            &quot;isuid&quot;: false, </span>
+<span class="line">            &quot;mode&quot;: &quot;0644&quot;, </span>
+<span class="line">            &quot;mtime&quot;: 1587594438.3750508, </span>
+<span class="line">            &quot;nlink&quot;: 1, </span>
+<span class="line">            &quot;path&quot;: &quot;/home/yyg/find.txt&quot;, </span>
+<span class="line">            &quot;pw_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;rgrp&quot;: true, </span>
+<span class="line">            &quot;roth&quot;: true, </span>
+<span class="line">            &quot;rusr&quot;: true, </span>
+<span class="line">            &quot;size&quot;: 8, </span>
+<span class="line">            &quot;uid&quot;: 0, </span>
+<span class="line">            &quot;wgrp&quot;: false, </span>
+<span class="line">            &quot;woth&quot;: false, </span>
+<span class="line">            &quot;wusr&quot;: true, </span>
+<span class="line">            &quot;xgrp&quot;: false, </span>
+<span class="line">            &quot;xoth&quot;: false, </span>
+<span class="line">            &quot;xusr&quot;: false</span>
+<span class="line">        &#125;</span>
+<span class="line">    ], </span>
+<span class="line">    &quot;matched&quot;: 1, </span>
+<span class="line">    &quot;msg&quot;: &quot;&quot;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+</pre></td><td class="code"><pre><span class="line">在test3主机的/home/yyg目录以及其子目录中查找文件内容中包含abc字符串的文件，隐藏文件会被忽略。</span>
+<span class="line">[root@zabbix ~]# ansible test3 -m find -a&apos;paths=/home/yyg recurse=yes contains=&quot;.*abc.*&quot;&apos;</span>
+<span class="line">test3 | SUCCESS =&gt; &#123;</span>
+<span class="line">    &quot;ansible_facts&quot;: &#123;</span>
+<span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span>
+<span class="line">    &#125;, </span>
+<span class="line">    &quot;changed&quot;: false, </span>
+<span class="line">    &quot;examined&quot;: 16, </span>
+<span class="line">    &quot;files&quot;: [</span>
+<span class="line">        &#123;</span>
+<span class="line">            &quot;atime&quot;: 1587594661.6363747, </span>
+<span class="line">            &quot;ctime&quot;: 1587594438.3750508, </span>
+<span class="line">            &quot;dev&quot;: 64768, </span>
+<span class="line">            &quot;gid&quot;: 0, </span>
+<span class="line">            &quot;gr_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;inode&quot;: 50780728, </span>
+<span class="line">            &quot;isblk&quot;: false, </span>
+<span class="line">            &quot;ischr&quot;: false, </span>
+<span class="line">            &quot;isdir&quot;: false, </span>
+<span class="line">            &quot;isfifo&quot;: false, </span>
+<span class="line">            &quot;isgid&quot;: false, </span>
+<span class="line">            &quot;islnk&quot;: false, </span>
+<span class="line">            &quot;isreg&quot;: true, </span>
+<span class="line">            &quot;issock&quot;: false, </span>
+<span class="line">            &quot;isuid&quot;: false, </span>
+<span class="line">            &quot;mode&quot;: &quot;0644&quot;, </span>
+<span class="line">            &quot;mtime&quot;: 1587594438.3750508, </span>
+<span class="line">            &quot;nlink&quot;: 1, </span>
+<span class="line">            &quot;path&quot;: &quot;/home/yyg/find.txt&quot;, </span>
+<span class="line">            &quot;pw_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;rgrp&quot;: true, </span>
+<span class="line">            &quot;roth&quot;: true, </span>
+<span class="line">            &quot;rusr&quot;: true, </span>
+<span class="line">            &quot;size&quot;: 8, </span>
+<span class="line">            &quot;uid&quot;: 0, </span>
+<span class="line">            &quot;wgrp&quot;: false, </span>
+<span class="line">            &quot;woth&quot;: false, </span>
+<span class="line">            &quot;wusr&quot;: true, </span>
+<span class="line">            &quot;xgrp&quot;: false, </span>
+<span class="line">            &quot;xoth&quot;: false, </span>
+<span class="line">            &quot;xusr&quot;: false</span>
+<span class="line">        &#125;, </span>
+<span class="line">        &#123;</span>
+<span class="line">            &quot;atime&quot;: 1587594824.9962718, </span>
+<span class="line">            &quot;ctime&quot;: 1587594824.9962718, </span>
+<span class="line">            &quot;dev&quot;: 64768, </span>
+<span class="line">            &quot;gid&quot;: 0, </span>
+<span class="line">            &quot;gr_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;inode&quot;: 50780729, </span>
+<span class="line">            &quot;isblk&quot;: false, </span>
+<span class="line">            &quot;ischr&quot;: false, </span>
+<span class="line">            &quot;isdir&quot;: false, </span>
+<span class="line">            &quot;isfifo&quot;: false, </span>
+<span class="line">            &quot;isgid&quot;: false, </span>
+<span class="line">            &quot;islnk&quot;: false, </span>
+<span class="line">            &quot;isreg&quot;: true, </span>
+<span class="line">            &quot;issock&quot;: false, </span>
+<span class="line">            &quot;isuid&quot;: false, </span>
+<span class="line">            &quot;mode&quot;: &quot;0644&quot;, </span>
+<span class="line">            &quot;mtime&quot;: 1587594824.9962718, </span>
+<span class="line">            &quot;nlink&quot;: 1, </span>
+<span class="line">            &quot;path&quot;: &quot;/home/yyg/find/find.txt&quot;, </span>
+<span class="line">            &quot;pw_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;rgrp&quot;: true, </span>
+<span class="line">            &quot;roth&quot;: true, </span>
+<span class="line">            &quot;rusr&quot;: true, </span>
+<span class="line">            &quot;size&quot;: 8, </span>
+<span class="line">            &quot;uid&quot;: 0, </span>
+<span class="line">            &quot;wgrp&quot;: false, </span>
+<span class="line">            &quot;woth&quot;: false, </span>
+<span class="line">            &quot;wusr&quot;: true, </span>
+<span class="line">            &quot;xgrp&quot;: false, </span>
+<span class="line">            &quot;xoth&quot;: false, </span>
+<span class="line">            &quot;xusr&quot;: false</span>
+<span class="line">        &#125;</span>
+<span class="line">    ], </span>
+<span class="line">    &quot;matched&quot;: 2, </span>
+<span class="line">    &quot;msg&quot;: &quot;&quot;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+</pre></td><td class="code"><pre><span class="line">在test3主机的/home/yyg目录中查找以.sh结尾的文件，包括隐藏文件，但是不包括目录或其他文件类型，不会进行递归查找。</span>
+<span class="line">[root@zabbix ~]# ansible test3 -m find -a&apos;paths=/home/yyg patterns=&quot;*.sh&quot; hidden=yes&apos;</span>
+<span class="line">test3 | SUCCESS =&gt; &#123;</span>
+<span class="line">    &quot;ansible_facts&quot;: &#123;</span>
+<span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span>
+<span class="line">    &#125;, </span>
+<span class="line">    &quot;changed&quot;: false, </span>
+<span class="line">    &quot;examined&quot;: 17, </span>
+<span class="line">    &quot;files&quot;: [</span>
+<span class="line">        &#123;</span>
+<span class="line">            &quot;atime&quot;: 1587595005.4002025, </span>
+<span class="line">            &quot;ctime&quot;: 1587595005.4002025, </span>
+<span class="line">            &quot;dev&quot;: 64768, </span>
+<span class="line">            &quot;gid&quot;: 0, </span>
+<span class="line">            &quot;gr_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;inode&quot;: 50780730, </span>
+<span class="line">            &quot;isblk&quot;: false, </span>
+<span class="line">            &quot;ischr&quot;: false, </span>
+<span class="line">            &quot;isdir&quot;: false, </span>
+<span class="line">            &quot;isfifo&quot;: false, </span>
+<span class="line">            &quot;isgid&quot;: false, </span>
+<span class="line">            &quot;islnk&quot;: false, </span>
+<span class="line">            &quot;isreg&quot;: true, </span>
+<span class="line">            &quot;issock&quot;: false, </span>
+<span class="line">            &quot;isuid&quot;: false, </span>
+<span class="line">            &quot;mode&quot;: &quot;0644&quot;, </span>
+<span class="line">            &quot;mtime&quot;: 1587595005.4002025, </span>
+<span class="line">            &quot;nlink&quot;: 1, </span>
+<span class="line">            &quot;path&quot;: &quot;/home/yyg/find.sh&quot;, </span>
+<span class="line">            &quot;pw_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;rgrp&quot;: true, </span>
+<span class="line">            &quot;roth&quot;: true, </span>
+<span class="line">            &quot;rusr&quot;: true, </span>
+<span class="line">            &quot;size&quot;: 0, </span>
+<span class="line">            &quot;uid&quot;: 0, </span>
+<span class="line">            &quot;wgrp&quot;: false, </span>
+<span class="line">            &quot;woth&quot;: false, </span>
+<span class="line">            &quot;wusr&quot;: true, </span>
+<span class="line">            &quot;xgrp&quot;: false, </span>
+<span class="line">            &quot;xoth&quot;: false, </span>
+<span class="line">            &quot;xusr&quot;: false</span>
+<span class="line">        &#125;, </span>
+<span class="line">        &#123;</span>
+<span class="line">            &quot;atime&quot;: 1587595141.808884, </span>
+<span class="line">            &quot;ctime&quot;: 1587595141.808884, </span>
+<span class="line">            &quot;dev&quot;: 64768, </span>
+<span class="line">            &quot;gid&quot;: 0, </span>
+<span class="line">            &quot;gr_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;inode&quot;: 50780731, </span>
+<span class="line">            &quot;isblk&quot;: false, </span>
+<span class="line">            &quot;ischr&quot;: false, </span>
+<span class="line">            &quot;isdir&quot;: false, </span>
+<span class="line">            &quot;isfifo&quot;: false, </span>
+<span class="line">            &quot;isgid&quot;: false, </span>
+<span class="line">            &quot;islnk&quot;: false, </span>
+<span class="line">            &quot;isreg&quot;: true, </span>
+<span class="line">            &quot;issock&quot;: false, </span>
+<span class="line">            &quot;isuid&quot;: false, </span>
+<span class="line">            &quot;mode&quot;: &quot;0644&quot;, </span>
+<span class="line">            &quot;mtime&quot;: 1587595141.808884, </span>
+<span class="line">            &quot;nlink&quot;: 1, </span>
+<span class="line">            &quot;path&quot;: &quot;/home/yyg/.find.sh&quot;, </span>
+<span class="line">            &quot;pw_name&quot;: &quot;root&quot;, </span>
+<span class="line">            &quot;rgrp&quot;: true, </span>
+<span class="line">            &quot;roth&quot;: true, </span>
+<span class="line">            &quot;rusr&quot;: true, </span>
+<span class="line">            &quot;size&quot;: 0, </span>
+<span class="line">            &quot;uid&quot;: 0, </span>
+<span class="line">            &quot;wgrp&quot;: false, </span>
+<span class="line">            &quot;woth&quot;: false, </span>
+<span class="line">            &quot;wusr&quot;: true, </span>
+<span class="line">            &quot;xgrp&quot;: false, </span>
+<span class="line">            &quot;xoth&quot;: false, </span>
+<span class="line">            &quot;xusr&quot;: false</span>
+<span class="line">        &#125;</span>
+<span class="line">    ], </span>
+<span class="line">    &quot;matched&quot;: 2, </span>
+<span class="line">    &quot;msg&quot;: &quot;&quot;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>replace<br>根据指定的正则表达式替换文件中所有匹配的内容。<br><strong>path</strong>：必须参数，指定要操作的文件<br><strong>regexp</strong>：必须参数，指定一个表达式。<br><strong>replace</strong>：指定最终替换成的字符串<br><strong>backup</strong>：修改前是否进行备份  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">[root@zabbix ~]# ansible test3 -m replace -a&apos;path=/home/yyg/find.txt regexp=&quot;abc&quot; replace=&quot;ABC&quot;&apos;</span>
+<span class="line">test3 | CHANGED =&gt; &#123;</span>
+<span class="line">    &quot;ansible_facts&quot;: &#123;</span>
+<span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span>
+<span class="line">    &#125;, </span>
+<span class="line">    &quot;changed&quot;: true, </span>
+<span class="line">    &quot;msg&quot;: &quot;1 replacements made&quot;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="命令模块"><a href="#命令模块" class="headerlink" title="命令模块"></a>命令模块</h2><ul>
+<li>command<br>在远程主机上执行命令，命令不会经过shell处理，例如指定的命令中含有重定向、管道等，这些字符就会失效。<br><strong>chdir</strong>：指定一个目录，命令会在该目录下执行<br><strong>creates</strong>：指定一个文件，当文件存在时不指定命令<br><strong>removes</strong>：指定一个文件，当文件不存在时执行命令  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">test3下/home/yyg目录下有testfile，当这个文件存在时，在/home/yyg目录下执行命令ll  </span>
+<span class="line">[root@zabbix ~]# ansible test3 -m command -a&apos;chdir=/home/yyg removes=testfile ls -l&apos;</span>
+<span class="line">test3 | CHANGED | rc=0 &gt;&gt;</span>
+<span class="line">总用量 0</span>
+<span class="line">-rw-r--r-- 1 root root 0 4月  23 06:58 testfile</span>
+<span class="line"></span>
+<span class="line">[root@zabbix ~]# ansible test3 -m command -a&apos;chdir=/home/yyg creates=testfile ls -l&apos;</span>
+<span class="line">test3 | SUCCESS | rc=0 &gt;&gt;</span>
+<span class="line">skipped, since testfile exists</span>
+</pre></td></tr></table></figure>
+<ul>
+<li><p>shell<br>在远程主机上执行命令，shell模块在远程主机中执行命令时，会经过远程主机上的/bin/sh程序处理，所以可以使用管道、重定向<br><strong>chdir</strong>：指定一个目录，命令会在该目录下执行<br><strong>creates</strong>：指定一个文件，当文件存在时不指定命令<br><strong>removes</strong>：指定一个文件，当文件不存在时执行命令  </p>
+</li>
+<li><p>script<br>在远程主机上执行ansible主机上的脚本，不需要手动拷贝到远程主机后再执行<br><strong>chdir</strong>：指定一个目录，命令会在该目录下执行<br><strong>creates</strong>：指定一个文件，当文件存在时不指定命令<br><strong>removes</strong>：指定一个文件，当文件不存在时执行命令  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">在test3的/home/yyg 目录下执行ansible主机上的/home/script.sh</span>
+<span class="line">ansible test3 -m script -a&apos;/home/script.sh chdir=&quot;/home/yyg&quot;&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="系统类型模块"><a href="#系统类型模块" class="headerlink" title="系统类型模块"></a>系统类型模块</h2><ul>
+<li>cron<br>相当于crontab命令。<br>【时间参数，默认情况下是*】<br><strong>minute</strong>：定时执行中的分钟<br><strong>hour</strong>：小时<br><strong>day</strong>：日<br><strong>month</strong>：月<br><strong>weekday</strong>：星期  </li>
+</ul>
+<hr>
+<p><strong>special_time</strong>：特殊时间用以替换定时的时间，reboot(重启后)、yearly(每年)、annually(每年，与yearly相同)、monthly(每月)、weekly(每周)、daily(每天)、hourly(每时)<br><strong>user</strong>：执行定时任务的用户<br><strong>job</strong>：指定定时执行的命令或者脚本<br><strong>name</strong>：指定定时任务的名称，会在注释中显示<br><strong>state</strong>：当计划任务有名称时，我们可以根据名称修改或删除对应的任务，当删除计划任务时，需要将state的值设置为absent<br><strong>disabled</strong>：可以根据任务名将定时任务取消（即注释），也要将任务的job和设定的时间写准确，否则例如，当时间写错误时，被注释的任务时间将被改为写错的时间<br><strong>backup</strong>：参数yes、no（默认），在修改定时任务时备份原定时任务清单，在/tmp目录下创建备份文件。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">在test3主机上创建计划任务，任务名称为&quot;test special time&quot;，任务将在重启时执行，任务内容为输出test字符</span>
+<span class="line">ansible test3 -m cron -a&apos;special_time=reboot name=&quot;test special time&quot; job=&quot;echo test&quot;&apos;</span>
+<span class="line"></span>
+<span class="line">[root@test3 yyg]# crontab -l</span>
+<span class="line">#Ansible: test special time</span>
+<span class="line">@reboot echo test</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>service<br>管理远程主机上的服务。<br><strong>name</strong>：指定服务名<br><strong>state</strong>：要将服务设定的状态started、stopped、restarted、reloaded<br><strong>enabled</strong>：是否设置为开启启动，参数yes、no  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">将test3上的firewalld服务关闭，并设置为开启不启动 </span>
+<span class="line">ansible test3 -m service -a&apos;name=firewalld state=stopped enabled=no&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="用户、组模块"><a href="#用户、组模块" class="headerlink" title="用户、组模块"></a>用户、组模块</h2><ul>
+<li>user<br>管理远程主机上的用户<br><strong>name</strong>：必须参数，指定用户名<br><strong>home</strong>：指定用户的家目录<br><strong>group</strong>：指定用户的数组<br><strong>groups</strong>：指定用户的附加组。当用户原已有附加组，需要在此基础上添加时需要配合append参数使用，否则将会将原附加组覆盖，而不是添加<br><strong>append</strong>：将groups参数提供的附加组，增添到用户的附加组中<br><strong>shell</strong>：指定用户的默认shell<br><strong>uid</strong>：指定用户的UID<br><strong>state</strong>：参数present（默认）、absent，absent表示将用户删除<br><strong>remove</strong>：当state=absent remove=yes时，表示将用户以及将用户的家目录进行删除  </li>
+</ul>
+<ul>
+<li>group<br>管理远程主机上的组<br><strong>name</strong>：必须参数，指定组<br><strong>state</strong>：present，absent，absent表示将组删除<br><strong>gid</strong>：用于指定组的gid  </li>
+</ul>
+<h2 id="包管理模块"><a href="#包管理模块" class="headerlink" title="包管理模块"></a>包管理模块</h2><ul>
+<li><p>yum_repository<br>管理远程主机上的yum仓库<br><strong>name</strong>:必须参数，用于指定要操作的唯一仓库的ID，也就是每个仓库对应的”中括号”内的仓库ID<br><strong>baseurl</strong>：用于设置yum仓库的baseurl<br><strong>description</strong>：此参数用于设置仓库的注释信息，也就是”.repo”配置文件中每个仓库对应的”name字段”对应的内容。<br><strong>file</strong>：此参数用于设置仓库的配置文件名称，即设置”.repo”配置文件的文件名前缀，在不使用此参数的情况下，默认以name参数的仓库ID作为”.repo”配置文件的文件名前缀，同一个’.repo’配置文件中可以存在多个yum源<br><strong>enabled</strong>：此参数用于设置是否激活对应的yum源，此参数默认值为yes，表示启用对应的yum源，设置为no表示不启用对应的yum源。<br><strong>gpgcheck</strong>：此参数用于设置是否开启rpm包验证功能，默认值为no，表示不启用包验证，设置为yes表示开启包验证功能。<br><strong>gpgcakey</strong>：当gpgcheck参数设置为yes时，需要使用此参数指定验证包所需的公钥<br><strong>state</strong>：默认值为present，当值设置为absent时，表示删除对应的yum源  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">#使用如下命令在test3主机上设置ID为test的yum源，仓库配置文件路径为/etc/yum.repos.d/aliEpel.repo</span>
+<span class="line">ansible test3 -m yum_repository -a&apos;name=test description=test baseurl=http://mirrors.aliyun.com/centos/$releasever/os/$basearch/&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>yum<br>在远程主机上通过yum源管理软件包<br><strong>name</strong>:必须参数，用于指定需要管理的软件包<br><strong>state</strong>:指定软件包的状态；present（默认值）、installed、latest、absent、removed，其中installed与present等效，latest表示安装yum中最新的版本，absent和removed等效，表示删除对应的软件包  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">#在test3上安装nginx</span>
+<span class="line">ansible test3 -m yum -a&apos;name=nginx&apos;</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ad-Hoc命令集/" rel="tag"># Ad-Hoc命令集</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/13/ansible/2-ansible基础元素介绍/" rel="next" title="2-ansible基础元素介绍">
+                <i class="fa fa-chevron-left"></i> 2-ansible基础元素介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/04/ansible/4-playbook/" rel="prev" title="4-playbook快速入门">
+                4-playbook快速入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DaguangYang</p>
+              <div class="site-description motion-element" itemprop="description">The fire in my heart it will never die</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ad-Hoc用法"><span class="nav-number">1.</span> <span class="nav-text">Ad-Hoc用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用模块"><span class="nav-number">2.</span> <span class="nav-text">常用模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作"><span class="nav-number">2.1.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模块"><span class="nav-number">2.2.</span> <span class="nav-text">命令模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统类型模块"><span class="nav-number">2.3.</span> <span class="nav-text">系统类型模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户、组模块"><span class="nav-number">2.4.</span> <span class="nav-text">用户、组模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包管理模块"><span class="nav-number">2.5.</span> <span class="nav-text">包管理模块</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-05-23</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DaguangYang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">184k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">2:47</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -116,7 +116,7 @@
 <meta property="og:description" content="ansible概念">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/07/11/ansible/1-ansible基本概念/ansible.jpg">
-<meta property="og:updated_time" content="2019-07-13T06:31:16.000Z">
+<meta property="og:updated_time" content="2020-04-19T16:36:57.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1-ansible基本概念">
 <meta name="twitter:description" content="ansible概念">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-13 14:31:16" itemprop="dateModified" datetime="2019-07-13T14:31:16+08:00">2019-07-13</time>
+                <time title="修改时间：2020-04-20 00:36:57" itemprop="dateModified" datetime="2020-04-20T00:36:57+08:00">2020-04-20</time>
               
             
           </span>
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.7k</span>
+                <span title="本文字数">3.9k</span>
               
 
               
@@ -514,7 +514,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -535,8 +535,13 @@
 
       
         <p><img src="/2019/07/11/ansible/1-ansible基本概念/ansible.jpg" alt="ansible"><br>ansible概念<br><a id="more"></a></p>
-<h2 id="ansible可以做什么"><a href="#ansible可以做什么" class="headerlink" title="ansible可以做什么"></a>ansible可以做什么</h2><p>&emsp;&emsp;它是“配置管理工具”、“自动化运维工具”。<br>&emsp;&emsp;可以完成一些批量任务，或者完成一些经常场重复的工作。例如：在10台机器上安装nginx服务，并启动；将某个文件一次性拷贝到10台服务器上。<br>&emsp;&emsp;获取这些工作也可以使用脚本来完成，但是ansible具有一些优秀的特性，例如：会比较“当前状态”与“目标状态”是否一致，若不一致，会将“当前状态”编程“目标状态”;若一致，则不进行任何操作，这种特性被称为 <strong>幂等性</strong>。而且ansible只需要ssh即可正常工作，不需要在受管机器上安装agent端；以及将受管机器的IP信息添加在ansible的管理清单中。</p>
-<h2 id="安装ansible"><a href="#安装ansible" class="headerlink" title="安装ansible"></a>安装ansible</h2><p>在一台服务器上安装ansible，这台主机就作为“配置管理主机”，其他主机作为“受关主机”。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="ansible可以做什么"><a href="#ansible可以做什么" class="headerlink" title="ansible可以做什么"></a>ansible可以做什么</h2><p>&emsp;&emsp;它是“配置管理工具”、“自动化运维工具”。<br>&emsp;&emsp;可以完成一些批量任务，或者完成一些经常场重复的工作。例如：在10台机器上安装nginx服务，并启动；将某个文件一次性拷贝到10台服务器上。<br>&emsp;&emsp;获取这些工作也可以使用脚本来完成，但是ansible具有一些优秀的特性，例如：会比较“当前状态”与“目标状态”是否一致，若不一致，会将“当前状态”编程“目标状态”;若一致，则不进行任何操作，这种特性被称为 <strong>幂等性</strong>。而且ansible只需要ssh即可正常工作，不需要在受管机器上安装agent端；以及将受管机器的IP信息添加在ansible的管理清单中。<br>&emsp;&emsp;ansible没有客户端，因此底层通信依赖系统软件，Linux下基于OpenSSH，windows下基于PowerShell，管理端必须是Linux系统。使用者在管理节点通过ansible将指令推送到被管理端执行，在执行完毕后自动删除产生的临时文件。  </p>
+<h2 id="Ansible通信方式"><a href="#Ansible通信方式" class="headerlink" title="Ansible通信方式"></a>Ansible通信方式</h2><ol>
+<li>OpenSSH<br>若希望通过非默认的22端口运行命令，在主机清单中进行配置ansible_ssh_port的值。  </li>
+<li>加速模式<br>开启加速模式可以提高ansible的通信速度，对Ad-Hoc命令不友好。  </li>
+<li>Faster OpenSSH<br>ansible 1.5+版本中可以使用，旧版本的实现方式是复制文件至被管理端服务器后运行，然后删除临时文件；新版本是通过OpenSSH发送执行命令，将所有的操作附带在ssh连接过程中实现。<br>需要将<code>/etc/ansible/ansible.cfg</code>中改为<code>pipelining = true</code>，并确保vim /etc/sudoers中的Defaults requiretty是注释状态（centos中没有该选项，有点迷惑）。  </li>
+</ol>
+<h2 id="安装ansible"><a href="#安装ansible" class="headerlink" title="安装ansible"></a>安装ansible</h2><p>在一台服务器上安装ansible，这台主机就作为“配置管理主机”，其他主机作为“受管主机”。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -579,7 +584,8 @@
 <p>安装anxible<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">yum install -y ansible</span>
 </pre></td></tr></table></figure></p>
-<h2 id="配置管理清单"><a href="#配置管理清单" class="headerlink" title="配置管理清单"></a>配置管理清单</h2><p>安装完成后会有一个<code>/etc/ansible/hosts</code>,直接在文件底部添加受管主机的IP即可，然后进行测试是否可行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>验证安装<code>ansible --version</code>。  </p>
+<h2 id="python多环境扩展管理"><a href="#python多环境扩展管理" class="headerlink" title="python多环境扩展管理"></a>python多环境扩展管理</h2><h3 id="pyenv"><a href="#pyenv" class="headerlink" title="pyenv"></a>pyenv</h3><p>python版本管理工具<br>安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -587,46 +593,110 @@
 <span class="line">6</span>
 <span class="line">7</span>
 <span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line">[root@ansible-server yum.repos.d]# ansible 192.168.163.171 -m ping</span>
-<span class="line">192.168.163.171 | SUCCESS =&gt; &#123;</span>
-<span class="line">    &quot;ansible_facts&quot;: &#123;</span>
-<span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span>
-<span class="line">    &#125;,</span>
-<span class="line">    &quot;changed&quot;: false,</span>
-<span class="line">    &quot;ping&quot;: &quot;pong&quot;</span>
-<span class="line">&#125;</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"># 安装依赖</span>
+<span class="line">yum -y install gcc zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel git</span>
+<span class="line"># 安装pyenv</span>
+<span class="line">git clone https://github.com/pyenv/pyenv.git ~/.pyenv</span>
+<span class="line"># 修改环境变量</span>
+<span class="line">echo &apos;export PATH=~/.pyenv/bin:$PATH&apos; &gt;&gt; .bashrc</span>
+<span class="line">echo &apos;export PYENV_ROOT=~/.pyenv&apos; &gt;&gt; .bashrc</span>
+<span class="line">echo &apos;eval &quot;$(pyenv init -)&quot;&apos; &gt;&gt; .bashrc</span>
+<span class="line">source .bashrc</span>
 </pre></td></tr></table></figure></p>
-<p>这是我们之前做过免密登录的结果，若没有做过免密登录，需要在配置清单（/etc/ansible/hosts）中对应的IP后面加上参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>验证安装<code>pyenv --version</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line">ans1 ansible_host=192.168.163.171 ansible_port=22 ansible_user=root ansible_ssh_pass=123456</span>
-<span class="line">ans2 ansible_host=192.168.163.172 ansible_port=22 ansible_user=root ansible_ssh_pass=123456</span>
-<span class="line">ans3 ansible_host=192.168.163.173 ansible_port=22 ansible_user=root ansible_ssh_pass=123456</span>
-<span class="line">192.168.163.171 ansible_port=22 ansible_user=root ansible_ssh_pass=123456</span>
-<span class="line">192.168.163.172 ansible_port=22 ansible_user=root ansible_ssh_pass=123456</span>
-<span class="line">192.168.163.173 ansible_port=22 ansible_user=root ansible_ssh_pass=123456</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line">pyenv install -l        查看所有可安装的python版本</span>
+<span class="line">pyenv install 3.4.1     安装指定版本</span>
+<span class="line">pyenv uninstall 3.4.1   卸载指定版本</span>
+<span class="line">pyenv local 3.4.1       切换当前目录为指定版本</span>
+<span class="line">pyenv local --unset     取消设置本地版本</span>
+<span class="line">pyenv shell 3.4.1       设置当前会话的python版本</span>
+<span class="line">pyenv shell --unset     取消设置当前会话版本</span>
+<span class="line">pyenv global 3.4.1      切换全局目录为指定版本</span>
+<span class="line">pyenv versions          查看已安装版本，当前使用的版本前会加上*号</span>
+<span class="line">pyenv version           查看当前使用的python版本</span>
+<span class="line">pyenv rehash            刷新python已安装列表</span>
+<span class="line">pyenv commands          列出所有可用的pyenv命令</span>
 </pre></td></tr></table></figure></p>
-<p>添加完成后再会能够ping通，这样才可以管理该服务器；在上面的前三条配置中我们指定了ssh端口、连接到配置的用户、连接密码，以及指定了主机别名，这样我们就可以使用别名进行主机管理，同时这样配置我们就无法使用IP进行管理，所以后三条是为使用IP进行管理所进行配置的。当然如果我们将管理主机向受管主机做了免密登录，我们就可以不再配置用户与密码。  </p>
-<pre><code>[root@ansible-server yum.repos.d]# ansible ans1 -m ping
-ans1 | SUCCESS =&gt; {
-    &quot;ansible_facts&quot;: {
-        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
-    },
-    &quot;changed&quot;: false,
-    &quot;ping&quot;: &quot;pong&quot;
-}
-[root@ansible-server yum.repos.d]# ansible 192.168.163.171 -m ping
-192.168.163.171 | SUCCESS =&gt; {
-    &quot;ansible_facts&quot;: {
-        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
-    },
-    &quot;changed&quot;: false,
-    &quot;ping&quot;: &quot;pong&quot;
-}
-</code></pre>
+<p>例如安装3.7.6时下载速度非常慢，这时我们可以手动下载python3.7.6的源码包Python-3.7.6.tar.xz将这个包放在~/.pyenv/cache中，然后在执行pyenv install 3.7.6。<br>可以一次将多个版本指定为全局Python(当前shell也可以这样设置)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">$ pyenv global 2.7.6 3.3.3</span>
+<span class="line">$ pyenv versions</span>
+<span class="line">  system</span>
+<span class="line">* 2.7.6 (set by /Users/yyuu/.pyenv/version)</span>
+<span class="line">* 3.3.3 (set by /Users/yyuu/.pyenv/version)</span>
+<span class="line">$ python --version</span>
+<span class="line">Python 2.7.6</span>
+<span class="line">$ python2.7 --version</span>
+<span class="line">Python 2.7.6</span>
+<span class="line">$ python3.3 --version</span>
+<span class="line">Python 3.3.3</span>
+</pre></td></tr></table></figure></p>
+<p>如果更喜欢3.3.3而不是2.7.6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line">$ pyenv global 3.3.3 2.7.6</span>
+<span class="line">$ pyenv versions</span>
+<span class="line">  system</span>
+<span class="line">* 2.7.6 (set by /Users/yyuu/.pyenv/version)</span>
+<span class="line">* 3.3.3 (set by /Users/yyuu/.pyenv/version)</span>
+<span class="line">  venv27</span>
+<span class="line">$ python --version</span>
+<span class="line">Python 3.3.3</span>
+<span class="line">$ python2.7 --version</span>
+<span class="line">Python 2.7.6</span>
+<span class="line">$ python3.3 --version</span>
+<span class="line">Python 3.3.3</span>
+</pre></td></tr></table></figure></p>
+<h3 id="pyenv-virtualenv"><a href="#pyenv-virtualenv" class="headerlink" title="pyenv-virtualenv"></a>pyenv-virtualenv</h3><p>是一个pyenv的插件，可以对pyenv中的python创建虚拟环境。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">git clone https://github.com/yyuu/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv</span>
+<span class="line">echo &apos;eval &quot;$(pyenv virtualenv-init -)&quot;&apos; &gt;&gt; ~/.bash_profile</span>
+<span class="line">source ~/.bash_profile</span>
+</pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">pyenv virtualenv 3.7.6 3-7-6test1   #将会在$(pyenv root)/versions下基于3.7.6创建一个virtualenv 3-7-6test1</span>
+<span class="line">pyenv virtualenv test2              #将会基于当前使用的python版本创建一个test2的virtualenv</span>
+<span class="line">pyenv virtualenvs                   #列出当前所有的virtualenv，每个virtualenv有两个条目，短的是一个链接</span>
+<span class="line">pyenv activate &lt;virtualenv-name&gt;    #使用指定virtualenv的虚拟环境</span>
+<span class="line">pyenv deactivate                    #退出虚拟环境</span>
+<span class="line">pyenv uninstall &lt;virtualenv-name&gt;   #删除指定虚拟环境</span>
+</pre></td></tr></table></figure>
       
     </div>
 
@@ -672,8 +742,8 @@ ans1 | SUCCESS =&gt; {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/13/ansible/2-清单配置详解/" rel="prev" title="2-清单配置详解">
-                2-清单配置详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/13/ansible/2-ansible基础元素介绍/" rel="prev" title="2-ansible基础元素介绍">
+                2-ansible基础元素介绍 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -743,7 +813,7 @@ ans1 | SUCCESS =&gt; {
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-count">58</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -776,7 +846,15 @@ ans1 | SUCCESS =&gt; {
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -913,7 +991,15 @@ ans1 | SUCCESS =&gt; {
                     
                       
                     
-                    <span class="site-state-item-count">60</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">64</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -951,7 +1037,7 @@ ans1 | SUCCESS =&gt; {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible可以做什么"><span class="nav-number">1.</span> <span class="nav-text">ansible可以做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ansible"><span class="nav-number">2.</span> <span class="nav-text">安装ansible</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置管理清单"><span class="nav-number">3.</span> <span class="nav-text">配置管理清单</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible可以做什么"><span class="nav-number">1.</span> <span class="nav-text">ansible可以做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible通信方式"><span class="nav-number">2.</span> <span class="nav-text">Ansible通信方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ansible"><span class="nav-number">3.</span> <span class="nav-text">安装ansible</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python多环境扩展管理"><span class="nav-number">4.</span> <span class="nav-text">python多环境扩展管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pyenv"><span class="nav-number">4.1.</span> <span class="nav-text">pyenv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyenv-virtualenv"><span class="nav-number">4.2.</span> <span class="nav-text">pyenv-virtualenv</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -972,7 +1058,7 @@ ans1 | SUCCESS =&gt; {
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-04-06</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-05-23</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -984,7 +1070,7 @@ ans1 | SUCCESS =&gt; {
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">141k</span>
+    <span title="站点总字数">184k</span>
   
 
   
@@ -993,7 +1079,7 @@ ans1 | SUCCESS =&gt; {
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:47</span>
   
 </div>
 
