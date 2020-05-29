@@ -116,7 +116,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/04/ansible/4-playbook/ansible.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/08/04/ansible/4-playbook/playbook1.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/04/ansible/4-playbook/ansible/4-playbook/--list-hosts.png">
-<meta property="og:updated_time" content="2020-05-12T13:45:07.770Z">
+<meta property="og:updated_time" content="2020-05-24T06:26:57.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4-playbook快速入门">
 <meta name="twitter:image" content="http://yoursite.com/2019/08/04/ansible/4-playbook/ansible.jpg">
@@ -446,7 +446,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-05-12 21:45:07" itemprop="dateModified" datetime="2020-05-12T21:45:07+08:00">2020-05-12</time>
+                <time title="修改时间：2020-05-24 14:26:57" itemprop="dateModified" datetime="2020-05-24T14:26:57+08:00">2020-05-24</time>
               
             
           </span>
@@ -499,7 +499,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.3k</span>
+                <span title="本文字数">2.8k</span>
               
 
               
@@ -513,7 +513,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -587,8 +587,29 @@
 <span class="line">        line: &quot;playbook 学习&quot;</span>
 </pre></td></tr></table></figure></p>
 <p>每个task的name都会在playbook执行时展示执行情况，虽然在playbook中不添加name也可以，但是还是建议加上，以便于问题的排查。<br><img src="/2019/08/04/ansible/4-playbook/playbook1.png" alt>  </p>
-<h1 id="playbook与shell的区别"><a href="#playbook与shell的区别" class="headerlink" title="playbook与shell的区别"></a>playbook与shell的区别</h1><p>因为ansible有着“幂等性”的特性，所以执行一个playbook时，当ansible会发现系统现有的状态与playbook定义的状态是相同时，就会跳过该操作，所以当再次执行playbook时，执行速度会非常的快；但是shell脚本重复重复进行操作时，会将所有的步骤在执行一遍。  </p>
-<h1 id="ansible-playbook-执行技巧"><a href="#ansible-playbook-执行技巧" class="headerlink" title="ansible-playbook 执行技巧"></a>ansible-playbook 执行技巧</h1><h2 id="限定执行范围"><a href="#限定执行范围" class="headerlink" title="限定执行范围"></a>限定执行范围</h2><ul>
+<h2 id="playbook与shell的区别"><a href="#playbook与shell的区别" class="headerlink" title="playbook与shell的区别"></a>playbook与shell的区别</h2><p>因为ansible有着“幂等性”的特性，所以执行一个playbook时，当ansible会发现系统现有的状态与playbook定义的状态是相同时，就会跳过该操作，所以当再次执行playbook时，执行速度会非常的快；但是shell脚本重复重复进行操作时，会将所有的步骤在执行一遍。  </p>
+<h1 id="playbook中多个paly"><a href="#playbook中多个paly" class="headerlink" title="playbook中多个paly"></a>playbook中多个paly</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">test1</span></span>
+<span class="line">      <span class="string">command</span> <span class="string">:</span> <span class="string">ls</span> <span class="string">/home</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">test2</span></span>
+<span class="line">      <span class="string">command</span> <span class="string">:</span> <span class="string">ls</span> <span class="string">/home/yyg</span></span>
+</pre></td></tr></table></figure>
+<p>这样一个palybook中就包含了两个paly</p>
+<h1 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h1><p>remote_user: root 　　    #在远程主机上以哪个用户身份执行<br>become: yes                     #是否允许身份切换<br>become_method: sudo   #切换用户身份的方式，有sudo、su、pbrun等方式，默认为sudo<br>become_user: root          #切换成什么用户身份，默认为root<br>以上选项不仅可用于全局，也可用于各task中。<br>如果需要指定切换用户身份时的密码，可在执行ansible-playbook时使用选项<code>--ask-become-pass</code>或者<code>-K</code></p>
+<h1 id="task"><a href="#task" class="headerlink" title="task"></a>task</h1><h1 id="ansible-playbook-执行技巧"><a href="#ansible-playbook-执行技巧" class="headerlink" title="ansible-playbook 执行技巧"></a>ansible-playbook 执行技巧</h1><h2 id="限定执行范围"><a href="#限定执行范围" class="headerlink" title="限定执行范围"></a>限定执行范围</h2><ul>
 <li><p>limit<br>指定操作的主机范围可以在playbook中通过<code>hosts</code>进行限定<br>也可以在ansible-playbook命令来指定主机。  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">ansible-playbook XXX.yml -limit test3  #通过这种方式执行，及时playbook中是hosts: test3,test4,test5，也只会对test3进行操作</span>
@@ -735,7 +756,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-count">59</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -921,7 +942,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">64</span>
+                      
+                    
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -959,7 +982,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#playbook语法特性"><span class="nav-number">1.</span> <span class="nav-text">playbook语法特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell与playbook的转换"><span class="nav-number">2.</span> <span class="nav-text">shell与playbook的转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#playbook与shell的区别"><span class="nav-number">3.</span> <span class="nav-text">playbook与shell的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible-playbook-执行技巧"><span class="nav-number">4.</span> <span class="nav-text">ansible-playbook 执行技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限定执行范围"><span class="nav-number">4.1.</span> <span class="nav-text">限定执行范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户与权限设置"><span class="nav-number">4.2.</span> <span class="nav-text">用户与权限设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用选项"><span class="nav-number">4.3.</span> <span class="nav-text">其他常用选项</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#playbook语法特性"><span class="nav-number">1.</span> <span class="nav-text">playbook语法特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell与playbook的转换"><span class="nav-number">2.</span> <span class="nav-text">shell与playbook的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook与shell的区别"><span class="nav-number">2.1.</span> <span class="nav-text">playbook与shell的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#playbook中多个paly"><span class="nav-number">3.</span> <span class="nav-text">playbook中多个paly</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户"><span class="nav-number">4.</span> <span class="nav-text">用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#task"><span class="nav-number">5.</span> <span class="nav-text">task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible-playbook-执行技巧"><span class="nav-number">6.</span> <span class="nav-text">ansible-playbook 执行技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限定执行范围"><span class="nav-number">6.1.</span> <span class="nav-text">限定执行范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户与权限设置"><span class="nav-number">6.2.</span> <span class="nav-text">用户与权限设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用选项"><span class="nav-number">6.3.</span> <span class="nav-text">其他常用选项</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -980,7 +1003,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-05-23</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-05-29</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -992,7 +1015,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">184k</span>
+    <span title="站点总字数">189k</span>
   
 
   
@@ -1001,7 +1024,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:47</span>
+    <span title="站点阅读时长">2:52</span>
   
 </div>
 
