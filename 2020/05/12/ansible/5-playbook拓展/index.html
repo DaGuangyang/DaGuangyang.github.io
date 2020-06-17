@@ -124,7 +124,18 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/注册变量.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/playbook执行结果开头.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/facts变量.png">
-<meta property="og:updated_time" content="2020-05-29T12:05:08.220Z">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/set_fact.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/交互输入.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/ansible_version.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/hostvars1.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/hostvars2.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/hostvars3.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/inventory_hostname.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/inventory_hostname_short.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/play_hosts.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/group_names.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/inventory_dir.png">
+<meta property="og:updated_time" content="2020-06-17T16:18:38.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="5-playbook拓展">
 <meta name="twitter:image" content="http://yoursite.com/2020/05/12/ansible/5-playbook拓展/ansible.jpg">
@@ -454,7 +465,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-05-29 20:05:08" itemprop="dateModified" datetime="2020-05-29T20:05:08+08:00">2020-05-29</time>
+                <time title="修改时间：2020-06-18 00:18:38" itemprop="dateModified" datetime="2020-06-18T00:18:38+08:00">2020-06-18</time>
               
             
           </span>
@@ -507,7 +518,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.7k</span>
+                <span title="本文字数">9.3k</span>
               
 
               
@@ -521,7 +532,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">8 分钟</span>
               
             </div>
           
@@ -818,7 +829,7 @@
 <span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
 <span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">名字为&#123;&#123;people.name&#125;&#125;,年龄为&#123;&#123;people.age&#125;&#125;</span></span>
 </pre></td></tr></table></figure></p>
-<h2 id="注册变量"><a href="#注册变量" class="headerlink" title="注册变量"></a>注册变量</h2><p>注册变量就是将操作的结果，包括标准输出和标准错误输出，保存到变量中。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="注册变量"><a href="#注册变量" class="headerlink" title="注册变量"></a>注册变量</h2><p>注册变量就是将操作的结果，包括标准输出和标准错误输出，保存到变量中。在同一个yml中操作同一台主机时，前一个play定义了register变量，后面的同一台主机中也可以调用到该register变量。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -862,6 +873,36 @@
 </pre></td><td class="code"><pre><span class="line">#当facts变量文件是在/tmp目录下</span>
 <span class="line">ansible test3 -m setup -a &apos;fact_path=/tmp&apos;</span>
 </pre></td></tr></table></figure></p>
+<h2 id="通过set-fact定义变量"><a href="#通过set-fact定义变量" class="headerlink" title="通过set_fact定义变量"></a>通过set_fact定义变量</h2><p>可以使用set_fact模块在tesk中定义变量。在同一个yml中操作同一台主机时，前一个play定义了set_fact变量，后面的同一台主机中也可以调用到该set_fact变量。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">set_fact测试</span></span>
+<span class="line">      <span class="string">set_fact</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">test_var</span> <span class="string">:</span> <span class="string">"testvar"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">测试输出</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;test_var&#125;&#125;</span>"</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">测试set_fact变量</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">输出上一个play中的test_var=</span> <span class="string">&#123;&#123;test_var&#125;&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/set_fact.png" alt="set_fact"></p>
 <h2 id="提示用户输入信息并写入到变量"><a href="#提示用户输入信息并写入到变量" class="headerlink" title="提示用户输入信息并写入到变量"></a>提示用户输入信息并写入到变量</h2><p>实现交互式输入信息，并将信息<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -880,17 +921,192 @@
 <span class="line"><span class="attr">- hosts:</span> <span class="string">test3</span></span>
 <span class="line"><span class="attr">  remote_user:</span> <span class="string">root</span></span>
 <span class="line"><span class="attr">  vars_prompt:</span></span>
-<span class="line"><span class="attr">    - name:</span> <span class="string">"your_name"</span></span>
-<span class="line"><span class="attr">      prompt:</span> <span class="string">"What is your name"</span></span>
+<span class="line"><span class="attr">    - name:</span> <span class="string">"your_name"</span>    <span class="comment">#输入的值存入的变量</span></span>
+<span class="line"><span class="attr">      prompt:</span> <span class="string">"What is your name"</span>   <span class="comment">#输入提示</span></span>
 <span class="line"><span class="attr">      private:</span> <span class="literal">no</span>     <span class="comment">#表示显示输入</span></span>
 <span class="line"><span class="attr">    - name:</span> <span class="string">"your_age"</span></span>
 <span class="line"><span class="attr">      prompt:</span> <span class="string">"How old are you"</span></span>
-<span class="line"><span class="attr">      private:</span> <span class="literal">no</span>    <span class="comment">#表示显示输入</span></span>
+<span class="line"><span class="attr">      private:</span> <span class="literal">no</span>    </span>
 <span class="line"><span class="attr">  tasks:</span></span>
 <span class="line"><span class="attr">   - name:</span> <span class="string">output</span> <span class="string">vars</span></span>
 <span class="line"><span class="attr">     debug:</span></span>
 <span class="line"><span class="attr">      msg:</span> <span class="string">Your</span> <span class="string">name</span> <span class="string">is</span> <span class="string">&#123;&#123;your_name&#125;&#125;,You</span> <span class="string">are</span> <span class="string">&#123;&#123;your_age&#125;&#125;</span> <span class="string">years</span> <span class="string">old.</span></span>
 </pre></td></tr></table></figure></p>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/交互输入.png" alt="交互输入"><br>这样在输入值的时候就可以看到输入的确切的值，若是不想显示则将private设置为yes(默认选项)。  </p>
+<h2 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h2><h3 id="ansible-version"><a href="#ansible-version" class="headerlink" title="ansible_version"></a>ansible_version</h3><p>内置变量ansible_version可以获取到ansible的版本号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ansible test3 -m debug -a &quot;msg=&#123;&#123;ansible_version&#125;&#125;&quot;</span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/ansible_version.png" alt="ansible_version">  </p>
+<h3 id="hostvars"><a href="#hostvars" class="headerlink" title="hostvars"></a>hostvars</h3><p>hostvars可以在操作A主机时获取到B主机的信息。  </p>
+<ul>
+<li>收集facts信息<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test4</span></span>
+<span class="line">  <span class="string">name</span> <span class="string">:</span> <span class="string">play1</span> <span class="string">hostsname</span> <span class="string">is</span> <span class="string">test4</span></span>
+<span class="line"></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">name</span> <span class="string">:</span> <span class="string">play2</span> <span class="string">hostsname</span> <span class="string">is</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">hostvars['test4'].ansible_hostname:&#123;&#123;hostvars['test4'].ansible_hostname&#125;&#125;</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/hostvars1.png" alt="hostvars1"><br>play1并没有task，但是这并不代表play1是没有用的，正是运行过play1收集了test4的facts信息，在play2中才可以使用fast4的facts信息。  </p>
+<ul>
+<li>收集注册变量、主机变量、组变量<br>收集注册变量时，不需要像收集facts信息一样需要事先进行收集，同样的也可以收集在主机清单中配置的主机变量与组变量  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test4</span> </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">shell</span> <span class="string">:</span> <span class="string">"echo this is test4 "</span></span>
+<span class="line">      <span class="string">register</span> <span class="string">:</span> <span class="string">testvar</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;hostvars.test4.testvar&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/hostvars2.png" alt="hostvars2">  </p>
+<ul>
+<li>收集定义变量<br>在play中使用vars定义的变量是无法被hostvars收集的，但是可以通过set_fact进行定义，这样变量就可以像facts信息一样被收集。  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test4</span> </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">set_fact</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">testvar</span> <span class="string">:</span> <span class="string">testvalue</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;hostvars.test4.testvar&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/hostvars3.png" alt="hostvars3">  </p>
+<h3 id="inventory-hostname"><a href="#inventory-hostname" class="headerlink" title="inventory_hostname"></a>inventory_hostname</h3><p>inventory_hostname可以获取到被操作主机的主机名（并不是linux的主机名，而是在ansible管理端主机清单中的主机名）。如果配置清单中只是IP那么inventory_hostname获取到的则是IP。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">#/home/ansible/hosts文件</span>
+<span class="line">testtest ansible_host=192.168.27.7</span>
+</pre></td></tr></table></figure></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">testtest</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">输出主机清单中的主机名</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;inventory_hostname&#125;&#125;</span>"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">定义操作主机的linux主机名</span> </span>
+<span class="line">      <span class="string">command</span> <span class="string">:</span> <span class="string">hostname</span></span>
+<span class="line">      <span class="string">register</span> <span class="string">:</span> <span class="string">hostname</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">输出操作的主机的linux主机名</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;hostname.stdout&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/inventory_hostname.png" alt="inventory_hostname">  </p>
+<h3 id="inventory-hostname-short"><a href="#inventory-hostname-short" class="headerlink" title="inventory_hostname_short"></a>inventory_hostname_short</h3><p>与inventory_hostname类似，inventory_hostname_short返回的则是简短名称(主机清单主机名称“.”分割的第一段名称)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">#/home/ansible/hosts文件</span>
+<span class="line">[test]</span>
+<span class="line">test.test3 ansible_host=192.168.27.7</span>
+<span class="line">192.168.27.8</span>
+</pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ansible test -i /home/ansible/hosts -m debug -a &quot;msg=&#123;&#123;inventory_hostname_short&#125;&#125;&quot;</span>
+</pre></td></tr></table></figure>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/inventory_hostname_short.png" alt="inventory_hostname_short">  </p>
+<h3 id="play-hosts"><a href="#play-hosts" class="headerlink" title="play_hosts"></a>play_hosts</h3><p>plsy_hosts可以获取到当前play操作的所有主机的主机列表名称。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">name</span> <span class="string">:</span> <span class="string">play1</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;play_hosts&#125;&#125;</span>"</span></span>
+<span class="line"></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> <span class="string">test4</span></span>
+<span class="line">  <span class="string">name</span> <span class="string">:</span> <span class="string">play2</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;play_hosts&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/play_hosts.png" alt="play_hosts">  </p>
+<h3 id="groups"><a href="#groups" class="headerlink" title="groups"></a>groups</h3><p>groups可以获取到主机清单中所有的组信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">#/home/ansible/hosts文件</span>
+<span class="line">test4 ansible_host=192.168.27.8</span>
+<span class="line">[test]</span>
+<span class="line">test3 ansible_host=192.168.27.7</span>
+<span class="line">```</span>
+</pre></td></tr></table></figure></p>
+<p>ansible test3 -i /home/ansible/hosts -m debug -a ‘msg=”“‘<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">![groups1](5-playbook拓展\groups1.png)  </span>
+<span class="line">当然可以获取指定组的信息。</span>
+</pre></td></tr></table></figure></p>
+<p>ansible test3 -i /home/ansible/hosts -m debug -a ‘msg=”“‘<br>ansible test3 -i /home/ansible/hosts -m debug -a ‘msg=”“‘  #后去未分组的主机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"></span>
+<span class="line">### group_names  </span>
+<span class="line">获取当前操作主机在主机清单中的分组名。</span>
+</pre></td></tr></table></figure></p>
+<p>#/home/ansible/hosts文件<br>[allhosts:children]<br>test<br>[test]<br>test3 ansible_host=192.168.27.7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">```</span>
+<span class="line">ansible test3 -i /home/ansible/hosts -m debug -a &apos;msg=&quot;&#123;&#123;group_names&#125;&#125;&quot;&apos;</span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/12/ansible/5-playbook拓展/group_names.png" alt="group_names"><br>因为test3属于test分组，而test分组又属于allhosts分组。  </p>
+<h3 id="inventory-dir"><a href="#inventory-dir" class="headerlink" title="inventory_dir"></a>inventory_dir</h3><p>该变量可以获取到使用的inventory文件的位置。<br><img src="/2020/05/12/ansible/5-playbook拓展/inventory_dir.png" alt="inventory_dir">  </p>
 
       
     </div>
@@ -1234,7 +1450,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Handlers"><span class="nav-number">1.</span> <span class="nav-text">Handlers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Handlers进阶"><span class="nav-number">1.1.</span> <span class="nav-text">Handlers进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mate模块-mate-flush-handlers"><span class="nav-number">1.1.1.</span> <span class="nav-text">mate模块 (mate:flush_handlers)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#listen模块"><span class="nav-number">1.1.2.</span> <span class="nav-text">listen模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook变量"><span class="nav-number">2.1.</span> <span class="nav-text">playbook变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册变量"><span class="nav-number">2.2.</span> <span class="nav-text">注册变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Facts（收集系统信息）"><span class="nav-number">2.3.</span> <span class="nav-text">Facts（收集系统信息）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#facts变量"><span class="nav-number">2.3.1.</span> <span class="nav-text">facts变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提示用户输入信息并写入到变量"><span class="nav-number">2.4.</span> <span class="nav-text">提示用户输入信息并写入到变量</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Handlers"><span class="nav-number">1.</span> <span class="nav-text">Handlers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Handlers进阶"><span class="nav-number">1.1.</span> <span class="nav-text">Handlers进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mate模块-mate-flush-handlers"><span class="nav-number">1.1.1.</span> <span class="nav-text">mate模块 (mate:flush_handlers)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#listen模块"><span class="nav-number">1.1.2.</span> <span class="nav-text">listen模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook变量"><span class="nav-number">2.1.</span> <span class="nav-text">playbook变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册变量"><span class="nav-number">2.2.</span> <span class="nav-text">注册变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Facts（收集系统信息）"><span class="nav-number">2.3.</span> <span class="nav-text">Facts（收集系统信息）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#facts变量"><span class="nav-number">2.3.1.</span> <span class="nav-text">facts变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过set-fact定义变量"><span class="nav-number">2.4.</span> <span class="nav-text">通过set_fact定义变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提示用户输入信息并写入到变量"><span class="nav-number">2.5.</span> <span class="nav-text">提示用户输入信息并写入到变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内置变量"><span class="nav-number">2.6.</span> <span class="nav-text">内置变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible-version"><span class="nav-number">2.6.1.</span> <span class="nav-text">ansible_version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hostvars"><span class="nav-number">2.6.2.</span> <span class="nav-text">hostvars</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inventory-hostname"><span class="nav-number">2.6.3.</span> <span class="nav-text">inventory_hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inventory-hostname-short"><span class="nav-number">2.6.4.</span> <span class="nav-text">inventory_hostname_short</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#play-hosts"><span class="nav-number">2.6.5.</span> <span class="nav-text">play_hosts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groups"><span class="nav-number">2.6.6.</span> <span class="nav-text">groups</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inventory-dir"><span class="nav-number">2.6.7.</span> <span class="nav-text">inventory_dir</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1255,7 +1471,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-05-29</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-06-18</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -1267,7 +1483,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">189k</span>
+    <span title="站点总字数">192k</span>
   
 
   
@@ -1276,7 +1492,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:52</span>
+    <span title="站点阅读时长">2:55</span>
   
 </div>
 
