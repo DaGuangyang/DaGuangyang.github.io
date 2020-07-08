@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="keywords" content="cobbler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cobbler自动化部署">
+<meta property="og:url" content="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/index.html">
+<meta property="og:site_name" content="DaguangY">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/Cobbler.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/DHCP服务.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/test.png">
+<meta property="og:updated_time" content="2020-07-07T16:00:44.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cobbler自动化部署">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/Cobbler.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Cobbler自动化部署 | DaguangY</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DaguangY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">All I need is a miracle</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaguangYang">
+      <meta itemprop="description" content="The fire in my heart it will never die">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DaguangY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Cobbler自动化部署
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-28 22:40:15" itemprop="dateCreated datePublished" datetime="2020-04-28T22:40:15+08:00">2020-04-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-08 00:00:44" itemprop="dateModified" datetime="2020-07-08T00:00:44+08:00">2020-07-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/cobbler/" itemprop="url" rel="index"><span itemprop="name">cobbler</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">10k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/Cobbler.png" alt="cobbler"><br><a id="more"></a></p>
+<p>## </p>
+<h2 id="cobbler安装"><a href="#cobbler安装" class="headerlink" title="cobbler安装"></a>cobbler安装</h2><p>虚拟机网卡使用建议使用NAT模式，并且将NAT模式的DHCP服务关闭。<br><img src="/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/DHCP服务.png" alt="DHCP服务">  </p>
+<ol>
+<li><strong>环境准备</strong><br>将主机的防火墙和selinux关闭。  </li>
+<li><p><strong>安装cobbler</strong><br>这里使用阿里镜像站中的epel源进行安装。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">yum -y install cobbler cobbler-web tftp-server dhcp httpd xinetd</span>
+<span class="line">systemctl start httpd cobblerd</span>
+<span class="line">systemctl enable httpd cobblerd</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p><strong>查看安装后的相关文件</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+</pre></td><td class="code"><pre><span class="line">/etc/cobbler                  # 配置文件目录</span>
+<span class="line">/etc/cobbler/settings         # cobbler主配置文件，这个文件是YAML格式，Cobbler是python写的程序。</span>
+<span class="line">/etc/cobbler/dhcp.template    # DHCP服务的配置模板</span>
+<span class="line">/etc/cobbler/tftpd.template   # tftp服务的配置模板</span>
+<span class="line">/etc/cobbler/rsync.template   # rsync服务的配置模板</span>
+<span class="line">/etc/cobbler/iso              # iso模板配置文件目录</span>
+<span class="line">/etc/cobbler/pxe              # pxe模板文件目录</span>
+<span class="line">/etc/cobbler/power            # 电源的配置文件目录</span>
+<span class="line">/etc/cobbler/users.conf       # Web服务授权配置文件</span>
+<span class="line">/etc/cobbler/users.digest     # 用于web访问的用户名密码配置文件</span>
+<span class="line">/etc/cobbler/dnsmasq.template # DNS服务的配置模板</span>
+<span class="line">/etc/cobbler/modules.conf     # Cobbler模块配置文件</span>
+<span class="line">/var/lib/cobbler              # Cobbler数据目录</span>
+<span class="line">/var/lib/cobbler/config       # 配置文件</span>
+<span class="line">/var/lib/cobbler/kickstarts   # 默认存放kickstart文件</span>
+<span class="line">/var/lib/cobbler/loaders      # 存放的各种引导程序</span>
+<span class="line">/var/www/cobbler              # 系统安装镜像目录</span>
+<span class="line">/var/www/cobbler/ks_mirror    # 导入的系统镜像列表</span>
+<span class="line">/var/www/cobbler/images       # 导入的系统镜像启动文件</span>
+<span class="line">/var/www/cobbler/repo_mirror  # yum源存储目录</span>
+<span class="line">/var/log/cobbler              # 日志目录</span>
+<span class="line">/var/log/cobbler/install.log  # 客户端系统安装日志</span>
+<span class="line">/var/log/cobbler/cobbler.log  # cobbler日志</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="配置cobbler"><a href="#配置cobbler" class="headerlink" title="配置cobbler"></a>配置cobbler</h2><ol>
+<li><strong>检查cobbler</strong>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">~]# cobbler check</span>
+<span class="line">The following are potential configuration items that you may want to fix:</span>
+<span class="line"></span>
+<span class="line">1 : The &apos;server&apos; field in /etc/cobbler/settings must be set to something other than localhost, or kickstarting features will not work.  This should be a resolvable hostname or IP for the boot server as reachable by all machines that will use it.</span>
+<span class="line">2 : For PXE to be functional, the &apos;next_server&apos; field in /etc/cobbler/settings must be set to something other than 127.0.0.1, and should match the IP of the boot server on the PXE network.</span>
+<span class="line">3 : change &apos;disable&apos; to &apos;no&apos; in /etc/xinetd.d/tftp</span>
+<span class="line">4 : Some network boot-loaders are missing from /var/lib/cobbler/loaders, you may run &apos;cobbler get-loaders&apos; to download them, or, if you only want to handle x86/x86_64 netbooting, you may ensure that you have installed a *recent* version of the syslinux package installed and can ignore this message entirely.  Files in this directory, should you want to support all architectures, should include pxelinux.0, menu.c32, elilo.efi, and yaboot. The &apos;cobbler get-loaders&apos; command is the easiest way to resolve these requirements.</span>
+<span class="line">5 : enable and start rsyncd.service with systemctl</span>
+<span class="line">6 : debmirror package is not installed, it will be required to manage debian deployments and repositories</span>
+<span class="line">7 : ksvalidator was not found, install pykickstart</span>
+<span class="line">8 : The default password used by the sample templates for newly installed machines (default_password_crypted in /etc/cobbler/settings) is still set to &apos;cobbler&apos; and should be changed, try: &quot;openssl passwd -1 -salt &apos;random-phrase-here&apos; &apos;your-password-here&apos;&quot; to generate new one</span>
+<span class="line">9 : fencing tools were not found, and are required to use the (optional) power management features. install cman or fence-agents to use them</span>
+<span class="line"></span>
+<span class="line">Restart cobblerd and then run &apos;cobbler sync&apos; to apply changes.</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面列出来的问题需要进行修改,cobbler的配置都存储在<code>/etc/cobbler/settings</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line">1. server   修改/etc/cobbler/settings</span>
+<span class="line">server: 192.168.27.3</span>
+<span class="line"></span>
+<span class="line">2. next_server   修改/etc/cobbler/settings</span>
+<span class="line">next_server: 192.168.27.3</span>
+<span class="line"></span>
+<span class="line">3. tftp_server   修改/etc/xinetd.d/tftp</span>
+<span class="line">disable = no</span>
+<span class="line"></span>
+<span class="line">4. boot-loaders</span>
+<span class="line">cobbler get-loaders</span>
+<span class="line"></span>
+<span class="line">5. rsyncd</span>
+<span class="line">systemctl start rsyncd</span>
+<span class="line">systemctl enable rsyncd</span>
+<span class="line"></span>
+<span class="line">6. debmirror 可忽略</span>
+<span class="line"></span>
+<span class="line">7. pykickstart </span>
+<span class="line">yum -y install pykickstart</span>
+<span class="line"></span>
+<span class="line">8. 设置后面安装系统的初始化登录密码</span>
+<span class="line">openssl passwd -1 -salt `openssl rand -hex 4` &apos;admin&apos;</span>
+<span class="line"></span>
+<span class="line">9. fencing tools</span>
+<span class="line">yum -y install fence-agents</span>
+</pre></td></tr></table></figure></p>
+<h2 id="配置DHCP"><a href="#配置DHCP" class="headerlink" title="配置DHCP"></a>配置DHCP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">1.修改/etc/cobbler/settings</span>
+<span class="line">manage_dhcp = 1 </span>
+<span class="line"></span>
+<span class="line">2. vim /etc/cobbler/dhcp.template</span>
+<span class="line">subnet 192.168.27.0 netmask 255.255.255.0 &#123;         #分配的网段和掩码</span>
+<span class="line">     option routers             192.168.27.1;       #网关地址</span>
+<span class="line">     option domain-name-servers 8.8.8.8;            #dns地址</span>
+<span class="line">     option subnet-mask         255.255.255.0;      #分配的IP的掩码</span>
+<span class="line">     range dynamic-bootp        192.168.27.100 192.168.27.254;      #分配的IP的范围</span>
+</pre></td></tr></table></figure>
+<h2 id="同步cobbler配置"><a href="#同步cobbler配置" class="headerlink" title="同步cobbler配置"></a>同步cobbler配置</h2><p>同步cobbler配置，它会根据配置自动修改dhcp等服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">cobbler sync</span>
+</pre></td></tr></table></figure></p>
+<p>同步完成后就可以创建一个新的虚拟机开启后，查看是否可以从DHCP中拉取到。  </p>
+<h2 id="cobbler命令"><a href="#cobbler命令" class="headerlink" title="cobbler命令"></a>cobbler命令</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">cobbler check</td>
+<td style="text-align:left">核对当前设置是否有问题</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler list</td>
+<td style="text-align:left">列出所有的cobbler元素</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler report</td>
+<td style="text-align:left">列出元素的详细信息</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler sync</td>
+<td style="text-align:left">同步配置到数据目录，更改配置最好都执行一下</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler reposync</td>
+<td style="text-align:left">同步yum仓库</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler distro</td>
+<td style="text-align:left">查看导入的发行版系统信息</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler system</td>
+<td style="text-align:left">查看添加的系统信息</td>
+</tr>
+<tr>
+<td style="text-align:left">cobbler profile</td>
+<td style="text-align:left">查看配置信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cobbler安装配置centos"><a href="#cobbler安装配置centos" class="headerlink" title="cobbler安装配置centos"></a>cobbler安装配置centos</h2><h3 id="将镜像挂载"><a href="#将镜像挂载" class="headerlink" title="将镜像挂载"></a>将镜像挂载</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">mkdir /mnt/cdrom </span>
+<span class="line">mount /dev/cdrom /mnt/cdrom</span>
+</pre></td></tr></table></figure>
+<h3 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">cobbler import --path=/mnt/cdrom --name=centos7.6 --arch=x86_64</span>
+</pre></td></tr></table></figure>
+<h3 id="查看导入后镜像信息"><a href="#查看导入后镜像信息" class="headerlink" title="查看导入后镜像信息"></a>查看导入后镜像信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line">cobbler distro report --name=centos7.6-x86_64</span>
+<span class="line"></span>
+<span class="line">Name                           : centos7.6-x86_64</span>
+<span class="line">Architecture                   : x86_64</span>
+<span class="line">TFTP Boot Files                : &#123;&#125;</span>
+<span class="line">Breed                          : redhat</span>
+<span class="line">Comment                        : </span>
+<span class="line">Fetchable Files                : &#123;&#125;</span>
+<span class="line">Initrd                         : /var/www/cobbler/ks_mirror/centos7.6-x86_64/images/pxeboot/initrd.img</span>
+<span class="line">Kernel                         : /var/www/cobbler/ks_mirror/centos7.6-x86_64/images/pxeboot/vmlinuz</span>
+<span class="line">Kernel Options                 : &#123;&#125;</span>
+<span class="line">Kernel Options (Post Install)  : &#123;&#125;</span>
+<span class="line">Kickstart Metadata             : &#123;&apos;tree&apos;: &apos;http://@@http_server@@/cblr/links/centos7.6-x86_64&apos;&#125;</span>
+<span class="line">Management Classes             : []</span>
+<span class="line">OS Version                     : rhel6</span>
+<span class="line">Owners                         : [&apos;admin&apos;]</span>
+<span class="line">Red Hat Management Key         : &lt;&lt;inherit&gt;&gt;</span>
+<span class="line">Red Hat Management Server      : &lt;&lt;inherit&gt;&gt;</span>
+<span class="line">Template Files                 : &#123;&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="查看profile信息"><a href="#查看profile信息" class="headerlink" title="查看profile信息"></a>查看profile信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+</pre></td><td class="code"><pre><span class="line">[root@clone cdrom]# cobbler profile report --name=centos7.6-x86_64</span>
+<span class="line">Name                           : centos7.6-x86_64</span>
+<span class="line">TFTP Boot Files                : &#123;&#125;</span>
+<span class="line">Comment                        : </span>
+<span class="line">DHCP Tag                       : default</span>
+<span class="line">Distribution                   : centos7.6-x86_64</span>
+<span class="line">Enable gPXE?                   : 0</span>
+<span class="line">Enable PXE Menu?               : 1</span>
+<span class="line">Fetchable Files                : &#123;&#125;</span>
+<span class="line">Kernel Options                 : &#123;&#125;</span>
+<span class="line">Kernel Options (Post Install)  : &#123;&#125;</span>
+<span class="line">Kickstart                      : /var/lib/cobbler/kickstarts/centos7.ks</span>
+<span class="line">Kickstart Metadata             : &#123;&#125;</span>
+<span class="line">Management Classes             : []</span>
+<span class="line">Management Parameters          : &lt;&lt;inherit&gt;&gt;</span>
+<span class="line">Name Servers                   : []</span>
+<span class="line">Name Servers Search Path       : []</span>
+<span class="line">Owners                         : [&apos;admin&apos;]</span>
+<span class="line">Parent Profile                 : </span>
+<span class="line">Internal proxy                 : </span>
+<span class="line">Red Hat Management Key         : &lt;&lt;inherit&gt;&gt;</span>
+<span class="line">Red Hat Management Server      : &lt;&lt;inherit&gt;&gt;</span>
+<span class="line">Repos                          : []</span>
+<span class="line">Server Override                : &lt;&lt;inherit&gt;&gt;</span>
+<span class="line">Template Files                 : &#123;&#125;</span>
+<span class="line">Virt Auto Boot                 : 1</span>
+<span class="line">Virt Bridge                    : xenbr0</span>
+<span class="line">Virt CPUs                      : 1</span>
+<span class="line">Virt Disk Driver Type          : raw</span>
+<span class="line">Virt File Size(GB)             : 5</span>
+<span class="line">Virt Path                      : </span>
+<span class="line">Virt RAM (MB)                  : 512</span>
+<span class="line">Virt Type                      : kvm</span>
+</pre></td></tr></table></figure>
+<h3 id="copy一份profile文件-ks-，进行修改"><a href="#copy一份profile文件-ks-，进行修改" class="headerlink" title="copy一份profile文件(ks)，进行修改"></a>copy一份profile文件(ks)，进行修改</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+<span class="line">80</span>
+<span class="line">81</span>
+<span class="line">82</span>
+<span class="line">83</span>
+<span class="line">84</span>
+<span class="line">85</span>
+<span class="line">86</span>
+<span class="line">87</span>
+<span class="line">88</span>
+<span class="line">89</span>
+<span class="line">90</span>
+</pre></td><td class="code"><pre><span class="line">cd /var/lib/cobbler/kickstarts/</span>
+<span class="line">cp sample_end.ks centos7.ks</span>
+<span class="line">vim centos7.ks</span>
+<span class="line"></span>
+<span class="line"># This kickstart file should only be used with EL &gt; 5 and/or Fedora &gt; 7.</span>
+<span class="line"># For older versions please use the sample.ks kickstart file.</span>
+<span class="line"></span>
+<span class="line">#platform=x86, AMD64, or Intel EM64T</span>
+<span class="line"># System authorization information</span>
+<span class="line">auth  --useshadow  --enablemd5</span>
+<span class="line"># System bootloader configuration</span>
+<span class="line">bootloader --location=mbr</span>
+<span class="line"># Partition clearing information</span>
+<span class="line">clearpart --all --initlabel</span>
+<span class="line"># Use text mode install</span>
+<span class="line">text      ## 使用文本模式安装</span>
+<span class="line"># Firewall configuration</span>
+<span class="line">firewall --disable   ## 防火墙选项</span>
+<span class="line"># Run the Setup Agent on first boot</span>
+<span class="line">firstboot --disable</span>
+<span class="line"># System keyboard</span>
+<span class="line">keyboard us    ## 选择键盘</span>
+<span class="line"># System language</span>
+<span class="line">lang en_US     ## 选择语言</span>
+<span class="line"># Use network installation</span>
+<span class="line">url --url=$tree</span>
+<span class="line"># If any cobbler repo definitions were referenced in the kickstart profile, include them here.</span>
+<span class="line">$yum_repo_stanza</span>
+<span class="line"># Network information</span>
+<span class="line">$SNIPPET(&apos;network_config&apos;)</span>
+<span class="line"># Reboot after installation</span>
+<span class="line">reboot</span>
+<span class="line"></span>
+<span class="line">#Root password</span>
+<span class="line">rootpw --iscrypted $default_password_crypted   </span>
+<span class="line"># SELinux configuration  </span>
+<span class="line">selinux --disabled  ## SELinux配置</span>
+<span class="line"># Do not configure the X Window System</span>
+<span class="line">skipx</span>
+<span class="line"># System timezone</span>
+<span class="line">timezone  America/New_York</span>
+<span class="line"># Install OS instead of upgrade</span>
+<span class="line">install        ##安装系统而不是升级</span>
+<span class="line"># Clear the Master Boot Record</span>
+<span class="line">zerombr</span>
+<span class="line"># Allow anaconda to partition the system as needed</span>
+<span class="line">autopart</span>
+<span class="line"></span>
+<span class="line">%pre</span>
+<span class="line">$SNIPPET(&apos;log_ks_pre&apos;)</span>
+<span class="line">$SNIPPET(&apos;kickstart_start&apos;)</span>
+<span class="line">$SNIPPET(&apos;pre_install_network_config&apos;)</span>
+<span class="line"># Enable installation monitoring</span>
+<span class="line">$SNIPPET(&apos;pre_anamon&apos;)</span>
+<span class="line">%end</span>
+<span class="line"></span>
+<span class="line">%packages  ## 想安装的软件包</span>
+<span class="line">$SNIPPET(&apos;func_install_if_enabled&apos;)</span>
+<span class="line">tree</span>
+<span class="line">vim</span>
+<span class="line">nmap</span>
+<span class="line">wget</span>
+<span class="line">lftp</span>
+<span class="line">net-tools</span>
+<span class="line">lrzsz</span>
+<span class="line">telnet</span>
+<span class="line">%end</span>
+<span class="line"></span>
+<span class="line">%post --nochroot</span>
+<span class="line">$SNIPPET(&apos;log_ks_post_nochroot&apos;)</span>
+<span class="line">%end</span>
+<span class="line"></span>
+<span class="line">%post</span>
+<span class="line">$SNIPPET(&apos;log_ks_post&apos;)</span>
+<span class="line"># Start yum configuration</span>
+<span class="line">$yum_config_stanza</span>
+<span class="line"># End yum configuration</span>
+<span class="line">$SNIPPET(&apos;post_install_kernel_options&apos;)</span>
+<span class="line">$SNIPPET(&apos;post_install_network_config&apos;)</span>
+<span class="line">$SNIPPET(&apos;func_register_if_enabled&apos;)</span>
+<span class="line">$SNIPPET(&apos;download_config_files&apos;)</span>
+<span class="line">$SNIPPET(&apos;koan_environment&apos;)</span>
+<span class="line">$SNIPPET(&apos;redhat_register&apos;)</span>
+<span class="line">$SNIPPET(&apos;cobbler_register&apos;)</span>
+<span class="line"># Enable post-install boot notification</span>
+<span class="line">$SNIPPET(&apos;post_anamon&apos;)</span>
+<span class="line"># Start final steps</span>
+<span class="line">$SNIPPET(&apos;kickstart_done&apos;)</span>
+<span class="line"># End final steps</span>
+<span class="line">%end</span>
+</pre></td></tr></table></figure>
+<h3 id="编辑centos7-6镜像所使用的kickstart文件"><a href="#编辑centos7-6镜像所使用的kickstart文件" class="headerlink" title="编辑centos7.6镜像所使用的kickstart文件"></a>编辑centos7.6镜像所使用的kickstart文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">cobbler profile edit --name=centos7.6-x86_64 --kickstart=/var/lib/cobbler/kickstarts/centos7.ks</span>
+</pre></td></tr></table></figure>
+<h3 id="同步cobbler配置-1"><a href="#同步cobbler配置-1" class="headerlink" title="同步cobbler配置"></a>同步cobbler配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">cobbler sync</span>
+</pre></td></tr></table></figure>
+<h3 id="创建一个虚拟机进行测试"><a href="#创建一个虚拟机进行测试" class="headerlink" title="创建一个虚拟机进行测试"></a>创建一个虚拟机进行测试</h3><p>创建的虚拟内存要大于2G<br><img src="/2020/04/28/Cobbler自动化部署/Cobbler自动化部署/test.png" alt="test"><br>选中后回车即可进行安装。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cobbler/" rel="tag"># cobbler</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/20/YAML教程/YAML教程/" rel="next" title="YAML教程">
+                <i class="fa fa-chevron-left"></i> YAML教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/06/算法/1-算法简介/" rel="prev" title="1-算法简介">
+                1-算法简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DaguangYang</p>
+              <div class="site-description motion-element" itemprop="description">The fire in my heart it will never die</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">66</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cobbler安装"><span class="nav-number">1.</span> <span class="nav-text">cobbler安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置cobbler"><span class="nav-number">2.</span> <span class="nav-text">配置cobbler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置DHCP"><span class="nav-number">3.</span> <span class="nav-text">配置DHCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步cobbler配置"><span class="nav-number">4.</span> <span class="nav-text">同步cobbler配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cobbler命令"><span class="nav-number">5.</span> <span class="nav-text">cobbler命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cobbler安装配置centos"><span class="nav-number">6.</span> <span class="nav-text">cobbler安装配置centos</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将镜像挂载"><span class="nav-number">6.1.</span> <span class="nav-text">将镜像挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入镜像"><span class="nav-number">6.2.</span> <span class="nav-text">导入镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看导入后镜像信息"><span class="nav-number">6.3.</span> <span class="nav-text">查看导入后镜像信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看profile信息"><span class="nav-number">6.4.</span> <span class="nav-text">查看profile信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy一份profile文件-ks-，进行修改"><span class="nav-number">6.5.</span> <span class="nav-text">copy一份profile文件(ks)，进行修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑centos7-6镜像所使用的kickstart文件"><span class="nav-number">6.6.</span> <span class="nav-text">编辑centos7.6镜像所使用的kickstart文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步cobbler配置-1"><span class="nav-number">6.7.</span> <span class="nav-text">同步cobbler配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个虚拟机进行测试"><span class="nav-number">6.8.</span> <span class="nav-text">创建一个虚拟机进行测试</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-07-09</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DaguangYang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">202k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:04</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -114,7 +114,20 @@
 <meta property="og:site_name" content="DaguangY">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/ansible.jpg">
-<meta property="og:updated_time" content="2020-05-25T16:26:18.664Z">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/未分组的主机的主机名.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/第二条未分组的主机的主机名.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/循环输出未分组的主机的主机名.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/自定义列表进行循环.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/循环复杂列表.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/循环创建文件.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/合并对齐.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/不能对齐的情况.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/with_cartesian.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/按照顺序生成数字序列.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/循环键值对.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/with_file.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/with_fileglob.png">
+<meta property="og:updated_time" content="2020-07-08T16:56:01.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6-playbook流程控制">
 <meta name="twitter:image" content="http://yoursite.com/2020/05/26/ansible/6-playbook流程控制/ansible.jpg">
@@ -427,12 +440,24 @@
                 
               
 
-              <time title="创建时间：2020-05-26 00:25:09 / 修改时间：00:26:18" itemprop="dateCreated datePublished" datetime="2020-05-26T00:25:09+08:00">2020-05-26</time>
+              <time title="创建时间：2020-05-26 00:25:09" itemprop="dateCreated datePublished" datetime="2020-05-26T00:25:09+08:00">2020-05-26</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-09 00:56:01" itemprop="dateModified" datetime="2020-07-09T00:56:01+08:00">2020-07-09</time>
               
             
           </span>
@@ -485,7 +510,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1</span>
+                <span title="本文字数">4k</span>
               
 
               
@@ -499,7 +524,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -520,6 +545,335 @@
 
       
         <p><img src="/2020/05/26/ansible/6-playbook流程控制/ansible.jpg" alt="ansible"><br><a id="more"></a></p>
+<h1 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h1><h2 id="with-items"><a href="#with-items" class="headerlink" title="with_items"></a>with_items</h2><p>/home/ansible/hosts 配置清单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">test3</span>
+<span class="line">test4</span>
+<span class="line">192.168.27.7</span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/未分组的主机的主机名.png" alt="未分组的主机的主机名"><br>当想要获取第二条主机名时可以使用<code></code>来进行获取。<br><img src="/2020/05/26/ansible/6-playbook流程控制/第二条未分组的主机的主机名.png" alt="第二条未分组的主机的主机名"><br>可以在playbook中使用with_items进行循环<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">输出未分组的主机的主机名</span></span>
+<span class="line">      <span class="comment">#关键字with_items会将&#123;&#123;groups.ungrouped&#125;&#125;的列表信息进行处理，将每条信息单独放在&#123;&#123;item&#125;&#125;中，获取&#123;&#123;item&#125;&#125;的值时会循环获取列表中的每一条信息</span></span>
+<span class="line">      <span class="string">with_items</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;groups.ungrouped&#125;&#125;</span>"</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/循环输出未分组的主机的主机名.png" alt="循环输出未分组的主机的主机名">  </p>
+<h3 id="自定义列表进行循环"><a href="#自定义列表进行循环" class="headerlink" title="自定义列表进行循环"></a>自定义列表进行循环</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">自定义一个列表进行循环</span></span>
+<span class="line">     <span class="comment">#with_items : [1,2,3]</span></span>
+<span class="line">      <span class="string">with_items</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="number">1</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="number">2</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="number">3</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/自定义列表进行循环.png" alt="自定义列表进行循环">  </p>
+<h3 id="循环复杂列表"><a href="#循环复杂列表" class="headerlink" title="循环复杂列表"></a>循环复杂列表</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">循环复杂列表</span></span>
+<span class="line"><span class="attr">      with_items:</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">&#123;test1</span> <span class="string">:</span> <span class="number">1</span><span class="string">,</span> <span class="string">test2</span> <span class="string">:</span> <span class="number">2</span><span class="string">&#125;</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">&#123;test1</span> <span class="string">:</span> <span class="string">"a"</span><span class="string">,</span> <span class="string">test2</span> <span class="string">:</span> <span class="string">"b"</span><span class="string">&#125;</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item.test1&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/循环复杂列表.png" alt="循环复杂列表">  </p>
+<h3 id="初步实际运用"><a href="#初步实际运用" class="headerlink" title="初步实际运用"></a>初步实际运用</h3><p>循环创建文件<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span></span>
+<span class="line">    <span class="string">dirs</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">      -</span> <span class="string">"/opt/a"</span></span>
+<span class="line"><span class="bullet">      -</span> <span class="string">"/opt/c"</span></span>
+<span class="line"><span class="bullet">      -</span> <span class="string">"/opt/b"</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">循环创建文件</span></span>
+<span class="line">      <span class="string">with_items</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;dirs&#125;&#125;</span>"</span></span>
+<span class="line">      <span class="string">file</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">path</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+<span class="line">        <span class="string">state</span> <span class="string">:</span> <span class="string">touch</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/循环创建文件.png" alt="循环创建文件">  </p>
+<h2 id="with-list"><a href="#with-list" class="headerlink" title="with_list"></a>with_list</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">循环输出列表</span></span>
+<span class="line">      <span class="string">with_list</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[1,2,3]</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[a,b,c]</span></span>
+<span class="line">        <span class="comment">#- </span></span>
+<span class="line">        <span class="comment">#  - 1</span></span>
+<span class="line">        <span class="comment">#  - 2</span></span>
+<span class="line">        <span class="comment">#  - 3</span></span>
+<span class="line">        <span class="comment">#- </span></span>
+<span class="line">        <span class="comment">#  - a</span></span>
+<span class="line">        <span class="comment">#  - b</span></span>
+<span class="line">        <span class="comment">#  - c</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+<span class="line"><span class="string">```</span>  </span>
+<span class="line"><span class="string">![循环输出列表](6-playbook流程控制\循环输出列表.png)</span>  </span>
+<span class="line"></span>
+<span class="line"><span class="comment">## with_together  </span></span>
+<span class="line"><span class="string">合并对齐:两个列表中相同位置的元素合并</span>  </span>
+<span class="line"><span class="string">```YAML</span></span>
+<span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">对其合并</span></span>
+<span class="line">      <span class="string">with_together</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[1,2,3]</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[a,b,c]</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/合并对齐.png" alt="合并对齐"><br>若不能对齐的情况<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">对其合并</span></span>
+<span class="line">      <span class="string">with_together</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[1,2,3,4]</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[a,b,c]</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/不能对齐的情况.png" alt="不能对齐的情况">  </p>
+<h2 id="with-cartesian"><a href="#with-cartesian" class="headerlink" title="with_cartesian"></a>with_cartesian</h2><p>交叉组合<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">对其合并</span></span>
+<span class="line">      <span class="string">with_cartesian</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[1,2,3]</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">[a,b,c]</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/with_cartesian.png" alt="with_cartesian">  </p>
+<h2 id="with-sequence"><a href="#with-sequence" class="headerlink" title="with_sequence"></a>with_sequence</h2><p>按照顺序生成数字序列<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span>  </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">按照顺序生成数字序列</span>  </span>
+<span class="line">      <span class="string">with_sequence</span> <span class="string">:</span>   <span class="comment">#start=1 end=10 stride=2</span></span>
+<span class="line">        <span class="string">start=1</span>   <span class="comment">#中间不要有空格</span></span>
+<span class="line">        <span class="string">end=10</span></span>
+<span class="line">        <span class="string">stride=2</span>  <span class="comment">#步长</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/按照顺序生成数字序列.png" alt="按照顺序生成数字序列"><br>步长可以设定为负数，则表示递减，相应的start要比end数值大。<br>还有一种简写方式 ，简写方式默认stride为1，start为1<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span>  </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">简写方式</span></span>
+<span class="line">      <span class="string">with_sequence</span> <span class="string">:</span> <span class="comment">#count=5 </span></span>
+<span class="line">        <span class="string">count=5</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<h2 id="with-random-choice"><a href="#with-random-choice" class="headerlink" title="with_random_choice"></a>with_random_choice</h2><p>随机返回列表中一个值<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">随机返回列表中一个值</span></span>
+<span class="line">      <span class="string">with_random_choice</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="number">1</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="number">2</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="number">3</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="number">4</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<h2 id="with-dict"><a href="#with-dict" class="headerlink" title="with_dict"></a>with_dict</h2><p>循环键值对<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span></span>
+<span class="line">    <span class="string">users</span> <span class="string">:</span></span>
+<span class="line">      <span class="string">name</span> <span class="string">:</span> <span class="string">xiaoming</span></span>
+<span class="line">      <span class="string">age</span> <span class="string">:</span> <span class="number">10</span> </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">循环键值对</span></span>
+<span class="line">      <span class="string">with_dict</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;users&#125;&#125;</span>"</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span> <span class="comment">#可以使用"&#123;&#123;item.key&#125;&#125;"、"&#123;&#123;item.value&#125;&#125;"来只获取键或者值</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/循环键值对.png" alt="循环键值对">  </p>
+<h2 id="with-file"><a href="#with-file" class="headerlink" title="with_file"></a>with_file</h2><p>循环读取ansible管理端主机本地的多个文件<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line"><span class="attr">    files:</span></span>
+<span class="line"><span class="bullet">      -</span> <span class="string">/opt/test/a</span>  </span>
+<span class="line"><span class="bullet">      -</span> <span class="string">/opt/test/b</span></span>
+<span class="line"><span class="bullet">      -</span> <span class="string">/opt/test/c</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">循环读取ansible管理端主机本地文件</span></span>
+<span class="line"><span class="attr">      with_file:</span> <span class="string">"<span class="template-variable">&#123;&#123;files&#125;&#125;</span>"</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/with_file.png" alt="with_file">  </p>
+<h2 id="with-fileglob"><a href="#with-fileglob" class="headerlink" title="with_fileglob"></a>with_fileglob</h2><p>在ansible管理端匹配文件名称,不会匹配到目录<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">配置/opt/test/下的所有文件</span></span>
+<span class="line">      <span class="string">with_fileglob</span> <span class="string">:</span> <span class="string">/opt/test/*</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;item&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/05/26/ansible/6-playbook流程控制/with_fileglob.png" alt="with_fileglob">  </p>
 
       
     </div>
@@ -566,6 +920,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/07/07/ansible/7-playbook条件判断/" rel="prev" title="7-playbook条件判断">
+                7-playbook条件判断 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -608,8 +966,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -624,7 +991,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-count">60</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -812,7 +1179,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">65</span>
+                      
+                    
+                    <span class="site-state-item-count">66</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -840,6 +1209,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#循环"><span class="nav-number">1.</span> <span class="nav-text">循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#with-items"><span class="nav-number">1.1.</span> <span class="nav-text">with_items</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义列表进行循环"><span class="nav-number">1.1.1.</span> <span class="nav-text">自定义列表进行循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环复杂列表"><span class="nav-number">1.1.2.</span> <span class="nav-text">循环复杂列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初步实际运用"><span class="nav-number">1.1.3.</span> <span class="nav-text">初步实际运用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-list"><span class="nav-number">1.2.</span> <span class="nav-text">with_list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-cartesian"><span class="nav-number">1.3.</span> <span class="nav-text">with_cartesian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-sequence"><span class="nav-number">1.4.</span> <span class="nav-text">with_sequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-random-choice"><span class="nav-number">1.5.</span> <span class="nav-text">with_random_choice</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-dict"><span class="nav-number">1.6.</span> <span class="nav-text">with_dict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-file"><span class="nav-number">1.7.</span> <span class="nav-text">with_file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with-fileglob"><span class="nav-number">1.8.</span> <span class="nav-text">with_fileglob</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -854,7 +1240,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-06-18</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-07-09</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -866,7 +1252,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">192k</span>
+    <span title="站点总字数">202k</span>
   
 
   
@@ -875,7 +1261,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:55</span>
+    <span title="站点阅读时长">3:04</span>
   
 </div>
 

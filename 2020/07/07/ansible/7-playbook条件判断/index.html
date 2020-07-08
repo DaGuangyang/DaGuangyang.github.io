@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="keywords" content="playbook条件判断">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7-playbook条件判断">
+<meta property="og:url" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/index.html">
+<meta property="og:site_name" content="DaguangY">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/ansible.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/when.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/ignore_errors.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/tests.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断变量.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断执行结果.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断字符串大小写.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断整除.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/版本号比较.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断子集父集.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断是字符串、数字.png">
+<meta property="og:updated_time" content="2020-07-08T17:23:04.847Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7-playbook条件判断">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/ansible.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>7-playbook条件判断 | DaguangY</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DaguangY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">All I need is a miracle</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaguangYang">
+      <meta itemprop="description" content="The fire in my heart it will never die">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DaguangY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">7-playbook条件判断
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-07-07 23:59:08" itemprop="dateCreated datePublished" datetime="2020-07-07T23:59:08+08:00">2020-07-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-09 01:23:04" itemprop="dateModified" datetime="2020-07-09T01:23:04+08:00">2020-07-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2020/07/07/ansible/7-playbook条件判断/ansible.jpg" alt="ansible"><br><a id="more"></a></p>
+<h2 id="when"><a href="#when" class="headerlink" title="when"></a>when</h2><p>ansible playbook中使用<code>when</code>作为条件判断的关键字,在when使用时后面的变量不加 <span style="background-color: #EEEEEE;">{{ &emsp; }}</span>。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">如果目标主机为centos则输出yes</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">ansible_distribution</span> <span class="string">==</span> <span class="string">"CentOS"</span> <span class="comment">#ansible_distribution表示目标主机系统的发行版</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+</pre></td></tr></table></figure></p>
+<p>表示若ansible_distribution为CentOS，则将会调用debug模块；若不是，则不会调用。<br><img src="/2020/07/07/ansible/7-playbook条件判断/when.png" alt="when">  </p>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p><strong>比较运算符</strong><br><code>==</code>:比较两个对象是否相等，相等为真<br><code>!=</code>:比较两个对象是否不等，不等为真<br><code>&gt;</code>:比较两个值的大小，如果左边的值大于右边的值，则为真<br><code>&lt;</code>:比较两个值的大小，如果左边的值小于右边的值，则为真<br><code>&gt;=</code>:比较两个值的大小，如果左边的值大于右边的值或左右相等，则为真<br><code>&lt;=</code>:比较两个值的大小，如果左边的值小于右边的值或左右相等，则为真<br><strong>逻辑运算符</strong><br><code>and</code>:逻辑与，当左边与右边同时为真，则返回真<br><code>or</code>:逻辑或，当左边与右边有任意一个为真，则返回真<br><code>not</code>:取反，对一个操作体取反<br><code>( )</code>:组合，将一组操作体包装在一起，形成一个较大的操作体<br>当逻辑运算符为<code>and</code>时有两种写法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">when: a==&quot;1&quot; and b == &quot;1&quot;</span>
+<span class="line">when :</span>
+<span class="line">  - a==&quot;1&quot;</span>
+<span class="line">  - b == &quot;1&quot;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="ignore-errors"><a href="#ignore-errors" class="headerlink" title="ignore_errors"></a>ignore_errors</h2><p>当前task执行报错，ansible也会忽略这个错误，继续执行playbook；若不使用，则当task报错时该playbook将会运行中断。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">/ansible/a是一个不存在的路径</span></span>
+<span class="line">      <span class="string">shell</span> <span class="string">:</span> <span class="string">ls</span> <span class="string">/ansible/a</span></span>
+<span class="line">      <span class="string">ignore_errors</span> <span class="string">:</span> <span class="literal">true</span></span>
+<span class="line">      <span class="string">register</span> <span class="string">:</span> <span class="string">result</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">result的相关信息,查看是否执行失败</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;result.failed&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/ignore_errors.png" alt="ignore_errors">  </p>
+<h2 id="tests"><a href="#tests" class="headerlink" title="tests"></a>tests</h2><p>tests是jinjia2中的，借助tests可以进行判断操作。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line">    <span class="string">testpath</span> <span class="string">:</span> <span class="string">/opt/test</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断ansible管理端是否有/opt/testtest这个路径</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">testpath</span>  <span class="string">exists</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;testpath&#125;&#125;</span> is exists"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/tests.png" alt="tests"><br><code>is exists</code>是判断ansible管理端主机的路径的，当然也可以使用<code>is not exists</code>。  </p>
+<h3 id="判断变量的tests"><a href="#判断变量的tests" class="headerlink" title="判断变量的tests"></a>判断变量的tests</h3><p><strong>defined</strong>：判断变量是否定义，定义则返回真<br><strong>undefined</strong>：判断变量是否定义，未定义则返回真<br><strong>none</strong>：判断变量是否为空值，若已定义且为空值，则返回真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line">    <span class="string">num1</span> <span class="string">:</span> <span class="number">1</span></span>
+<span class="line">    <span class="string">num3</span> <span class="string">:</span>  </span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断num1是否定义</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">num1</span> <span class="string">is</span> <span class="string">defined</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"num1 is <span class="template-variable">&#123;&#123;num1&#125;&#125;</span>"</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断num2是否定义</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">num2</span> <span class="string">is</span> <span class="string">undefined</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"num2 is undefined"</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断num3是否为空值</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">num3</span> <span class="string">is</span> <span class="string">none</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"num3 is none"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/判断变量.png" alt="判断变量">  </p>
+<h3 id="判断执行结果的tests"><a href="#判断执行结果的tests" class="headerlink" title="判断执行结果的tests"></a>判断执行结果的tests</h3><p><strong>success或successded</strong>：通过任务的返回信息判断任务执行状态，任务执行成功返回真<br><strong>failure或failed</strong>：通过任务的返回信息判断任务执行状态，任务执行失败返回真<br><strong>change或changed</strong>：任务执行状态为change为真<br><strong>skip或skipped</strong>：任务没有满足条件，跳过执行时返回为真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span></span>
+<span class="line">      <span class="string">condition</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">设定一个判断场景</span></span>
+<span class="line">      <span class="string">shell</span> <span class="string">:</span> <span class="string">"cat /home/test"</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">condition</span> <span class="string">==</span> <span class="string">"yes"</span></span>
+<span class="line">      <span class="string">register</span> <span class="string">:</span> <span class="string">returnmsg</span></span>
+<span class="line">      <span class="string">ignore_errors</span> <span class="string">:</span> <span class="literal">true</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">查看执行状态</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"<span class="template-variable">&#123;&#123;returnmsg&#125;&#125;</span>"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断执行结果是否为success</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">returnmsg</span> <span class="string">is</span> <span class="string">success</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"success"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断执行结果是否为failed</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">returnmsg</span> <span class="string">is</span> <span class="string">failure</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"failure"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断执行结果是否为change</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">returnmsg</span> <span class="string">is</span> <span class="string">change</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"change"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断执行结果是否为skip</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">returnmsg</span> <span class="string">is</span> <span class="string">skip</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"skip"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/判断执行结果.png" alt="判断执行结果">  </p>
+<h3 id="判断路径的tests"><a href="#判断路径的tests" class="headerlink" title="判断路径的tests"></a>判断路径的tests</h3><p><strong><em>如下的tests都是针对ansible管理端主机中的路径，与目标主机无关</em></strong><br><strong>file</strong> : 判断路径是否是一个文件，如果路径是一个文件则返回真<br><strong>directory</strong> ：判断路径是否是一个目录，如果路径是一个目录则返回真<br><strong>link</strong> ：判断路径是否是一个软链接，如果路径是一个软链接则返回真<br><strong>mount</strong> :判断路径是否是一个挂载点，如果路径是一个挂载点则返回真<br><strong>exists</strong> :判断路径是否存在，如果路径存在则返回真  </p>
+<h3 id="判断字符串的tests"><a href="#判断字符串的tests" class="headerlink" title="判断字符串的tests"></a>判断字符串的tests</h3><p><strong>lower</strong>：判断包含字母的字符串中的字母是否是纯小写，字符串中的字母全部为小写则返回真<br><strong>upper</strong>：判断包含字母的字符串中的字母是否是纯大写，字符串中的字母全部为大写则返回真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line">    <span class="string">str1</span> <span class="string">:</span> <span class="string">"ABC"</span></span>
+<span class="line">    <span class="string">str2</span> <span class="string">:</span> <span class="string">"abc"</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断str1是否全为大写字母</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">str1</span> <span class="string">is</span> <span class="string">upper</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"str1全为大写，str1=<span class="template-variable">&#123;&#123;str1&#125;&#125;</span>"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断str2是否全为小写字母</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">str2</span> <span class="string">is</span> <span class="string">lower</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"str2全为大写，str1=<span class="template-variable">&#123;&#123;str2&#125;&#125;</span>"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/判断字符串大小写.png" alt="判断字符串大小写">  </p>
+<h3 id="判断整除的tests"><a href="#判断整除的tests" class="headerlink" title="判断整除的tests"></a>判断整除的tests</h3><p><strong>even</strong> : 判断数值是否为偶数<br><strong>odd</strong> : 判断数值是否为奇数<br><strong>divisibleby(NUM)</strong>:判断是可以被NUM整除<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span></span>
+<span class="line">    <span class="string">num1</span> <span class="string">:</span> <span class="number">6</span></span>
+<span class="line">    <span class="string">num2</span> <span class="string">:</span> <span class="number">3</span></span>
+<span class="line">    <span class="string">num3</span> <span class="string">:</span> <span class="number">9</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断num1是否为偶数</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">num1</span> <span class="string">is</span> <span class="string">even</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"num1为<span class="template-variable">&#123;&#123;num1&#125;&#125;</span>是整数"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断num2是否为偶数</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">num2</span> <span class="string">is</span> <span class="string">odd</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"num2为<span class="template-variable">&#123;&#123;num2&#125;&#125;</span>是奇数"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断num3是否能被3整除</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">num2</span> <span class="string">is</span> <span class="string">divisibleby(3)</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"num3为<span class="template-variable">&#123;&#123;num3&#125;&#125;</span>可以被3整除"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/判断整除.png" alt="判断整除">  </p>
+<h3 id="其他判断的tests"><a href="#其他判断的tests" class="headerlink" title="其他判断的tests"></a>其他判断的tests</h3><blockquote>
+<p><strong>version</strong>：可以用于对比两个版本号的大小，或者与指定的版本号进行对比，使用语法为 version(‘版本号’, ‘比较操作符’)<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line">    <span class="string">ver1</span> <span class="string">:</span> <span class="number">1.9</span><span class="number">.12</span></span>
+<span class="line">    <span class="string">ver2</span> <span class="string">:</span> <span class="number">7.2</span><span class="number">.21</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">比较两个版本号的大小</span>  </span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">ver2</span> <span class="string">is</span> <span class="string">version(ver1,"&gt;")</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"ver2&gt;ver1"</span></span>
+</pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/版本号比较.png" alt="版本号比较"><br><strong>大于</strong>：&gt;, gt<br><strong>大于等于</strong>：&gt;=, ge<br><strong>小于</strong>：&lt;, lt<br><strong>小于等于</strong>：&lt;=, le<br><strong>等于</strong>： ==, =, eq<br><strong>不等于</strong>：!=, &lt;&gt;, ne  </p>
+<blockquote>
+<p>subset：判断一个list是不是另一个list的子集，是另一个list的子集时返回真<br>superset : 判断一个list是不是另一个list的父集，是另一个list的父集时返回真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span><span class="bullet">--</span> </span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line">    <span class="string">a</span> <span class="string">:</span> <span class="string">[1,2,3,4,5]</span></span>
+<span class="line">    <span class="string">b</span> <span class="string">:</span> <span class="string">[2,3,5]</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">输出a与b的值</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"a=<span class="template-variable">&#123;&#123;a&#125;&#125;</span>   b=<span class="template-variable">&#123;&#123;b&#125;&#125;</span>"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断b是否为a的子集</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">b</span> <span class="string">is</span> <span class="string">subset(a)</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"b 是 a 的子集"</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断a是否为b的父集</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">a</span> <span class="string">is</span> <span class="string">superset(b)</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"a 是 b 的父集"</span></span>
+</pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/判断子集父集.png" alt="判断子集父集">  </p>
+<blockquote>
+<p>string：判断对象是否是一个字符串，是字符串则返回真<br>number：判断对象是否是一个数字，是数字则返回真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span> </span>
+<span class="line">  <span class="string">vars</span> <span class="string">:</span> </span>
+<span class="line">    <span class="string">var1</span> <span class="string">:</span> <span class="string">a</span></span>
+<span class="line">    <span class="string">var2</span> <span class="string">:</span> <span class="string">"2"</span></span>
+<span class="line">    <span class="string">var3</span> <span class="string">:</span> <span class="number">3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断var1是否为字符串</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var1</span> <span class="string">is</span> <span class="string">string</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断var2是否为字符串</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var2</span> <span class="string">is</span> <span class="string">string</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断var3是否为字符串</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var3</span> <span class="string">is</span> <span class="string">string</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断var1是否为数字</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var1</span> <span class="string">is</span> <span class="string">number</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断var2是否为数字</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var2</span> <span class="string">is</span> <span class="string">number</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">判断var3是否为数字</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var3</span> <span class="string">is</span> <span class="string">number</span> </span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
+</pre></td></tr></table></figure></p>
+</blockquote>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/判断是字符串、数字.png" alt="判断是字符串、数字"><br>可以看出数字只有在被双引号引起时才会被认定是一个数字，字符、字符串加不加双引号都被认定为是字符串  </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/playbook条件判断/" rel="tag"># playbook条件判断</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/26/ansible/6-playbook流程控制/" rel="next" title="6-playbook流程控制">
+                <i class="fa fa-chevron-left"></i> 6-playbook流程控制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DaguangYang</p>
+              <div class="site-description motion-element" itemprop="description">The fire in my heart it will never die</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">66</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#when"><span class="nav-number">1.</span> <span class="nav-text">when</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符"><span class="nav-number">2.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ignore-errors"><span class="nav-number">3.</span> <span class="nav-text">ignore_errors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tests"><span class="nav-number">4.</span> <span class="nav-text">tests</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断变量的tests"><span class="nav-number">4.1.</span> <span class="nav-text">判断变量的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断执行结果的tests"><span class="nav-number">4.2.</span> <span class="nav-text">判断执行结果的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断路径的tests"><span class="nav-number">4.3.</span> <span class="nav-text">判断路径的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断字符串的tests"><span class="nav-number">4.4.</span> <span class="nav-text">判断字符串的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断整除的tests"><span class="nav-number">4.5.</span> <span class="nav-text">判断整除的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他判断的tests"><span class="nav-number">4.6.</span> <span class="nav-text">其他判断的tests</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-07-09</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DaguangYang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">202k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:04</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
