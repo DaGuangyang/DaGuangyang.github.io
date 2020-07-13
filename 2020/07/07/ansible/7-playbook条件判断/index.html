@@ -124,7 +124,12 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/版本号比较.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断子集父集.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/判断是字符串、数字.png">
-<meta property="og:updated_time" content="2020-07-08T17:23:04.847Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/block.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/rescue.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/always.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/fail.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/failed_when.png">
+<meta property="og:updated_time" content="2020-07-12T14:11:30.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7-playbook条件判断">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/07/ansible/7-playbook条件判断/ansible.jpg">
@@ -454,7 +459,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-07-09 01:23:04" itemprop="dateModified" datetime="2020-07-09T01:23:04+08:00">2020-07-09</time>
+                <time title="修改时间：2020-07-12 22:11:30" itemprop="dateModified" datetime="2020-07-12T22:11:30+08:00">2020-07-12</time>
               
             
           </span>
@@ -507,7 +512,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.8k</span>
+                <span title="本文字数">7.1k</span>
               
 
               
@@ -521,7 +526,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -779,7 +784,9 @@
 </pre></td></tr></table></figure></p>
 <p><img src="/2020/07/07/ansible/7-playbook条件判断/判断整除.png" alt="判断整除">  </p>
 <h3 id="其他判断的tests"><a href="#其他判断的tests" class="headerlink" title="其他判断的tests"></a>其他判断的tests</h3><blockquote>
-<p><strong>version</strong>：可以用于对比两个版本号的大小，或者与指定的版本号进行对比，使用语法为 version(‘版本号’, ‘比较操作符’)<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p><strong>version</strong>：可以用于对比两个版本号的大小，或者与指定的版本号进行对比，使用语法为 version(‘版本号’, ‘比较操作符’)  </p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -799,11 +806,12 @@
 <span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">ver2</span> <span class="string">is</span> <span class="string">version(ver1,"&gt;")</span></span>
 <span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
 <span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"ver2&gt;ver1"</span></span>
-</pre></td></tr></table></figure></p>
-</blockquote>
+</pre></td></tr></table></figure>
 <p><img src="/2020/07/07/ansible/7-playbook条件判断/版本号比较.png" alt="版本号比较"><br><strong>大于</strong>：&gt;, gt<br><strong>大于等于</strong>：&gt;=, ge<br><strong>小于</strong>：&lt;, lt<br><strong>小于等于</strong>：&lt;=, le<br><strong>等于</strong>： ==, =, eq<br><strong>不等于</strong>：!=, &lt;&gt;, ne  </p>
 <blockquote>
-<p>subset：判断一个list是不是另一个list的子集，是另一个list的子集时返回真<br>superset : 判断一个list是不是另一个list的父集，是另一个list的父集时返回真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>subset：判断一个list是不是另一个list的子集，是另一个list的子集时返回真<br>superset : 判断一个list是不是另一个list的父集，是另一个list的父集时返回真  </p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -837,11 +845,12 @@
 <span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">a</span> <span class="string">is</span> <span class="string">superset(b)</span></span>
 <span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
 <span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"a 是 b 的父集"</span></span>
-</pre></td></tr></table></figure></p>
-</blockquote>
+</pre></td></tr></table></figure>
 <p><img src="/2020/07/07/ansible/7-playbook条件判断/判断子集父集.png" alt="判断子集父集">  </p>
 <blockquote>
-<p>string：判断对象是否是一个字符串，是字符串则返回真<br>number：判断对象是否是一个数字，是数字则返回真<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>string：判断对象是否是一个字符串，是字符串则返回真<br>number：判断对象是否是一个数字，是数字则返回真  </p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -903,9 +912,111 @@
 <span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="string">var3</span> <span class="string">is</span> <span class="string">number</span> </span>
 <span class="line">      <span class="string">debug</span> <span class="string">:</span> </span>
 <span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"yes"</span></span>
-</pre></td></tr></table></figure></p>
-</blockquote>
+</pre></td></tr></table></figure>
 <p><img src="/2020/07/07/ansible/7-playbook条件判断/判断是字符串、数字.png" alt="判断是字符串、数字"><br>可以看出数字只有在被双引号引起时才会被认定是一个数字，字符、字符串加不加双引号都被认定为是字符串  </p>
+<h2 id="block"><a href="#block" class="headerlink" title="block"></a>block</h2><p><code>block</code>可以将多个任务整合成一个块，这个块将被当做是一个整体，当这个block满足所在的tasks中的条件判断时，这个块里的任务都会被执行。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">name</span> <span class="string">:</span> <span class="string">"学习block"</span></span>
+<span class="line">      <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">"任务一"</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">block</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">      -</span> <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">          <span class="string">msg</span> <span class="string">:</span> <span class="string">"任务二"</span></span>
+<span class="line"><span class="bullet">      -</span> <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">          <span class="string">msg</span> <span class="string">:</span> <span class="string">"任务三"</span></span>
+<span class="line">      <span class="string">when</span> <span class="string">:</span> <span class="number">1</span> <span class="string">&lt;</span> <span class="number">2</span>  <span class="comment">#注意when对齐的位置，该when是对应整个block的</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/block.png" alt="block">  </p>
+<h3 id="rescue"><a href="#rescue" class="headerlink" title="rescue"></a>rescue</h3><p><code>block</code>除了能在符合when条件是执行多个任务，还能与<code>rescue</code>一同使用，应对<code>block块</code>中任务出错的场景,当<code>block块</code>中任务无误时则不会执行<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">block</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">            <span class="string">msg</span> <span class="string">:</span> <span class="string">"block块中任务一"</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">shell</span> <span class="string">:</span> <span class="string">ls</span> <span class="string">/asd</span></span>
+<span class="line">      <span class="string">rescue</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">        -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">            <span class="string">msg</span> <span class="string">:</span> <span class="string">"block块中某一个任务报错"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/rescue.png" alt="rescue"><br><code>rescue</code>中可以定义多个任务</p>
+<h3 id="always"><a href="#always" class="headerlink" title="always"></a>always</h3><p><code>always</code>关键字，无论block中的任务执行成功还是失败，always中的任务都会被执行。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">block</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">shell</span> <span class="string">:</span> <span class="string">ls</span> <span class="string">/asd</span></span>
+<span class="line">      <span class="string">always</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">        -</span> <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">            <span class="string">msg</span> <span class="string">:</span> <span class="string">block</span> <span class="string">块任务结束</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/always.png" alt="always">  </p>
+<h2 id="fail"><a href="#fail" class="headerlink" title="fail"></a>fail</h2><p><code>fail</code>模块，将任务标记为失败终止playbook，一般会与<code>when</code>一起使用退出playbook执行。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">任务一</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">fail</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">任务二fail模块输出</span></span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span></span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">任务三</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/fail.png" alt="fail">  </p>
+<h2 id="failed-when"><a href="#failed-when" class="headerlink" title="failed_when"></a>failed_when</h2><p>表示符合条件时，将任务标记为失败终止playbook<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span>
+<span class="line"><span class="bullet">-</span> <span class="string">hosts</span> <span class="string">:</span> <span class="string">test3</span></span>
+<span class="line">  <span class="string">tasks</span> <span class="string">:</span> </span>
+<span class="line"><span class="bullet">    -</span> <span class="string">debug</span> <span class="string">:</span> </span>
+<span class="line">        <span class="string">msg</span> <span class="string">:</span> <span class="string">error</span></span>
+<span class="line">      <span class="string">register</span> <span class="string">:</span> <span class="string">result</span></span>
+<span class="line">      <span class="string">failed_when</span> <span class="string">:</span> <span class="string">result.msg</span> <span class="string">==</span> <span class="string">"error"</span></span>
+</pre></td></tr></table></figure></p>
+<p><img src="/2020/07/07/ansible/7-playbook条件判断/failed_when.png" alt="failed_when">  </p>
+<h2 id="changed-when"><a href="#changed-when" class="headerlink" title="changed_when"></a>changed_when</h2><p>与<code>failed_when</code>类似，符合条件时将任务状态标记为changed</p>
 
       
     </div>
@@ -951,6 +1062,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/12/ansible/8-过滤器/" rel="prev" title="8-过滤器">
+                8-过滤器 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1019,7 +1134,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1209,7 +1324,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">66</span>
+                      
+                    
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1247,7 +1364,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#when"><span class="nav-number">1.</span> <span class="nav-text">when</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符"><span class="nav-number">2.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ignore-errors"><span class="nav-number">3.</span> <span class="nav-text">ignore_errors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tests"><span class="nav-number">4.</span> <span class="nav-text">tests</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断变量的tests"><span class="nav-number">4.1.</span> <span class="nav-text">判断变量的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断执行结果的tests"><span class="nav-number">4.2.</span> <span class="nav-text">判断执行结果的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断路径的tests"><span class="nav-number">4.3.</span> <span class="nav-text">判断路径的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断字符串的tests"><span class="nav-number">4.4.</span> <span class="nav-text">判断字符串的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断整除的tests"><span class="nav-number">4.5.</span> <span class="nav-text">判断整除的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他判断的tests"><span class="nav-number">4.6.</span> <span class="nav-text">其他判断的tests</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#when"><span class="nav-number">1.</span> <span class="nav-text">when</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符"><span class="nav-number">2.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ignore-errors"><span class="nav-number">3.</span> <span class="nav-text">ignore_errors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tests"><span class="nav-number">4.</span> <span class="nav-text">tests</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断变量的tests"><span class="nav-number">4.1.</span> <span class="nav-text">判断变量的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断执行结果的tests"><span class="nav-number">4.2.</span> <span class="nav-text">判断执行结果的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断路径的tests"><span class="nav-number">4.3.</span> <span class="nav-text">判断路径的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断字符串的tests"><span class="nav-number">4.4.</span> <span class="nav-text">判断字符串的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断整除的tests"><span class="nav-number">4.5.</span> <span class="nav-text">判断整除的tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他判断的tests"><span class="nav-number">4.6.</span> <span class="nav-text">其他判断的tests</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#block"><span class="nav-number">5.</span> <span class="nav-text">block</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rescue"><span class="nav-number">5.1.</span> <span class="nav-text">rescue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#always"><span class="nav-number">5.2.</span> <span class="nav-text">always</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fail"><span class="nav-number">6.</span> <span class="nav-text">fail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#failed-when"><span class="nav-number">7.</span> <span class="nav-text">failed_when</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#changed-when"><span class="nav-number">8.</span> <span class="nav-text">changed_when</span></a></li></ol></div>
             
 
           </div>
@@ -1268,7 +1385,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-07-10</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-07-13</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -1280,7 +1397,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">201k</span>
+    <span title="站点总字数">210k</span>
   
 
   
@@ -1289,7 +1406,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">3:03</span>
+    <span title="站点阅读时长">3:11</span>
   
 </div>
 
