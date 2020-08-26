@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="DaguangY">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/22/docker/6.docker数据管理/图片docker.jpg">
-<meta property="og:updated_time" content="2019-04-23T18:27:14.000Z">
+<meta property="og:updated_time" content="2020-08-24T14:55:45.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6.docker数据管理">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/22/docker/6.docker数据管理/图片docker.jpg">
@@ -444,7 +444,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-24 02:27:14" itemprop="dateModified" datetime="2019-04-24T02:27:14+08:00">2019-04-24</time>
+                <time title="修改时间：2020-08-24 22:55:45" itemprop="dateModified" datetime="2020-08-24T22:55:45+08:00">2020-08-24</time>
               
             
           </span>
@@ -497,7 +497,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.5k</span>
+                <span title="本文字数">3k</span>
               
 
               
@@ -511,7 +511,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -533,8 +533,8 @@
       
         <p><img src="/2019/04/22/docker/6.docker数据管理/图片docker.jpg" alt="docker"><br><a id="more"></a><br>在容器中管理数据主要有两种方式  </p>
 <ul>
-<li>数据卷（Volumes）</li>
-<li>挂载主机目录（Bind mounts）</li>
+<li>数据卷（Volumes）  </li>
+<li>数据卷容器：使用特定容器维护数据卷  </li>
 </ul>
 <h2 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h2><p><strong>数据卷</strong>是一个可供一个或多个容器使用的特殊目录，可以提供个很多有用的特性  </p>
 <ul>
@@ -552,7 +552,7 @@
 <span class="line">6</span>
 <span class="line">7</span>
 <span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line">#创建一个数据卷my-vol</span>
+</pre></td><td class="code"><pre><span class="line">#创建一个数据卷my-vol。创建的数据卷在`/var/lib/docker/volumes`下  </span>
 <span class="line">docker volume create my-vol</span>
 <span class="line"></span>
 <span class="line">#查看所有的数据卷</span>
@@ -561,15 +561,10 @@
 <span class="line">#查看指定数据卷my-vol的信息</span>
 <span class="line">docker volume inspect my-vol</span>
 </pre></td></tr></table></figure>
-<h3 id="启动一个挂载数据卷的容器"><a href="#启动一个挂载数据卷的容器" class="headerlink" title="启动一个挂载数据卷的容器"></a>启动一个挂载数据卷的容器</h3><p>在用docker run命令的时候，使用–mount标记来将数据卷挂载到容器里。再一次docker run中可以挂载都多个数据卷 。<br>下面创建一个名为web的容器，并加载一个数据卷到容器的/webapp目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">docker run -d -P --name web \</span>
-<span class="line">#-v my-vol:/webapp \</span>
-<span class="line">--mount source=my-vol,target=/webapp \</span>
-<span class="line">training/webapp python app.py</span>
-</pre></td></tr></table></figure></p>
+<h3 id="启动一个挂载数据卷的容器"><a href="#启动一个挂载数据卷的容器" class="headerlink" title="启动一个挂载数据卷的容器"></a>启动一个挂载数据卷的容器</h3><p>在用docker run命令的时候，使用- -mount标记来将数据卷挂载到容器里。再一次docker run中可以挂载都多个数据卷 。<br>下面创建一个名为web的容器，并加载一个数据卷到容器的/webapp目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">docker run -d -P --name web #-v my-vol:/webapp --mount source=my-vol,target=/webapp training/webapp python app.py</span>
+</pre></td></tr></table></figure>
 <h3 id="查看数据卷的具体信息"><a href="#查看数据卷的具体信息" class="headerlink" title="查看数据卷的具体信息"></a>查看数据卷的具体信息</h3><p>在主机里使用以下命令可以查看web容器的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">docker inspect web</span>
 </pre></td></tr></table></figure></p>
@@ -643,14 +638,18 @@
 <span class="line">    &#125;</span>
 <span class="line">]</span>
 </pre></td></tr></table></figure></p>
-<h3 id="挂载一个本地主机文件作为数据卷"><a href="#挂载一个本地主机文件作为数据卷" class="headerlink" title="挂载一个本地主机文件作为数据卷"></a>挂载一个本地主机文件作为数据卷</h3><p>–mount选项也可以从主机挂载单个文件到容器中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">docker run --rm -it \</span>
-<span class="line"># -v $HOME/.bash_history:/root/.bash_history \</span>
-<span class="line">--mount type=bind,source=$HOME/.bash_history,target=/root/.bash_history \</span>
+<h2 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h2><p>如果用户需要在多个容器之间共享一些持续更新的数据，最简单的方式是使用数据卷容器。<br>首先创建一个数据卷容器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">~]# docker run -it -v /dbdata --name dbdata ubuntu:18.04</span>
 </pre></td></tr></table></figure></p>
-<p>这样就可以记录在容器中输入过的命令了  </p>
+<p>可以在其他容器中使用–volumes-from来挂载dbdata容器中的数据卷。<br>可以多次使用–volumes-from参数来从多个容器挂载多个数据卷，还可以从其他已经挂载了容器卷的容器来挂载数据卷。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">docker run -it --volumes-from dbdata --name db1 ubuntu:18.04</span>
+<span class="line">docker run -it --volumes-from dbdata --name db2 ubuntu:18.04</span>
+</pre></td></tr></table></figure>
+<p>这样三个容器任何一方在该目录下的写入，其他容器都可以看到。删除挂载数据卷的容器，数据卷不会被删除。  </p>
+<h2 id="利用数据卷容器来迁移数据"><a href="#利用数据卷容器来迁移数据" class="headerlink" title="利用数据卷容器来迁移数据"></a>利用数据卷容器来迁移数据</h2><h3 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h3><p>备份dbdata数据卷容器，大体的思路为，创建一个容器时，使用<code>--volumes-from</code>挂载dbdata数据卷容器中的数据卷，并使用<code>-v</code>将一个本地目录挂载到容器中，然后将数据卷中的内容打包，拷贝到本地目录中，这样就实现了将数据卷备份的效果。  </p>
+<h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3><p>想要将备份在本地的数据恢复到数据卷容器中，需要创建两个容器，一个是数据卷容器，另一个容器的作用就是恢复数据。<br>数据卷容器创建完毕后，创建另一个容器时，将数据卷容器的数据卷挂载，并将存有需恢复数据的本地目录挂载到容器中，然后在容器中将需恢复的数据拷贝到数据卷目录中。  </p>
 
       
     </div>
@@ -768,7 +767,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -960,7 +959,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">67</span>
+                      
+                    
+                    <span class="site-state-item-count">68</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -998,7 +999,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷"><span class="nav-number">1.</span> <span class="nav-text">数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个数据卷"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动一个挂载数据卷的容器"><span class="nav-number">1.2.</span> <span class="nav-text">启动一个挂载数据卷的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据卷的具体信息"><span class="nav-number">1.3.</span> <span class="nav-text">查看数据卷的具体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据卷"><span class="nav-number">1.4.</span> <span class="nav-text">删除数据卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载主机目录"><span class="nav-number">2.</span> <span class="nav-text">挂载主机目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载一个主机目录作为数据卷"><span class="nav-number">2.1.</span> <span class="nav-text">挂载一个主机目录作为数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据卷的具体信息-1"><span class="nav-number">2.2.</span> <span class="nav-text">查看数据卷的具体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载一个本地主机文件作为数据卷"><span class="nav-number">2.3.</span> <span class="nav-text">挂载一个本地主机文件作为数据卷</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷"><span class="nav-number">1.</span> <span class="nav-text">数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个数据卷"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动一个挂载数据卷的容器"><span class="nav-number">1.2.</span> <span class="nav-text">启动一个挂载数据卷的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据卷的具体信息"><span class="nav-number">1.3.</span> <span class="nav-text">查看数据卷的具体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据卷"><span class="nav-number">1.4.</span> <span class="nav-text">删除数据卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载主机目录"><span class="nav-number">2.</span> <span class="nav-text">挂载主机目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载一个主机目录作为数据卷"><span class="nav-number">2.1.</span> <span class="nav-text">挂载一个主机目录作为数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据卷的具体信息-1"><span class="nav-number">2.2.</span> <span class="nav-text">查看数据卷的具体信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷容器"><span class="nav-number">3.</span> <span class="nav-text">数据卷容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用数据卷容器来迁移数据"><span class="nav-number">4.</span> <span class="nav-text">利用数据卷容器来迁移数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#备份"><span class="nav-number">4.1.</span> <span class="nav-text">备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#恢复"><span class="nav-number">4.2.</span> <span class="nav-text">恢复</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1019,7 +1020,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-07-19</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020-08-27</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -1031,7 +1032,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">213k</span>
   
 
   
@@ -1040,7 +1041,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:13</span>
   
 </div>
 
